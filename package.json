@@ -1,0 +1,17 @@
+{
+  "name": "chatkit-demo-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^1.7.3",
+    "pusher-chatkit-server": "^0.8.1",
+    "server": "^1.0.15"
+  }
+}
