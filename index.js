@@ -29,7 +29,7 @@ const randomUser = () =>
       user.photo,
     ])
 
-server([
+server({ port: process.env.PORT || 3000 }, [
   ctx => header('Access-Control-Allow-Origin', '*'),
   ctx =>
     header(
