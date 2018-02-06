@@ -17,6 +17,6 @@ export const RoomList = (state, actions) => [
         )
       },
     },
-    `# ${room.name}`,
+    [['p', `# ${room.name}`], room.userIds.length === 100 && ['span', 'FULL']],
   ]),
 ]

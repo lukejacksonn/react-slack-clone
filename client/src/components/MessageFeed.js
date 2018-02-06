@@ -4,17 +4,18 @@ const time = string => {
   return `${date.getHours()}:${minutes < 10 ? '0' + minutes : minutes}`
 }
 
-export const MessageFeed = ({ messages = [], user = {} }) => [
+export const MessageFeed = ({ messages = {}, user = {}, room = {} }) => [
   'div',
   {
     class: 'feed',
-    ondragenter: console.log,
   },
   Object.keys(messages)
+    .filter(x => messages[x].room.id === room.id)
     .map(k => messages[k])
     .reverse()
     .map(x => [
       'message-',
+      { key: x.id },
       [
         ['img', { src: x.sender.avatarURL }],
         [

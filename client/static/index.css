@@ -49,6 +49,9 @@ aside ul {
 }
 
 aside ul li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   padding: 1rem;
   list-style: none;
   cursor: pointer;
@@ -66,6 +69,14 @@ aside ul li[disabled] {
   background: rgba(0, 0, 0, 0.05);
   opacity: 1;
   color: rgba(0, 0, 0, 0.62);
+}
+
+aside ul li span {
+  font-size: 0.62rem;
+  display: block;
+  padding: 0.38rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.38rem;
 }
 
 aside form {

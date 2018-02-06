@@ -1,7 +1,7 @@
 {
   "name": "chatkit-demo-server",
   "version": "1.0.0",
-  "description": "",
+  "description": "The server component for a web app demonstrating the capabilities of the Pusher Chatkit SDK",
   "main": "index.js",
   "scripts": {
     "start": "PORT=80 node ."

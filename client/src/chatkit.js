@@ -24,14 +24,12 @@ export const startup = ({
         userId,
       }).connect({
         delegate: {
-          userStartedTyping: (room, user) => isTyping(user.name),
+          userStartedTyping: (room, user) => isTyping([user.name, room]),
           userStoppedTyping: (room, user) => notTyping(user.name),
         },
-        onSuccess: currentUser => {
-          setUser(currentUser)
-          currentUser.getJoinableRooms(setRooms, error =>
-            console.log(`Error getting rooms: ${err}`)
-          )
+        onSuccess: user => {
+          setUser(user)
+          user.getJoinableRooms(setRooms)
         },
         onError: error => console.log('Error on connection', error),
       })

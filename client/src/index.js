@@ -24,16 +24,17 @@ const state = {
 
 const actions = {
   setUser: user => ({ user }),
-  setRoom: room => ({ room, messages: {} }),
+  setRoom: room => ({ room }),
   setRooms: rooms => ({ rooms }),
   setDraggingFile: dragging => ({ dragging }),
   setMessage: message => ({ message }),
-  addMessage: payload => ({ messages }) => ({
+  addMessage: payload => ({ messages, room }) => ({
     messages: Object.assign({}, messages, { [payload.id]: payload }),
   }),
-  isTyping: user => ({ typing }) => ({
-    typing: !typing.includes(user) ? [...typing, user] : typing,
-  }),
+  isTyping: ([user, from]) => ({ typing, room }) =>
+    room.id === from.id && {
+      typing: !typing.includes(user) ? [...typing, user] : typing,
+    },
   notTyping: user => ({ typing }) => ({
     typing: typing.filter(x => x !== user),
   }),
