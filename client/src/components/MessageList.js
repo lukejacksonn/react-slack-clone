@@ -4,7 +4,7 @@ const time = string => {
   return `${date.getHours()}:${minutes < 10 ? '0' + minutes : minutes}`
 }
 
-export const MessageFeed = ({ messages = {}, user = {}, room = {} }) => [
+export const MessageList = ({ messages = {}, user = {}, room = {} }) => [
   'div',
   {
     class: 'feed',

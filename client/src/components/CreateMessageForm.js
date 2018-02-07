@@ -20,7 +20,7 @@ const MessageInput = ({ user = {}, message = '', room = null }, actions) => [
   },
 ]
 
-export const MessageForm = (
+export const CreateMessageForm = (
   { user = {}, room = {}, message = '' },
   actions
 ) => [

@@ -1,10 +1,10 @@
 import { app } from 'hyperapp'
 import { h } from 'ijk'
 
-import { Header } from './components/Header'
-import { MessageFeed } from './components/MessageFeed'
+import { UserHeader } from './components/UserHeader'
+import { MessageList } from './components/MessageList'
 import { TypingIndicator } from './components/TypingIndicator'
-import { MessageForm } from './components/MessageForm'
+import { CreateMessageForm } from './components/CreateMessageForm'
 import { RoomList } from './components/RoomList'
 import { RoomHeader } from './components/RoomHeader'
 import { CreateRoomForm } from './components/CreateRoomForm'
@@ -47,7 +47,7 @@ const view = (state, actions) =>
       [
         'aside',
         [
-          Header(state.user),
+          UserHeader(state.user),
           RoomList(state, actions),
           CreateRoomForm(state, actions),
         ],
@@ -61,9 +61,9 @@ const view = (state, actions) =>
         },
         [
           RoomHeader(state.room),
-          MessageFeed(state),
+          MessageList(state),
           TypingIndicator(state),
-          MessageForm(state, actions),
+          CreateMessageForm(state, actions),
           state.dragging && FileInput(state, actions),
         ],
       ],
