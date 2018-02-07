@@ -4,6 +4,37 @@ const time = string => {
   return `${date.getHours()}:${minutes < 10 ? '0' + minutes : minutes}`
 }
 
+const Message = user => ({ id, sender, createdAt, text, attachment }) => [
+  'message-',
+  { key: id },
+  [
+    ['img', { src: sender.avatarURL }],
+    [
+      'div',
+      [
+        ['span', `${sender.name} | ${time(createdAt)}`],
+        ['p', text],
+        attachment && MessageAttachment(user)(attachment),
+      ],
+    ],
+  ],
+]
+
+const MessageAttachment = user => attachment => [
+  {
+    image: 'img',
+    video: 'video',
+    audio: 'audio',
+  }[attachment.type],
+  {
+    controls: true,
+    oncreate: e =>
+      user
+        .fetchAttachment(attachment.link)
+        .then(fetched => (e.src = fetched.link)),
+  },
+]
+
 export const MessageList = ({ messages = {}, user = {}, room = {} }) => [
   'div',
   {
@@ -13,23 +44,5 @@ export const MessageList = ({ messages = {}, user = {}, room = {} }) => [
     .filter(x => messages[x].room.id === room.id)
     .map(k => messages[k])
     .reverse()
-    .map(x => [
-      'message-',
-      { key: x.id },
-      [
-        ['img', { src: x.sender.avatarURL }],
-        [
-          'div',
-          [
-            ['span', `${x.sender.name} | ${time(x.createdAt)}`],
-            ['p', x.text],
-            // x.attachment &&
-            //   x.attachment.type === 'image' && [
-            //     'img',
-            //     { src: x.attachment.link },
-            //   ],
-          ],
-        ],
-      ],
-    ]),
+    .map(Message(user)),
 ]

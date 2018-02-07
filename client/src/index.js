@@ -55,9 +55,18 @@ const view = (state, actions) =>
       [
         'section',
         {
-          ondragover: e => actions.setDraggingFile(true),
-          ondragleave: e => actions.setDraggingFile(false),
-          ondrop: e => actions.setDraggingFile(false),
+          ondragover: e => {
+            actions.setDraggingFile(true)
+            e.path[1].style.opacity = 0.5
+          },
+          ondragleave: e => {
+            actions.setDraggingFile(false)
+            e.path[1].style.opacity = 1
+          },
+          ondrop: e => {
+            actions.setDraggingFile(false)
+            e.path[1].style.opacity = 1
+          },
         },
         [
           RoomHeader(state.room),

@@ -188,10 +188,27 @@ header svg {
   font-size: 16px;
 }
 
-.feed img {
+message- > img {
   width: 2.8rem;
   height: 2.8rem;
   border-radius: 0.38rem;
+}
+
+message- div img {
+  width: 30rem;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+message- div video {
+  width: 30rem;
+  max-width: 100%;
+  height: auto;
+}
+
+message- div audio {
+  width: 30rem;
 }
 
 .feed message- > * + * {
