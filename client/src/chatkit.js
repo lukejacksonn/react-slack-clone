@@ -13,8 +13,9 @@ export const startup = ({
   setRoom,
   isTyping,
   notTyping,
+  setUserPresence,
 }) =>
-  fetch('http://localhost:3000')
+  fetch('https://chatkit-demo-server-xzqbaderjc.now.sh')
     .then(res => res.text())
     .then(userId => {
       const { instanceLocator, url } = credentials
@@ -24,8 +25,13 @@ export const startup = ({
         userId,
       }).connect({
         delegate: {
-          userStartedTyping: (room, user) => isTyping([user.name, room]),
-          userStoppedTyping: (room, user) => notTyping(user.name),
+          userStartedTyping: (room, user) => {
+            setUserPresence([user.id, true])
+            isTyping([user.id, room])
+          },
+          userStoppedTyping: (room, user) => notTyping(user.id),
+          userCameOnline: user => setUserPresence([user.id, true]),
+          userWentOffline: user => setUserPresence([user.id, false]),
         },
         onSuccess: user => {
           setUser(user)

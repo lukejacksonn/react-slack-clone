@@ -31,7 +31,6 @@ main {
   background: #fff;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   overflow: hidden;
-  // animation: fadeInUp 1s;
 }
 
 aside {
@@ -181,7 +180,7 @@ header svg {
   animation: pulse 1s infinite;
 }
 
-.feed message- {
+message- {
   position: relative;
   display: flex;
   flex: none;
@@ -211,15 +210,15 @@ message- div audio {
   width: 30rem;
 }
 
-.feed message- > * + * {
+message- > * + * {
   margin-left: 0.38rem;
 }
 
-.feed message- div {
+message- div {
   margin-left: 1rem;
 }
 
-.feed message- p {
+message- p {
   padding: 0.5rem 0;
   max-width: 100%;
   word-break: break-word;
@@ -228,34 +227,32 @@ message- div audio {
   max-width: 100ex;
 }
 
-// .feed message-.own {
-//   flex-direction: row-reverse;
-// }
-//
-// .feed message-.own > * + * {
-//   margin-right: 0.38rem;
-// }
-//
-// .feed message-.own p {
-//   background: #006eff;
-//   border-radius: 0.5rem 0.5rem 0 0.5rem;
-//   color: #fff;
-// }
-
-.feed message- span {
-  display: block;
+message- span {
+  position: relative;
+  display: flex;
+  align-items: center;
   font-size: 0.62rem;
   color: #b6b6b6;
   margin: 0;
 }
 
+message-.online span::before {
+  display: block;
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  background: #42b72a;
+  border-radius: 50%;
+  margin-right: 0.25rem;
+}
+
 .typing {
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   color: rgba(0, 0, 0, 0.38);
 }
 
 .typing:not(:empty) {
-  padding: 0.68rem;
+  padding: 0.62rem;
 }
 
 form {

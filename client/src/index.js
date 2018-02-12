@@ -19,6 +19,7 @@ const state = {
   message: '',
   messages: {},
   typing: [],
+  online: {},
   dragging: false,
 }
 
@@ -37,6 +38,9 @@ const actions = {
     },
   notTyping: user => ({ typing }) => ({
     typing: typing.filter(x => x !== user),
+  }),
+  setUserPresence: ([user, status]) => ({ online }) => ({
+    online: Object.assign({}, online, { [user]: status }),
   }),
 }
 

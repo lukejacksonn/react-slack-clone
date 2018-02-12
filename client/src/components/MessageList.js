@@ -4,9 +4,18 @@ const time = string => {
   return `${date.getHours()}:${minutes < 10 ? '0' + minutes : minutes}`
 }
 
-const Message = user => ({ id, sender, createdAt, text, attachment }) => [
+const Message = (user, online) => ({
+  id,
+  sender,
+  createdAt,
+  text,
+  attachment,
+}) => [
   'message-',
-  { key: id },
+  {
+    key: id,
+    class: online[sender.id] && 'online',
+  },
   [
     ['img', { src: sender.avatarURL }],
     [
@@ -35,7 +44,7 @@ const MessageAttachment = user => attachment => [
   },
 ]
 
-export const MessageList = ({ messages = {}, user = {}, room = {} }) => [
+export const MessageList = ({ messages, user, room, online }) => [
   'div',
   {
     class: 'feed',
@@ -44,5 +53,5 @@ export const MessageList = ({ messages = {}, user = {}, room = {} }) => [
     .filter(x => messages[x].room.id === room.id)
     .map(k => messages[k])
     .reverse()
-    .map(Message(user)),
+    .map(Message(user, online)),
 ]
