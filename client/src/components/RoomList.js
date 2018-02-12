@@ -5,16 +5,16 @@ export const RoomList = (state, actions) => [
     {
       disabled: state.room.id === room.id,
       onclick: e => {
-        state.user.joinRoom(
-          room.id,
-          room => {
+        state.user.joinRoom(room.id)
+          .then(room => {
             actions.setRoom(room)
-            state.user.subscribeToRoom(room, {
+            state.user.subscribeToRoom(room.id, {
               newMessage: actions.addMessage,
             })
-          },
-          error => console.log(`Error joining room ${room.name}: ${error}`)
-        )
+          })
+          .catch(error =>
+            console.log(`Error joining room ${room.name}: ${error}`)
+          )
       },
     },
     [['p', `# ${room.name}`], room.userIds.length === 100 && ['span', 'FULL']],

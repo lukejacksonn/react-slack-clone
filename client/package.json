@@ -21,6 +21,6 @@
   "dependencies": {
     "hyperapp": "^1.0.1",
     "ijk": "^0.17.0",
-    "pusher-chatkit-client": "^0.6.1"
+    "pusher-chatkit-client": "pusher/chatkit-client-js#vanilla"
   }
 }

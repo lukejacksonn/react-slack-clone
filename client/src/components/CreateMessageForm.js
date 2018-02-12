@@ -13,7 +13,7 @@ const MessageInput = ({ user = {}, message = '', room = null }, actions) => [
     placeholder: 'Type a Message..',
     oninput: e => {
       actions.setMessage(e.target.value)
-      user.isTypingIn(room.id, x => x, x => x)
+      user.isTypingIn(room.id)
     },
     value: message,
     disabled: !room.id,
@@ -26,17 +26,18 @@ export const CreateMessageForm = (
 ) => [
   'form',
   {
-    onsubmit: e =>
-      e.preventDefault() ||
-      user.sendMessage(
-        {
-          text: message,
-          roomId: room.id,
-        },
-        messageId => console.log(`Added message to ${room.name}`),
-        error => console.log(`Error adding message to ${room.name}: ${error}`)
-      ) ||
-      actions.setMessage(''),
+    onsubmit: e => {
+      e.preventDefault()
+      user.sendMessage({
+        text: message,
+        roomId: room.id,
+      })
+        .then(messageId => console.log(`Added message to ${room.name}`))
+        .catch(error =>
+          console.log(`Error adding message to ${room.name}: ${error}`)
+        )
+      actions.setMessage('')
+    }
   },
   [MessageInput({ user, room, message }, actions), SendMessageButton({ room })],
 ]

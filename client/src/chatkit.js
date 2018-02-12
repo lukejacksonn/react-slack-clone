@@ -24,19 +24,17 @@ export const startup = ({
         instanceLocator,
         userId,
       }).connect({
-        delegate: {
-          userStartedTyping: (room, user) => {
-            setUserPresence([user.id, true])
-            isTyping([user.id, room])
-          },
-          userStoppedTyping: (room, user) => notTyping(user.id),
-          userCameOnline: user => setUserPresence([user.id, true]),
-          userWentOffline: user => setUserPresence([user.id, false]),
+        userStartedTyping: (room, user) => {
+          setUserPresence([user.id, true])
+          isTyping([user.id, room])
         },
-        onSuccess: user => {
-          setUser(user)
-          user.getJoinableRooms(setRooms)
-        },
-        onError: error => console.log('Error on connection', error),
+        userStoppedTyping: (room, user) => notTyping(user.id),
+        userCameOnline: user => setUserPresence([user.id, true]),
+        userWentOffline: user => setUserPresence([user.id, false]),
       })
+      .then(user => {
+        setUser(user)
+        user.getJoinableRooms().then(setRooms)
+      })
+      .catch(error => console.log('Error on connection', error))
     })
