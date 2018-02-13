@@ -5,13 +5,10 @@ export const RoomList = (state, actions) => [
     {
       disabled: state.room.id === room.id,
       onclick: e => {
-        state.user.joinRoom(room.id)
-          .then(room => {
-            actions.setRoom(room)
-            state.user.subscribeToRoom(room.id, {
-              newMessage: actions.addMessage,
-            })
-          })
+        state.user.subscribeToRoom(room.id, {
+          newMessage: actions.addMessage,
+        })
+          .then(actions.setRoom)
           .catch(error =>
             console.log(`Error joining room ${room.name}: ${error}`)
           )
