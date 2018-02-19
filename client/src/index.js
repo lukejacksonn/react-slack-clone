@@ -23,6 +23,8 @@ const state = {
   dragging: false,
 }
 
+const merge = (a, b) => Object.assign({}, a, b)
+
 const actions = {
   setUser: user => ({ user }),
   setRoom: room => ({ room }),
@@ -30,7 +32,11 @@ const actions = {
   setDraggingFile: dragging => ({ dragging }),
   setMessage: message => ({ message }),
   addMessage: payload => ({ messages, room }) => ({
-    messages: Object.assign({}, messages, { [payload.id]: payload }),
+    messages: merge(messages, {
+      [payload.room.id]: merge(messages[payload.room.id], {
+        [payload.id]: payload,
+      }),
+    }),
   }),
   isTyping: ([user, from]) => ({ typing, room }) =>
     room.id === from.id && {
@@ -40,11 +46,12 @@ const actions = {
     typing: typing.filter(x => x !== user),
   }),
   setUserPresence: ([user, status]) => ({ online }) => ({
-    online: Object.assign({}, online, { [user]: status }),
+    online: merge(online, { [user]: status }),
   }),
 }
 
 const view = (state, actions) =>
+  console.log(state) ||
   h('name', 'props', 'children')([
     'main',
     [

@@ -11,6 +11,9 @@ export const RoomList = (state, actions) => [
             actions.setRoom(room)
             state.user.subscribeToRoom(room, {
               newMessage: actions.addMessage,
+              cursorSet: cursor => {
+                console.log('Cursor was set:', cursor)
+              },
             })
           },
           error => console.log(`Error joining room ${room.name}: ${error}`)

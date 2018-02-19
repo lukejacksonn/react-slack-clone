@@ -10,24 +10,25 @@ const Message = (user, online) => ({
   createdAt,
   text,
   attachment,
-}) => [
-  'message-',
-  {
-    key: id,
-    class: online[sender.id] && 'online',
-  },
-  [
-    ['img', { src: sender.avatarURL }],
+}) =>
+  console.log(user.id === sender.id) || [
+    'message-',
+    {
+      key: id,
+      class: (sender.id === user.id || online[sender.id]) && 'online',
+    },
     [
-      'div',
+      ['img', { src: sender.avatarURL }],
       [
-        ['span', `${sender.name} | ${time(createdAt)}`],
-        ['p', text],
-        attachment && MessageAttachment(user)(attachment),
+        'div',
+        [
+          ['span', `${sender.name} | ${time(createdAt)}`],
+          ['p', text],
+          attachment && MessageAttachment(user)(attachment),
+        ],
       ],
     ],
-  ],
-]
+  ]
 
 const MessageAttachment = user => attachment => [
   {
@@ -49,9 +50,9 @@ export const MessageList = ({ messages, user, room, online }) => [
   {
     class: 'feed',
   },
-  Object.keys(messages)
-    .filter(x => messages[x].room.id === room.id)
-    .map(k => messages[k])
-    .reverse()
-    .map(Message(user, online)),
+  messages[room.id] &&
+    Object.keys(messages[room.id])
+      .map(k => messages[room.id][k])
+      .reverse()
+      .map(Message(user, online)),
 ]
