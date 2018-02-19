@@ -167,6 +167,7 @@ header svg {
   flex-direction: column-reverse;
   padding: 1rem;
   overflow: auto;
+  margin: 0;
 }
 
 .feed > * {
@@ -289,7 +290,8 @@ input {
   outline: none;
 }
 
-[disabled] {
+[disabled],
+.dragging {
   opacity: 0.5;
 }
 

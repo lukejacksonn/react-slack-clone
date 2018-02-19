@@ -1,5 +1,4 @@
-import { app } from 'hyperapp'
-import { h } from 'ijk'
+import { app, h } from 'hyperapp'
 
 import { UserHeader } from './components/UserHeader'
 import { MessageList } from './components/MessageList'
@@ -50,44 +49,26 @@ const actions = {
   }),
 }
 
-const view = (state, actions) =>
-  console.log(state) ||
-  h('name', 'props', 'children')([
-    'main',
-    [
-      [
-        'aside',
-        [
-          UserHeader(state.user),
-          RoomList(state, actions),
-          CreateRoomForm(state, actions),
-        ],
-      ],
-      [
-        'section',
-        {
-          ondragover: e => {
-            actions.setDraggingFile(true)
-            e.path[1].style.opacity = 0.5
-          },
-          ondragleave: e => {
-            actions.setDraggingFile(false)
-            e.path[1].style.opacity = 1
-          },
-          ondrop: e => {
-            actions.setDraggingFile(false)
-            e.path[1].style.opacity = 1
-          },
-        },
-        [
-          RoomHeader(state.room),
-          MessageList(state),
-          TypingIndicator(state),
-          CreateMessageForm(state, actions),
-          state.dragging && FileInput(state, actions),
-        ],
-      ],
-    ],
-  ])
+const view = (state, actions) => (
+  <main>
+    <aside>
+      {UserHeader(state.user)}
+      {RoomList(state, actions)}
+      {CreateRoomForm(state, actions)}
+    </aside>
+    <section
+      class={state.dragging && 'dragging'}
+      ondragover={e => actions.setDraggingFile(true)}
+      ondragleave={e => actions.setDraggingFile(false)}
+      ondrop={e => actions.setDraggingFile(false)}
+    >
+      {RoomHeader(state.room)}
+      {MessageList(state)}
+      {TypingIndicator(state)}
+      {CreateMessageForm(state, actions)}
+      {state.dragging && FileInput(state, actions)}
+    </section>
+  </main>
+)
 
 startup(app(state, actions, view, document.body))
