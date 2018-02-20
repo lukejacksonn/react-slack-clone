@@ -1,10 +1,12 @@
 import { h } from 'hyperapp'
+import style from './index.css'
 
 export const FileInput = (
   { user = {}, message = '', room = null },
   actions
 ) => (
   <input
+    class={style.component}
     type="file"
     onchange={e => {
       const file = e.target.files[0]

@@ -1,4 +1,7 @@
 import { h } from 'hyperapp'
+import style from './index.css'
+
+console.log(style);
 
 const time = string => {
   const date = new Date(string)
@@ -31,7 +34,7 @@ const Message = (user, online) => ({
 }) => (
   <message-
     key={id}
-    class={(sender.id === user.id || online[sender.id]) && 'online'}
+    class={(sender.id === user.id || online[sender.id]) && style.online}
   >
     <img src={sender.avatarURL} />
     <div>
@@ -43,7 +46,7 @@ const Message = (user, online) => ({
 )
 
 export const MessageList = ({ messages, user, room, online }) => (
-  <ul class="feed">
+  <ul class={style.component}>
     {messages[room.id] &&
       Object.keys(messages[room.id])
         .map(k => messages[room.id][k])

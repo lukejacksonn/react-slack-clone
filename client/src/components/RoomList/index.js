@@ -1,4 +1,5 @@
 import { h } from 'hyperapp'
+import style from './index.css'
 
 const join = (state, actions) => room => e =>
   state.user.joinRoom(
@@ -21,5 +22,5 @@ const room = (state, actions) => room => (
 )
 
 export const RoomList = (state, actions) => (
-  <ul>{state.rooms.map(room(state, actions))}</ul>
+  <ul class={style.component}>{state.rooms.map(room(state, actions))}</ul>
 )

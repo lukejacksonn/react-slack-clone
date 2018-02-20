@@ -1,9 +1,10 @@
 import { h } from 'hyperapp'
+import style from './index.css'
 
 const SendMessageButton = ({ room = false }) => (
   <button type="submit" disabled={!room.id}>
     <svg>
-      <use href="index.svg#add" />
+      <use href="index.svg#send" />
     </svg>
   </button>
 )
@@ -25,6 +26,7 @@ export const CreateMessageForm = (
   actions
 ) => (
   <form
+    class={style.component}
     onsubmit={e => {
       e.preventDefault()
       user.sendMessage(

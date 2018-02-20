@@ -1,0 +1,11 @@
+.component {
+
+  font-size: 0.62rem;
+  color: rgba(0, 0, 0, 0.38);
+
+  &:not(:empty) {
+    border-top: 1px solid #f2f2f2;
+    padding: 0.62rem;
+  }
+
+}

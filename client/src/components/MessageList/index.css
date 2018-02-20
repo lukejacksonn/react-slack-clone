@@ -1,0 +1,93 @@
+.component {
+
+  flex: 1 1 100%;
+  display: flex;
+  flex-direction: column-reverse;
+  padding: 1rem;
+  overflow: auto;
+  margin: 0;
+
+  > * {
+    padding-top: 1rem;
+  }
+
+  &:empty::after {
+    content: 'LOADING';
+    margin: auto;
+    color: #e0e0e0;
+    animation: pulse 1s infinite;
+  }
+
+  message- {
+    position: relative;
+    display: flex;
+    flex: none;
+    font-size: 16px;
+  }
+
+  message- > img {
+    width: 2.8rem;
+    height: 2.8rem;
+    border-radius: 0.38rem;
+  }
+
+  message- div img {
+    width: 30rem;
+    max-width: 100%;
+    height: auto;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  message- div video {
+    width: 30rem;
+    max-width: 100%;
+    height: auto;
+  }
+
+  message- div audio {
+    width: 30rem;
+  }
+
+  message- > * + * {
+    margin-left: 0.38rem;
+  }
+
+  message- div {
+    margin-left: 1rem;
+  }
+
+  message- p {
+    padding: 0.5rem 0;
+    max-width: 100%;
+    word-break: break-word;
+    color: rgba(0, 0, 0, 0.8);
+    line-height: 150%;
+    max-width: 100ex;
+  }
+
+  message- span {
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-size: 0.62rem;
+    color: #b6b6b6;
+    margin: 0;
+  }
+
+  message-.online span::before {
+    display: block;
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    background: #42b72a;
+    border-radius: 50%;
+    margin-right: 0.25rem;
+  }
+
+}
+
+@keyframes pulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
