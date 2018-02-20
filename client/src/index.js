@@ -45,7 +45,7 @@ const actions = {
 }
 
 const view = (state, actions) =>
-  h('name', 'props', 'children')([
+  h('nodeName', 'attributes', 'children')([
     'main',
     [
       [
