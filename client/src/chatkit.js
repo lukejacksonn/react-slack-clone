@@ -26,7 +26,7 @@ export const startup = ({
       }).connect({
         userStartedTyping: (room, user) => {
           setUserPresence([user.id, true])
-          isTyping([user.id, room])
+          isTyping([user.name, room])
         },
         userStoppedTyping: (room, user) => notTyping(user.id),
         userCameOnline: user => setUserPresence([user.id, true]),
