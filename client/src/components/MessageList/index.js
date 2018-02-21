@@ -1,7 +1,5 @@
-import { h } from 'hyperapp'
-import style from './index.css'
-
-console.log(style);
+import React from 'react';
+import style from './index.module.css'
 
 const time = string => {
   const date = new Date(string)
@@ -9,20 +7,27 @@ const time = string => {
   return `${date.getHours()}:${minutes < 10 ? '0' + minutes : minutes}`
 }
 
-const props = (user, attachment) => ({
-  controls: true,
-  oncreate: e =>
-    user
-      .fetchAttachment(attachment.link)
-      .then(fetched => (e.src = fetched.link)),
-})
 
-const Attachment = user => attachment => {
-  return {
-    image: <img {...props(user, attachment)} />,
-    video: <video {...props(user, attachment)} />,
-    audio: <audio {...props(user, attachment)} />,
-  }[attachment.type]
+class Attachment extends React.Component {
+
+  state = {
+    src: undefined
+  }
+
+  componentDidMount() {
+    this.props.user
+      .fetchAttachment(this.props.attachment.link)
+      .then(fetched => this.setState({ src: fetched.link }))
+  }
+
+  render() {
+    return {
+      image: <img controls={true} src={this.state.src} />,
+      video: <video controls={true} src={this.state.src} />,
+      audio: <audio controls={true} src={this.state.src} />,
+    }[this.props.attachment.type]
+  }
+
 }
 
 const Message = (user, online) => ({
@@ -40,13 +45,13 @@ const Message = (user, online) => ({
     <div>
       <span>{`${sender.name} | ${time(createdAt)}`}</span>
       <p>{text}</p>
-      {attachment && Attachment(user)(attachment)}
+      {attachment && <Attachment user={user} attachment={attachment} />}
     </div>
   </message->
 )
 
-export const MessageList = ({ messages, user, room, online }) => (
-  <ul class={style.component}>
+export const MessageList = ({ state: { messages, user, room, online }}) => (
+  <ul className={style.component}>
     {messages[room.id] &&
       Object.keys(messages[room.id])
         .map(k => messages[room.id][k])

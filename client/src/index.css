@@ -10,6 +10,7 @@ body {
   font-size: calc(10px + 1vmin);
   font-family: sans-serif;
   background: #f2f2f2;
+  margin: 0;
 }
 
 body,
@@ -18,14 +19,16 @@ p {
   margin: 0;
 }
 
+#root {
+  width: 100%;
+}
+
 main {
   display: flex;
   margin: auto;
   width: 100%;
   height: 100%;
-  border: 1px solid #e0e0e0;
   background: #fff;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   overflow: hidden;
 }
 
@@ -47,6 +50,10 @@ section {
 button,
 input {
   outline: none;
+}
+
+section:not(.dragging) > input[type='file'] {
+  transform: translate(100%);
 }
 
 [disabled],

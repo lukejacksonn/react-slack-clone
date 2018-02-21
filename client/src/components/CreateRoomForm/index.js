@@ -1,10 +1,10 @@
-import { h } from 'hyperapp'
-import style from './index.css'
+import React from 'react';
+import style from './index.module.css'
 
-export const CreateRoomForm = (state, actions) => (
+export const CreateRoomForm = ({ state, actions }) => (
   <form
-    class={style.component}
-    onsubmit={e => {
+    className={style.component}
+    onSubmit={e => {
       e.preventDefault()
       state.user.createRoom(
         { name: e.target[0].value },

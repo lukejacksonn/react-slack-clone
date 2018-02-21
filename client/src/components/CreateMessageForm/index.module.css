@@ -1,0 +1,29 @@
+.component {
+  flex: none;
+  position: relative;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #e0e0e0;
+  height: 3.6rem;
+  display: flex;
+  width: 100%;
+}
+
+.component input {
+  flex: 1 1 100%;
+  padding: 1rem;
+  border: 0;
+  font-size: 1rem;
+}
+
+.component button {
+  border: 0;
+  padding: 0 1rem;
+  background: #fff;
+}
+
+.component svg {
+  width: 2rem;
+  height: 2rem;
+  fill: #006eff;
+}

@@ -1,5 +1,5 @@
-import { h } from 'hyperapp'
-import style from './index.css'
+import React from 'react';
+import style from './index.module.css'
 
 const SendMessageButton = ({ room = false }) => (
   <button type="submit" disabled={!room.id}>
@@ -12,7 +12,7 @@ const SendMessageButton = ({ room = false }) => (
 const MessageInput = ({ user = {}, message = '', room = null }, actions) => (
   <input
     placeholder="Type a Message.."
-    oninput={e => {
+    onInput={e => {
       actions.setMessage(e.target.value)
       user.isTypingIn(room.id, x => x, x => x)
     }}
@@ -21,13 +21,13 @@ const MessageInput = ({ user = {}, message = '', room = null }, actions) => (
   />
 )
 
-export const CreateMessageForm = (
-  { user = {}, room = {}, message = '' },
+export const CreateMessageForm = ({
+  state: { user = {}, room = {}, message = '' },
   actions
-) => (
+}) => (
   <form
-    class={style.component}
-    onsubmit={e => {
+    className={style.component}
+    onSubmit={e => {
       e.preventDefault()
       user.sendMessage(
         {

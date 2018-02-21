@@ -1,5 +1,5 @@
-import { h } from 'hyperapp'
-import style from './index.css'
+import React from 'react';
+import style from './index.module.css'
 
 const join = (state, actions) => room => e =>
   state.user.joinRoom(
@@ -15,12 +15,12 @@ const join = (state, actions) => room => e =>
   )
 
 const room = (state, actions) => room => (
-  <li disabled={state.room.id === room.id} onclick={join(state, actions)(room)}>
+  <li key={room.id} disabled={state.room.id === room.id} onClick={join(state, actions)(room)}>
     <p>{`# ${room.name}`}</p>
     {room.userIds.length === 100 && <span>FULL</span>}
   </li>
 )
 
-export const RoomList = (state, actions) => (
-  <ul class={style.component}>{state.rooms.map(room(state, actions))}</ul>
+export const RoomList = ({ state, actions }) => (
+  <ul className={style.component}>{state.rooms.map(room(state, actions))}</ul>
 )

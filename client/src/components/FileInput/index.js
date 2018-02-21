@@ -1,14 +1,14 @@
-import { h } from 'hyperapp'
-import style from './index.css'
+import React from 'react';
+import style from './index.module.css'
 
-export const FileInput = (
-  { user = {}, message = '', room = null },
+export const FileInput = ({
+  state: { user = {}, message = '', room = null },
   actions
-) => (
+}) => (
   <input
-    class={style.component}
+    className={style.component}
     type="file"
-    onchange={e => {
+    onChange={e => {
       const file = e.target.files[0]
       user.sendMessage(
         {

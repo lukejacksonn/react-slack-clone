@@ -1,0 +1,38 @@
+.component {
+  border-bottom: 1px solid #e0e0e0;
+  z-index: 1;
+  flex: none;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  height: 4.8rem;
+}
+
+.component > * + * {
+  margin-left: 1rem;
+}
+
+.component > img {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 0.38rem;
+  background: #e0e0e0;
+}
+
+.component h3 {
+  color: rgba(0, 0, 0, 0.38);
+}
+
+.component h3:empty {
+  display: block;
+  background: #f2f2f2;
+  width: 10rem;
+  height: 1rem;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}

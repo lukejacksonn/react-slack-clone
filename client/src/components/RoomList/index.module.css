@@ -1,0 +1,36 @@
+.component {
+  padding: 1rem;
+  margin: 0;
+  overflow-y: scroll;
+}
+
+.component li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  list-style: none;
+  cursor: pointer;
+  font-weight: bold;
+  user-select: none;
+  color: rgba(0, 0, 0, 0.38);
+}
+
+.component li:hover {
+  background: rgba(0, 0, 0, 0.015);
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.component li[disabled] {
+  background: rgba(0, 0, 0, 0.05);
+  opacity: 1;
+  color: rgba(0, 0, 0, 0.62);
+}
+
+.component span {
+  font-size: 0.62rem;
+  display: block;
+  padding: 0.38rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0.38rem;
+}
