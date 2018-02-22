@@ -34,14 +34,20 @@ class View extends React.Component {
 
   actions = {
     setUser: user => this.setState({ user }),
-    setRoom: room => this.setState({ room }),
+    setRoom: room => {
+      setTimeout(() => {
+        const $ = document.querySelector('section ul')
+        $.scrollTop = 100000
+      }, 0)
+      this.setState({ room })
+    },
     setRooms: rooms => this.setState({ rooms }),
     setDraggingFile: dragging => this.setState({ dragging }),
     setMessage: message => this.setState({ message }),
     addMessage: payload => {
       const $ = document.querySelector('section ul')
       const x = $.scrollHeight - $.clientHeight <= $.scrollTop + 1
-      x && setTimeout(() => ($.scrollTop = 1000000), 0)
+      x && setTimeout(() => ($.scrollTop = 100000), 0)
       this.setState({
         messages: {
           ...this.state.messages,

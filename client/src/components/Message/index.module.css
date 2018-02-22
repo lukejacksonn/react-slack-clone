@@ -3,15 +3,11 @@
   display: flex;
   flex: none;
   font-size: 16px;
-}
-
-.component:first-child {
-  margin-top: auto;
-}
-
-.component:not(:first-child) {
-  border-top: 1px solid #f2f2f2;
   padding-top: 1rem;
+}
+
+.component:not(:last-child) {
+  border-top: 1px solid #f2f2f2;
   margin-top: 1rem;
 }
 
