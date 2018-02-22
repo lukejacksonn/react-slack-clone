@@ -90,21 +90,21 @@
   margin-right: 0.25rem;
 }
 
-.component > div {
+.empty {
   margin: auto;
   text-align: center;
   color: #b6b6b6;
 }
 
-.component > div > * + * {
+.empty > * + * {
   margin-top: 1rem;
 }
 
-.component > div > span {
+.empty > span {
   font-size: 3rem;
 }
 
-.component > div > p {
+.empty > p {
   font-size: 1rem;
   line-height: 150%;
   max-width: 40ex;
