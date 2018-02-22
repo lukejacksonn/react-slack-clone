@@ -14,8 +14,6 @@ import { FileInput } from './components/FileInput'
 
 import Chatkit from 'pusher-chatkit-client'
 
-const merge = (a, b) => Object.assign({}, a, b)
-
 const credentials = {
   url:
     'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/05f46048-3763-4482-9cfe-51ff327c3f29/token?instance_locator=v1:us1:05f46048-3763-4482-9cfe-51ff327c3f29',
@@ -44,15 +42,15 @@ class View extends React.Component {
       const out = document.querySelector('section ul')
       const isScrolledToBottom =
         out.scrollHeight - out.clientHeight <= out.scrollTop + 1
-      console.log('isBottomBeforeAdd', isScrolledToBottom)
       this.setState({
-        messages: merge(this.state.messages, {
-          [payload.room.id]: merge(this.state.messages[payload.room.id], {
+        messages: {
+          ...this.state.messages,
+          [payload.room.id]: {
+            ...this.state.messages[payload.room.id],
             [payload.id]: payload,
-          }),
-        }),
+          },
+        },
       })
-      console.log('isBottomAfterAdd', isScrolledToBottom)
       isScrolledToBottom &&
         (out.scrollTop = out.scrollHeight - out.clientHeight)
     },
@@ -66,7 +64,7 @@ class View extends React.Component {
       }),
     setUserPresence: ([user, status]) =>
       this.setState({
-        online: merge(this.state.online, { [user]: status }),
+        online: { ...this.state.online, [user]: status },
       }),
   }
 
