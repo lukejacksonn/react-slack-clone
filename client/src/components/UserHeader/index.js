@@ -1,11 +1,12 @@
-import React from 'react';
+import React from 'react'
 import style from './index.module.css'
 
-console.log('STYLE', style);
+const placeholder =
+  'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
 
-export const UserHeader = ({ state }) => (
+export const UserHeader = ({ state: { user } }) => (
   <header className={style.component}>
-    <img src={state.user.avatarURL || 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'} />
-    <h3>{state.user.name || ''}</h3>
+    <img src={user.avatarURL || placeholder} alt={user.name} />
+    <h3>{user.name}</h3>
   </header>
 )

@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 import style from './index.module.css'
 
-export const RoomHeader = ({ state: { room }}) =>
-  room.name ? (
+export const RoomHeader = ({ state: { room } }) =>
+  room.id ? (
     <header className={style.component}>
       <h1>{`#${room.name}`}</h1>
       <div>

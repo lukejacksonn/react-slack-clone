@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "pusher-chatkit-client": "^0.6.2",
+    "pusher-chatkit-client": "next",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-scripts": "next"

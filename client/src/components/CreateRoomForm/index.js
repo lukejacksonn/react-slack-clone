@@ -1,24 +1,30 @@
-import React from 'react';
+import React from 'react'
 import style from './index.module.css'
 
-export const CreateRoomForm = ({ state, actions }) => (
-  <form
-    className={style.component}
-    onSubmit={e => {
-      e.preventDefault()
-      state.user.createRoom(
-        { name: e.target[0].value },
-        room => actions.setRooms([...state.rooms, room]),
-        error => console.log(`Error creating room ${error}`)
-      )
-      e.target[0].value = ''
-    }}
-  >
-    <input placeholder="Create a Room" />
-    <button type="submit">
-      <svg>
-        <use href="index.svg#add" />
-      </svg>
-    </button>
-  </form>
-)
+export const CreateRoomForm = ({
+  state: { user, rooms },
+  actions: { setRooms, setRoom, addMessage },
+}) =>
+  user.id ? (
+    <form
+      className={style.component}
+      onSubmit={e => {
+        e.preventDefault()
+        user.createRoom({ name: e.target[0].value }).then(room => {
+          setRooms([...rooms, room])
+          user
+            .subscribeToRoom(room.id, { newMessage: addMessage })
+            .then(setRoom)
+            .catch(console.log)
+        })
+        e.target[0].value = ''
+      }}
+    >
+      <input placeholder="Create a Room" />
+      <button type="submit">
+        <svg>
+          <use href="index.svg#add" />
+        </svg>
+      </button>
+    </form>
+  ) : null

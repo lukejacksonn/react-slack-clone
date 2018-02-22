@@ -1,7 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react'
+import ReactDOM from 'react-dom'
 
-import './index.css';
+import './index.css'
 
 import { UserHeader } from './components/UserHeader'
 import { MessageList } from './components/MessageList'
@@ -15,13 +15,14 @@ import { FileInput } from './components/FileInput'
 import Chatkit from 'pusher-chatkit-client'
 
 const merge = (a, b) => Object.assign({}, a, b)
+
 const credentials = {
-  url: 'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/05f46048-3763-4482-9cfe-51ff327c3f29/token?instance_locator=v1:us1:05f46048-3763-4482-9cfe-51ff327c3f29',
+  url:
+    'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/05f46048-3763-4482-9cfe-51ff327c3f29/token?instance_locator=v1:us1:05f46048-3763-4482-9cfe-51ff327c3f29',
   instanceLocator: 'v1:us1:05f46048-3763-4482-9cfe-51ff327c3f29',
 }
 
 class View extends React.Component {
-
   state = {
     user: {},
     room: {},
@@ -39,26 +40,29 @@ class View extends React.Component {
     setRooms: rooms => this.setState({ rooms }),
     setDraggingFile: dragging => this.setState({ dragging }),
     setMessage: message => this.setState({ message }),
-    addMessage: payload => this.setState({
-      messages: merge(this.state.messages, {
-        [payload.room.id]: merge(this.state.messages[payload.room.id], {
-          [payload.id]: payload,
+    addMessage: payload =>
+      this.setState({
+        messages: merge(this.state.messages, {
+          [payload.room.id]: merge(this.state.messages[payload.room.id], {
+            [payload.id]: payload,
+          }),
         }),
       }),
-    }),
     isTyping: ([user, from]) =>
-      this.state.room.id === from.id && !this.state.typing.includes(user) &&
+      this.state.room.id === from.id &&
+      !this.state.typing.includes(user) &&
       this.setState({ typing: [...this.state.typing, user] }),
-    notTyping: user => this.setState({
-      typing: this.state.typing.filter(x => x !== user),
-    }),
-    setUserPresence: ([user, status]) => this.setState({
-      online: merge(this.state.online, { [user]: status }),
-    }),
+    notTyping: user =>
+      this.setState({
+        typing: this.state.typing.filter(x => x !== user),
+      }),
+    setUserPresence: ([user, status]) =>
+      this.setState({
+        online: merge(this.state.online, { [user]: status }),
+      }),
   }
 
   componentDidMount() {
-
     fetch('https://chatkit-demo-server-xzqbaderjc.now.sh')
       .then(res => res.text())
       .then(userId => {
@@ -67,25 +71,33 @@ class View extends React.Component {
           tokenProvider: new Chatkit.TokenProvider({ url }),
           instanceLocator,
           userId,
-        }).connect({
-          delegate: {
+        })
+          .connect({
             userStartedTyping: (room, user) => {
-              this.setState(this.actions.setUserPresence([user.id, true]))
-              this.setState(this.actions.isTyping([user.id, room]))
+              this.actions.setUserPresence([user.id, true])
+              this.actions.isTyping([user.id, room])
             },
             userStoppedTyping: (room, user) => this.actions.notTyping(user.id),
-            userCameOnline: user => this.actions.setUserPresence([user.id, true]),
-            userWentOffline: user => this.actions.setUserPresence([user.id, false]),
-          },
-          onSuccess: user => {
+            userCameOnline: user =>
+              this.actions.setUserPresence([user.id, true]),
+            userWentOffline: user =>
+              this.actions.setUserPresence([user.id, false]),
+          })
+          .then(user => {
             this.actions.setUser(user)
-            user.getJoinableRooms(this.actions.setRooms)
-          },
-          onError: error => console.log('Error on connection', error),
-        })
+            user.getJoinableRooms().then(rooms => {
+              this.actions.setRooms(rooms)
+              const initial = rooms.find(x => x.userIds.length !== 100)
+              user
+                .subscribeToRoom(initial.id, {
+                  newMessage: this.actions.addMessage,
+                })
+                .then(this.actions.setRoom)
+                .catch(console.log)
+            })
+          })
+          .catch(error => console.log('Error on connection', error))
       })
-
-
   }
 
   render() {
@@ -111,8 +123,6 @@ class View extends React.Component {
       </main>
     )
   }
-
 }
 
-
-ReactDOM.render(<View />, document.querySelector('#root'));
+ReactDOM.render(<View />, document.querySelector('#root'))

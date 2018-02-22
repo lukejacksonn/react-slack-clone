@@ -1,27 +1,29 @@
-import React from 'react';
+import React from 'react'
 import style from './index.module.css'
 
-export const FileInput = ({
-  state: { user = {}, message = '', room = null },
-  actions
-}) => (
-  <input
-    className={style.component}
-    type="file"
-    onChange={e => {
-      const file = e.target.files[0]
-      user.sendMessage(
-        {
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = (Math.random() * 16) | 0,
+      v = c === 'x' ? r : (r & 0x3) | 0x8
+    return v.toString(16)
+  })
+}
+
+export const FileInput = ({ state: { user, message, room } }) =>
+  room.id ? (
+    <input
+      className={style.component}
+      type="file"
+      onChange={e => {
+        const file = e.target.files[0]
+        user.sendMessage({
           text: message || file.name,
           roomId: room.id,
           attachment: {
+            name: uuidv4(),
             file,
-            name: file.name,
           },
-        },
-        messageId => console.log(`Added message to ${room.name}`),
-        error => console.log(`Error adding message to ${room.name}: ${error}`)
-      )
-    }}
-  />
-)
+        })
+      }}
+    />
+  ) : null

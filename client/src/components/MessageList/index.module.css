@@ -23,6 +23,12 @@
   display: flex;
   flex: none;
   font-size: 16px;
+  padding-top: 1rem;
+  margin-top: 1rem;
+}
+
+.component message-:not(:last-child) {
+  border-top: 1px solid #f2f2f2;
 }
 
 .component message- > img {
@@ -84,8 +90,34 @@
   margin-right: 0.25rem;
 }
 
+.component > div {
+  margin: auto;
+  text-align: center;
+  color: #b6b6b6;
+}
+
+.component > div > * + * {
+  margin-top: 1rem;
+}
+
+.component > div > span {
+  font-size: 3rem;
+}
+
+.component > div > p {
+  font-size: 1rem;
+  line-height: 150%;
+  max-width: 40ex;
+}
+
 @keyframes pulse {
-  0% { opacity: 0.5; }
-  50% { opacity: 1; }
-  100% { opacity: 0.5; }
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
 }
