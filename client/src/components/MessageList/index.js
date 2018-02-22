@@ -16,10 +16,9 @@ export const MessageList = ({ state: { messages, user, room, online } }) =>
   room.id ? (
     <ul className={style.component}>
       {Object.keys(messages[room.id] || {}).length > 0
-        ? Object.keys(messages[room.id])
-            .map(k => messages[room.id][k])
-            .reverse()
-            .map(Message(user, online))
+        ? Object.keys(messages[room.id]).map(k =>
+            Message(user, online)(messages[room.id][k])
+          )
         : emptyList}
     </ul>
   ) : null

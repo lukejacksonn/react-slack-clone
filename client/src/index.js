@@ -40,14 +40,22 @@ class View extends React.Component {
     setRooms: rooms => this.setState({ rooms }),
     setDraggingFile: dragging => this.setState({ dragging }),
     setMessage: message => this.setState({ message }),
-    addMessage: payload =>
+    addMessage: payload => {
+      const out = document.querySelector('section ul')
+      const isScrolledToBottom =
+        out.scrollHeight - out.clientHeight <= out.scrollTop + 1
+      console.log('isBottomBeforeAdd', isScrolledToBottom)
       this.setState({
         messages: merge(this.state.messages, {
           [payload.room.id]: merge(this.state.messages[payload.room.id], {
             [payload.id]: payload,
           }),
         }),
-      }),
+      })
+      console.log('isBottomAfterAdd', isScrolledToBottom)
+      isScrolledToBottom &&
+        (out.scrollTop = out.scrollHeight - out.clientHeight)
+    },
     isTyping: ([user, from]) =>
       this.state.room.id === from.id &&
       !this.state.typing.includes(user) &&
@@ -115,8 +123,8 @@ class View extends React.Component {
           onDrop={e => this.actions.setDraggingFile(false)}
         >
           <RoomHeader state={this.state} />
-          <MessageList state={this.state} />
           <TypingIndicator state={this.state} />
+          <MessageList state={this.state} />
           <CreateMessageForm state={this.state} actions={this.actions} />
           <FileInput state={this.state} actions={this.actions} />
         </section>

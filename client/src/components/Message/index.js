@@ -32,15 +32,14 @@ export const Message = (user, online) => ({
   text,
   attachment = {},
 }) => (
-  <message-
-    key={id}
-    class={(sender.id === user.id || online[sender.id]) && style.online}
-  >
+  <li key={id} className={style.component}>
     <img src={sender.avatarURL} alt={sender.name} />
     <div>
-      <span>{`${sender.name} | ${time(createdAt)}`}</span>
+      <span
+        className={(sender.id === user.id || online[sender.id]) && style.online}
+      >{`${sender.name} | ${time(createdAt)}`}</span>
       <p>{text}</p>
       <Attachment user={user} link={attachment.link} type={attachment.type} />
     </div>
-  </message->
+  </li>
 )
