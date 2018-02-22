@@ -6,6 +6,7 @@
     "pusher-chatkit-client": "next",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-linkify": "^0.2.2",
     "react-scripts": "next"
   },
   "scripts": {

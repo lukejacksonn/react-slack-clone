@@ -1,5 +1,6 @@
 import React from 'react'
 import style from './index.module.css'
+import Linkify from 'react-linkify'
 
 const time = string => {
   const date = new Date(string)
@@ -38,7 +39,9 @@ export const Message = (user, online) => ({
       <span
         className={(sender.id === user.id || online[sender.id]) && style.online}
       >{`${sender.name} | ${time(createdAt)}`}</span>
-      <p>{text}</p>
+      <p>
+        <Linkify properties={{ target: '_blank' }}>{text}</Linkify>
+      </p>
       <Attachment user={user} link={attachment.link} type={attachment.type} />
     </div>
   </li>

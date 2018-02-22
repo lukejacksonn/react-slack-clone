@@ -39,9 +39,9 @@ class View extends React.Component {
     setDraggingFile: dragging => this.setState({ dragging }),
     setMessage: message => this.setState({ message }),
     addMessage: payload => {
-      const out = document.querySelector('section ul')
-      const isScrolledToBottom =
-        out.scrollHeight - out.clientHeight <= out.scrollTop + 1
+      const $ = document.querySelector('section ul')
+      const x = $.scrollHeight - $.clientHeight <= $.scrollTop + 1
+      x && setTimeout(() => ($.scrollTop = 1000000), 0)
       this.setState({
         messages: {
           ...this.state.messages,
@@ -51,11 +51,9 @@ class View extends React.Component {
           },
         },
       })
-      isScrolledToBottom &&
-        (out.scrollTop = out.scrollHeight - out.clientHeight)
     },
-    isTyping: ([user, from]) =>
-      this.state.room.id === from.id &&
+    isTyping: ([user, room]) =>
+      this.state.room.id === room.id &&
       !this.state.typing.includes(user) &&
       this.setState({ typing: [...this.state.typing, user] }),
     notTyping: user =>

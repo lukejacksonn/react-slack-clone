@@ -38,13 +38,18 @@
   margin-left: 1rem;
 }
 
-.component > div > p {
+.component > div > p,
+.component > div > a {
   padding: 0.5rem 0;
   max-width: 100%;
   word-break: break-word;
   color: rgba(0, 0, 0, 0.8);
   line-height: 150%;
   max-width: 100ex;
+}
+
+.component > div a {
+  color: #006eff;
 }
 
 .component > div > span {
