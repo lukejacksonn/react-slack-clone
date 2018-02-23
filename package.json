@@ -1,7 +1,7 @@
 {
   "name": "chatkit-demo",
   "version": "1.0.0",
-  "private": true,
+  "homepage" : "https://pusher.github.io/chatkit-demo",
   "dependencies": {
     "pusher-chatkit-client": "next",
     "react": "^16.2.0",
