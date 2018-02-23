@@ -1,0 +1,56 @@
+.component {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  bottom: 3.6rem;
+  height: 2rem;
+  font-size: 0.62rem;
+  color: rgba(0, 0, 0, 0.38);
+  padding: 0 0.62rem;
+  border-top: 1px solid #f2f2f2;
+  width: 100%;
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.62rem;
+}
+
+.dots > * + * {
+  margin-left: 0.2em;
+}
+
+.dots > div {
+  width: 0.5em;
+  height: 0.5em;
+  border-radius: 50%;
+  background: rgba(158, 158, 158, 0.7);
+  transform-origin: 50% 50%;
+  animation: ball-beat 1.1s 0s infinite cubic-bezier(0.445, 0.05, 0.55, 0.95);
+}
+
+.dots div:nth-child(2) {
+  animation-delay: 0.3s !important;
+}
+
+.dots div:nth-child(3) {
+  animation-delay: 0.6s !important;
+}
+
+@keyframes ball-beat {
+  0% {
+    opacity: 0.7;
+  }
+  33.33% {
+    opacity: 0.55;
+  }
+  66.67% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}

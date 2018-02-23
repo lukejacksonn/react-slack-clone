@@ -1,0 +1,68 @@
+.component {
+  position: relative;
+  display: flex;
+  flex: none;
+  font-size: 16px;
+  padding-top: 1rem;
+}
+
+.component:not(:last-child) {
+  border-top: 1px solid #f2f2f2;
+  margin-top: 1rem;
+}
+
+.component > img {
+  width: 2.8rem;
+  height: 2.8rem;
+  border-radius: 0.38rem;
+}
+
+.component > div > img,
+.component > div > video,
+.component > div > audio {
+  width: 30rem;
+  max-width: 100%;
+  height: auto;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.component > * + * {
+  margin-left: 0.38rem;
+}
+
+.component > div {
+  margin-left: 1rem;
+}
+
+.component > div > p,
+.component > div > a {
+  padding: 0.5rem 0;
+  max-width: 100%;
+  word-break: break-word;
+  color: rgba(0, 0, 0, 0.8);
+  line-height: 150%;
+  max-width: 100ex;
+}
+
+.component > div a {
+  color: #006eff;
+}
+
+.component > div > span {
+  position: relative;
+  display: flex;
+  align-items: center;
+  font-size: 0.62rem;
+  color: #b6b6b6;
+  margin: 0;
+}
+
+.online::before {
+  display: block;
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  background: #42b72a;
+  border-radius: 50%;
+  margin-right: 0.38rem;
+}

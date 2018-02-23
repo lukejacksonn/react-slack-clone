@@ -1,0 +1,88 @@
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  display: flex;
+  height: 100vh;
+  font-size: calc(10px + 1vmin);
+  font-family: sans-serif;
+  background: #f2f2f2;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
+
+button,
+input {
+  outline: none;
+}
+
+[disabled],
+.dragging {
+  opacity: 0.5;
+}
+
+
+#root {
+  width: 100%;
+}
+
+main {
+  display: flex;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  overflow: hidden;
+}
+
+aside {
+  flex: 1 1 28rem;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  background: #fcfcfc;
+  z-index: 2;
+}
+
+section {
+  flex: 1 1 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+section:not(.dragging) > input[type='file'] {
+  transform: translate(100%);
+}
+
+@media (max-width: 640px) {
+  aside {
+    position: absolute;
+    left: 0;
+    top: 4.8rem;
+    bottom: 0;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease-out;
+    z-index: 1;
+    box-shadow: 0 0 0.38rem rgba(0, 0, 0, 0.1);
+  }
+  aside[data-open='true'] {
+    transform: translateX(0);
+  }
+  aside[data-open='true'] + section > *:not(header) {
+    opacity: 0.2;
+    transition: opacity 0.4s;
+    overflow: hidden;
+  }
+}
