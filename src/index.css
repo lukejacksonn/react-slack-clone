@@ -13,7 +13,6 @@ body {
   margin: 0;
 }
 
-body,
 h1,
 h2,
 h3,
@@ -21,6 +20,17 @@ h4,
 p {
   margin: 0;
 }
+
+button,
+input {
+  outline: none;
+}
+
+[disabled],
+.dragging {
+  opacity: 0.5;
+}
+
 
 #root {
   width: 100%;
@@ -39,7 +49,7 @@ aside {
   flex: 1 1 28rem;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 0 0.62rem rgba(0, 0, 0, 0.1);
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
   background: #fcfcfc;
   z-index: 2;
 }
@@ -50,6 +60,10 @@ section {
   display: flex;
   flex-direction: column;
   position: relative;
+}
+
+section:not(.dragging) > input[type='file'] {
+  transform: translate(100%);
 }
 
 @media (max-width: 640px) {
@@ -71,18 +85,4 @@ section {
     transition: opacity 0.4s;
     overflow: hidden;
   }
-}
-
-button,
-input {
-  outline: none;
-}
-
-section:not(.dragging) > input[type='file'] {
-  transform: translate(100%);
-}
-
-[disabled],
-.dragging {
-  opacity: 0.5;
 }

@@ -77,7 +77,7 @@ class View extends React.Component {
   }
 
   componentDidMount() {
-    fetch('https://chatkit-demo-server-xzqbaderjc.now.sh')
+    fetch('https://chatkit-demo-server.herokuapp.com')
       .then(res => res.text())
       .then(userId => {
         const { instanceLocator, url } = credentials
