@@ -39,8 +39,9 @@ aside {
   flex: 1 1 28rem;
   display: flex;
   flex-direction: column;
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 0.62rem rgba(0, 0, 0, 0.1);
   background: #fcfcfc;
+  z-index: 2;
 }
 
 section {
@@ -49,6 +50,27 @@ section {
   display: flex;
   flex-direction: column;
   position: relative;
+}
+
+@media (max-width: 640px) {
+  aside {
+    position: absolute;
+    left: 0;
+    top: 4.8rem;
+    bottom: 0;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease-out;
+    z-index: 1;
+    box-shadow: 0 0 0.38rem rgba(0, 0, 0, 0.1);
+  }
+  aside[data-open='true'] {
+    transform: translateX(0);
+  }
+  aside[data-open='true'] + section > *:not(header) {
+    opacity: 0.2;
+    transition: opacity 0.4s;
+    overflow: hidden;
+  }
 }
 
 button,

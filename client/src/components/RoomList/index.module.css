@@ -1,7 +1,8 @@
 .component {
   padding: 1rem;
   margin: 0;
-  overflow-y: scroll;
+  overflow-y: scroll; /* has to be scroll, not auto */
+  -webkit-overflow-scrolling: touch;
 }
 
 .component li {

@@ -23,7 +23,7 @@ export const CreateRoomForm = ({
       <input placeholder="Create a Room" />
       <button type="submit">
         <svg>
-          <use href="index.svg#add" />
+          <use xlinkHref="index.svg#add" />
         </svg>
       </button>
     </form>

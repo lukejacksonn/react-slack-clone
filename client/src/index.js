@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-
 import './index.css'
 
 import { UserHeader } from './components/UserHeader'
@@ -30,16 +29,21 @@ class View extends React.Component {
     typing: [],
     online: {},
     dragging: false,
+    sidebar: false,
   }
 
   actions = {
+    setSidebar: sidebar => this.setState({ sidebar }),
     setUser: user => this.setState({ user }),
     setRoom: room => {
       setTimeout(() => {
         const $ = document.querySelector('section ul')
         $.scrollTop = 100000
       }, 0)
-      this.setState({ room })
+      this.setState({
+        room,
+        sidebar: false,
+      })
     },
     setRooms: rooms => this.setState({ rooms }),
     setDraggingFile: dragging => this.setState({ dragging }),
@@ -113,7 +117,7 @@ class View extends React.Component {
   render() {
     return (
       <main>
-        <aside>
+        <aside data-open={this.state.sidebar}>
           <UserHeader state={this.state} />
           <RoomList state={this.state} actions={this.actions} />
           <CreateRoomForm state={this.state} actions={this.actions} />
@@ -124,7 +128,7 @@ class View extends React.Component {
           onMouseLeave={e => this.actions.setDraggingFile(false)}
           onDrop={e => this.actions.setDraggingFile(false)}
         >
-          <RoomHeader state={this.state} />
+          <RoomHeader state={this.state} actions={this.actions} />
           <TypingIndicator state={this.state} />
           <MessageList state={this.state} />
           <CreateMessageForm state={this.state} actions={this.actions} />

@@ -27,7 +27,7 @@ export const CreateMessageForm = ({
       />
       <button type="submit">
         <svg>
-          <use href="index.svg#send" />
+          <use xlinkHref="index.svg#send" />
         </svg>
       </button>
     </form>

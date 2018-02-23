@@ -6,11 +6,10 @@ const Room = (state, actions) => room =>
     <li
       key={room.id}
       disabled={state.room.id === room.id}
-      onClick={e =>
-        state.user
-          .subscribeToRoom(room.id, { newMessage: actions.addMessage })
-          .then(actions.setRoom)
-      }
+      onClick={e => {
+        actions.setRoom(room)
+        state.user.subscribeToRoom(room.id, { newMessage: actions.addMessage })
+      }}
     >
       <p>{`# ${room.name}`}</p>
     </li>
