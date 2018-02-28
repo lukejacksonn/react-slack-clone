@@ -14,26 +14,17 @@ export default ({ state, actions }, userId) =>
     userId,
   })
     .connect({
-      userStartedTyping: (room, user) => {
-        actions.setUserPresence([user.id, true])
-        actions.isTyping([user.id, room])
-      },
+      userStartedTyping: (room, user) => actions.isTyping([user.id, room]),
       userStoppedTyping: (room, user) => actions.notTyping(user.id),
       userCameOnline: user => actions.setUserPresence([user.id, true]),
       userWentOffline: user => actions.setUserPresence([user.id, false]),
-      addedToRoom: room => state.user.getAllRooms().then(actions.setRooms),
+      addedToRoom: actions.addRoom,
     })
     .then(user => {
       actions.setUser(user)
       user.getAllRooms().then(rooms => {
         actions.setRooms(rooms)
-        const initial = rooms.find(x => x.userIds.length !== 100)
-        user
-          .subscribeToRoom(initial.id, {
-            newMessage: actions.addMessage,
-          })
-          .then(actions.setRoom)
-          .catch(console.log)
+        actions.joinRoom(rooms.find(x => x.userIds.length !== 100))
       })
     })
     .catch(error => console.log('Error on connection', error))

@@ -6,10 +6,7 @@ const Room = (state, actions) => room =>
     <li
       key={room.id}
       disabled={state.room.id === room.id}
-      onClick={e => {
-        actions.setRoom(room)
-        state.user.subscribeToRoom(room.id, { newMessage: actions.addMessage })
-      }}
+      onClick={e => actions.joinRoom(room)}
     >
       <p>
         <svg>

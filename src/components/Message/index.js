@@ -26,40 +26,16 @@ class Attachment extends React.Component {
   }
 }
 
-export const Message = (
-  user,
-  online,
-  rooms,
-  setRoom,
-  setRooms,
-  addMessage
-) => ({ id, sender, createdAt, text, attachment = {} }) => (
+export const Message = ({ user, online, createConvo }) => ({
+  id,
+  sender,
+  createdAt,
+  text,
+  attachment = {},
+}) => (
   <li key={id} className={style.component}>
     <img
-      onClick={e => {
-        const exists = rooms.find(
-          x => x.name.match(sender.id) && x.name.match(user.id)
-        )
-        exists
-          ? user
-              .subscribeToRoom(exists.id, { newMessage: addMessage })
-              .then(setRoom)
-              .catch(console.log)
-          : user
-              .createRoom({
-                name: user.id + sender.id,
-                addUserIds: [sender.id],
-                private: true,
-              })
-              .then(room => {
-                setRooms([...rooms, room])
-                user
-                  .subscribeToRoom(room.id, { newMessage: addMessage })
-                  .then(setRoom)
-                  .catch(console.log)
-              })
-              .catch(console.log)
-      }}
+      onClick={e => createConvo({ user: sender })}
       src={sender.avatarURL}
       alt={sender.name}
     />

@@ -27,7 +27,32 @@ class View extends React.Component {
   }
 
   actions = {
+    createConvo: options => {
+      const exists = this.state.rooms.find(
+        x => x.name.match(options.user.id) && x.name.match(this.state.user.id)
+      )
+      exists
+        ? this.actions.joinRoom(exists)
+        : this.actions.createRoom({
+            name: this.state.user.id + options.user.id,
+            addUserIds: [options.user.id],
+            private: true,
+          })
+    },
+    createRoom: options => {
+      this.state.user.createRoom(options).then(room => {
+        this.actions.addRoom(room)
+        this.actions.joinRoom(room)
+      })
+    },
+    joinRoom: room => {
+      this.actions.setRoom(room)
+      this.state.user
+        .subscribeToRoom(room.id, { newMessage: this.actions.addMessage })
+        .catch(console.log)
+    },
     setSidebar: sidebar => this.setState({ sidebar }),
+    addRoom: room => this.setState({ rooms: [...this.state.rooms, room] }),
     setUser: user => this.setState({ user }),
     setRoom: room => {
       setTimeout(() => {
@@ -59,7 +84,10 @@ class View extends React.Component {
     isTyping: ([user, room]) =>
       this.state.room.id === room.id &&
       !this.state.typing.includes(user) &&
-      this.setState({ typing: [...this.state.typing, user] }),
+      this.setState({
+        typing: [...this.state.typing, user],
+        online: { ...this.state.online, [user]: true },
+      }),
     notTyping: user =>
       this.setState({
         typing: this.state.typing.filter(x => x !== user),

@@ -3,20 +3,14 @@ import style from './index.module.css'
 
 export const CreateRoomForm = ({
   state: { user, rooms },
-  actions: { setRooms, setRoom, addMessage },
+  actions: { createRoom },
 }) =>
   user.id ? (
     <form
       className={style.component}
       onSubmit={e => {
         e.preventDefault()
-        user.createRoom({ name: e.target[0].value }).then(room => {
-          setRooms([...rooms, room])
-          user
-            .subscribeToRoom(room.id, { newMessage: addMessage })
-            .then(setRoom)
-            .catch(console.log)
-        })
+        createRoom({ name: e.target[0].value })
         e.target[0].value = ''
       }}
     >

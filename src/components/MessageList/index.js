@@ -13,8 +13,8 @@ const emptyList = (
 )
 
 export const MessageList = ({
-  state: { messages, user, room, rooms, online },
-  actions: { setRoom, setRooms, addMessage },
+  state: { messages, user, room, online },
+  actions: { createConvo },
 }) =>
   room.id ? (
     <ul className={style.component}>
@@ -22,9 +22,7 @@ export const MessageList = ({
         ? Object.keys(messages[room.id])
             .reverse()
             .map(k =>
-              Message(user, online, rooms, setRoom, setRooms, addMessage)(
-                messages[room.id][k]
-              )
+              Message({ user, online, createConvo })(messages[room.id][k])
             )
         : emptyList}
     </ul>
