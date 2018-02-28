@@ -1,5 +1,5 @@
 .component {
-  padding: 1rem;
+  padding: 0;
   margin: 0;
   overflow-y: scroll; /* has to be scroll, not auto */
   -webkit-overflow-scrolling: touch;
@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem;
+  padding: 1.38rem;
   list-style: none;
   cursor: pointer;
   font-weight: bold;
@@ -29,9 +29,18 @@
 }
 
 .component span {
-  font-size: 0.62rem;
   display: block;
-  padding: 0.38rem;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 0.38rem;
+  white-space: nowrap;
+}
+
+.component li p {
+  display: flex;
+  align-items: center;
+}
+
+.component svg {
+  width: 1.62rem;
+  height: 1.62rem;
+  fill: rgba(0, 0, 0, 0.38);
+  margin-right: 1rem;
 }

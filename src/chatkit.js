@@ -6,37 +6,34 @@ const credentials = {
   instanceLocator: 'v1:us1:05f46048-3763-4482-9cfe-51ff327c3f29',
 }
 
-export const startup = ({
-  addMessage,
-  setUser,
-  setRooms,
-  setRoom,
-  isTyping,
-  notTyping,
-  setUserPresence,
-}) =>
-  fetch('https://chatkit-demo-server-xzqbaderjc.now.sh')
-    .then(res => res.text())
-    .then(userId => {
-      const { instanceLocator, url } = credentials
-      new Chatkit.ChatManager({
-        tokenProvider: new Chatkit.TokenProvider({ url }),
-        instanceLocator,
-        userId,
-      }).connect({
-        delegate: {
-          userStartedTyping: (room, user) => {
-            setUserPresence([user.id, true])
-            isTyping([user.id, room])
-          },
-          userStoppedTyping: (room, user) => notTyping(user.id),
-          userCameOnline: user => setUserPresence([user.id, true]),
-          userWentOffline: user => setUserPresence([user.id, false]),
-        },
-        onSuccess: user => {
-          setUser(user)
-          user.getJoinableRooms(setRooms)
-        },
-        onError: error => console.log('Error on connection', error),
+const { instanceLocator, url } = credentials
+export default ({ state, actions }, userId) =>
+  new Chatkit.ChatManager({
+    tokenProvider: new Chatkit.TokenProvider({ url }),
+    instanceLocator,
+    userId,
+  })
+    .connect({
+      userStartedTyping: (room, user) => {
+        actions.setUserPresence([user.id, true])
+        actions.isTyping([user.id, room])
+      },
+      userStoppedTyping: (room, user) => actions.notTyping(user.id),
+      userCameOnline: user => actions.setUserPresence([user.id, true]),
+      userWentOffline: user => actions.setUserPresence([user.id, false]),
+      addedToRoom: room => state.user.getAllRooms().then(actions.setRooms),
+    })
+    .then(user => {
+      actions.setUser(user)
+      user.getAllRooms().then(rooms => {
+        actions.setRooms(rooms)
+        const initial = rooms.find(x => x.userIds.length !== 100)
+        user
+          .subscribeToRoom(initial.id, {
+            newMessage: actions.addMessage,
+          })
+          .then(actions.setRoom)
+          .catch(console.log)
       })
     })
+    .catch(error => console.log('Error on connection', error))

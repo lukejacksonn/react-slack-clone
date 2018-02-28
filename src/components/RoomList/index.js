@@ -11,10 +11,26 @@ const Room = (state, actions) => room =>
         state.user.subscribeToRoom(room.id, { newMessage: actions.addMessage })
       }}
     >
-      <p>{`# ${room.name}`}</p>
+      <p>
+        <svg>
+          {room.name.match(state.user.id) ? (
+            <use xlinkHref={'index.svg#members'} />
+          ) : (
+            <use xlinkHref={'index.svg#public'} />
+          )}
+        </svg>
+        <span>{room.name.replace(state.user.id, '')}</span>
+      </p>
     </li>
   ) : null
 
 export const RoomList = ({ state, actions }) => (
-  <ul className={style.component}>{state.rooms.map(Room(state, actions))}</ul>
+  <ul className={style.component}>
+    {state.rooms
+      .filter(x => x.name.match(state.user.id))
+      .map(Room(state, actions))}
+    {state.rooms
+      .filter(x => !x.name.match(state.user.id))
+      .map(Room(state, actions))}
+  </ul>
 )
