@@ -12,13 +12,18 @@ const emptyList = (
   </div>
 )
 
-export const MessageList = ({ state: { messages, user, room, online } }) =>
+export const MessageList = ({
+  state: { messages, user, room, online },
+  actions: { createConvo },
+}) =>
   room.id ? (
     <ul className={style.component}>
       {Object.keys(messages[room.id] || {}).length > 0
         ? Object.keys(messages[room.id])
             .reverse()
-            .map(k => Message(user, online)(messages[room.id][k]))
+            .map(k =>
+              Message({ user, online, createConvo })(messages[room.id][k])
+            )
         : emptyList}
     </ul>
   ) : null

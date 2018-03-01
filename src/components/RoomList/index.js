@@ -6,15 +6,33 @@ const Room = (state, actions) => room =>
     <li
       key={room.id}
       disabled={state.room.id === room.id}
-      onClick={e => {
-        actions.setRoom(room)
-        state.user.subscribeToRoom(room.id, { newMessage: actions.addMessage })
-      }}
+      onClick={e => actions.joinRoom(room)}
     >
-      <p>{`# ${room.name}`}</p>
+      <p>
+        <svg>
+          <use
+            xlinkHref={
+              room.name.match(state.user.id)
+                ? 'index.svg#members'
+                : room.isPrivate ? 'index.svg#lock' : 'index.svg#public'
+            }
+          />
+        </svg>
+        <span>{room.name.replace(state.user.id, '')}</span>
+      </p>
     </li>
   ) : null
 
 export const RoomList = ({ state, actions }) => (
-  <ul className={style.component}>{state.rooms.map(Room(state, actions))}</ul>
+  <ul className={style.component}>
+    {state.rooms
+      .filter(x => x.name.match(state.user.id))
+      .map(Room(state, actions))}
+    {state.rooms
+      .filter(x => !x.name.match(state.user.id) && x.isPrivate)
+      .map(Room(state, actions))}
+    {state.rooms
+      .filter(x => !x.name.match(state.user.id) && !x.isPrivate)
+      .map(Room(state, actions))}
+  </ul>
 )

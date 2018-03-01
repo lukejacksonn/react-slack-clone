@@ -1,5 +1,6 @@
 import React from 'react'
 import style from './index.module.css'
+import { FileInput } from '../FileInput'
 
 export const CreateMessageForm = ({
   state: { user = {}, room = {}, message = '' },
@@ -25,6 +26,7 @@ export const CreateMessageForm = ({
         }}
         value={message}
       />
+      <FileInput state={{ user, room, message }} />
       <button type="submit">
         <svg>
           <use xlinkHref="index.svg#send" />

@@ -26,11 +26,9 @@ input {
   outline: none;
 }
 
-[disabled],
-.dragging {
+[disabled] {
   opacity: 0.5;
 }
-
 
 #root {
   width: 100%;

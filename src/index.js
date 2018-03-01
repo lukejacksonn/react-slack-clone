@@ -9,15 +9,8 @@ import { CreateMessageForm } from './components/CreateMessageForm'
 import { RoomList } from './components/RoomList'
 import { RoomHeader } from './components/RoomHeader'
 import { CreateRoomForm } from './components/CreateRoomForm'
-import { FileInput } from './components/FileInput'
 
-import Chatkit from 'pusher-chatkit-client'
-
-const credentials = {
-  url:
-    'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/05f46048-3763-4482-9cfe-51ff327c3f29/token?instance_locator=v1:us1:05f46048-3763-4482-9cfe-51ff327c3f29',
-  instanceLocator: 'v1:us1:05f46048-3763-4482-9cfe-51ff327c3f29',
-}
+import ChatManager from './chatkit'
 
 class View extends React.Component {
   state = {
@@ -33,8 +26,34 @@ class View extends React.Component {
   }
 
   actions = {
+    createConvo: options => {
+      const exists = this.state.rooms.find(
+        x => x.name.match(options.user.id) && x.name.match(this.state.user.id)
+      )
+      exists
+        ? this.actions.joinRoom(exists)
+        : this.actions.createRoom({
+            name: this.state.user.id + options.user.id,
+            addUserIds: [options.user.id],
+            private: true,
+          })
+    },
+    createRoom: options => {
+      this.state.user.createRoom(options).then(room => {
+        this.actions.addRoom(room)
+        this.actions.joinRoom(room)
+      })
+    },
+    joinRoom: room => {
+      this.actions.setRoom(room)
+      this.state.user
+        .subscribeToRoom(room.id, { newMessage: this.actions.addMessage })
+        .catch(console.log)
+    },
     setSidebar: sidebar => this.setState({ sidebar }),
     setUser: user => this.setState({ user }),
+    setRooms: rooms => this.setState({ rooms }),
+    addRoom: room => this.setState({ rooms: [...this.state.rooms, room] }),
     setRoom: room => {
       setTimeout(() => {
         const $ = document.querySelector('section ul')
@@ -45,8 +64,6 @@ class View extends React.Component {
         sidebar: false,
       })
     },
-    setRooms: rooms => this.setState({ rooms }),
-    setDraggingFile: dragging => this.setState({ dragging }),
     setMessage: message => this.setState({ message }),
     addMessage: payload => {
       const $ = document.querySelector('section ul')
@@ -65,7 +82,10 @@ class View extends React.Component {
     isTyping: ([user, room]) =>
       this.state.room.id === room.id &&
       !this.state.typing.includes(user) &&
-      this.setState({ typing: [...this.state.typing, user] }),
+      this.setState({
+        typing: [...this.state.typing, user],
+        online: { ...this.state.online, [user]: true },
+      }),
     notTyping: user =>
       this.setState({
         typing: this.state.typing.filter(x => x !== user),
@@ -77,41 +97,15 @@ class View extends React.Component {
   }
 
   componentDidMount() {
-    fetch('https://chatkit-demo-server.herokuapp.com')
-      .then(res => res.text())
-      .then(userId => {
-        const { instanceLocator, url } = credentials
-        new Chatkit.ChatManager({
-          tokenProvider: new Chatkit.TokenProvider({ url }),
-          instanceLocator,
-          userId,
-        })
-          .connect({
-            userStartedTyping: (room, user) => {
-              this.actions.setUserPresence([user.id, true])
-              this.actions.isTyping([user.id, room])
-            },
-            userStoppedTyping: (room, user) => this.actions.notTyping(user.id),
-            userCameOnline: user =>
-              this.actions.setUserPresence([user.id, true]),
-            userWentOffline: user =>
-              this.actions.setUserPresence([user.id, false]),
+    const user = localStorage.getItem('chatkit-user')
+    user
+      ? ChatManager(this, user)
+      : fetch('https://chatkit-demo-server.herokuapp.com')
+          .then(res => res.text())
+          .then(id => {
+            localStorage.setItem('chatkit-user', id)
+            ChatManager(this, id)
           })
-          .then(user => {
-            this.actions.setUser(user)
-            user.getJoinableRooms().then(rooms => {
-              this.actions.setRooms(rooms)
-              const initial = rooms.find(x => x.userIds.length !== 100)
-              user
-                .subscribeToRoom(initial.id, {
-                  newMessage: this.actions.addMessage,
-                })
-                .then(this.actions.setRoom)
-                .catch(console.log)
-            })
-          })
-          .catch(error => console.log('Error on connection', error))
-      })
   }
 
   render() {
@@ -122,17 +116,11 @@ class View extends React.Component {
           <RoomList state={this.state} actions={this.actions} />
           <CreateRoomForm state={this.state} actions={this.actions} />
         </aside>
-        <section
-          className={this.state.dragging ? 'dragging' : undefined}
-          onDragEnter={e => this.actions.setDraggingFile(true)}
-          onMouseLeave={e => this.actions.setDraggingFile(false)}
-          onDrop={e => this.actions.setDraggingFile(false)}
-        >
+        <section>
           <RoomHeader state={this.state} actions={this.actions} />
           <TypingIndicator state={this.state} />
-          <MessageList state={this.state} />
+          <MessageList state={this.state} actions={this.actions} />
           <CreateMessageForm state={this.state} actions={this.actions} />
-          <FileInput state={this.state} actions={this.actions} />
         </section>
       </main>
     )

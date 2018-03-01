@@ -26,7 +26,7 @@ class Attachment extends React.Component {
   }
 }
 
-export const Message = (user, online) => ({
+export const Message = ({ user, online, createConvo }) => ({
   id,
   sender,
   createdAt,
@@ -34,7 +34,11 @@ export const Message = (user, online) => ({
   attachment = {},
 }) => (
   <li key={id} className={style.component}>
-    <img src={sender.avatarURL} alt={sender.name} />
+    <img
+      onClick={e => createConvo({ user: sender })}
+      src={sender.avatarURL}
+      alt={sender.name}
+    />
     <div>
       <span
         className={(sender.id === user.id || online[sender.id]) && style.online}

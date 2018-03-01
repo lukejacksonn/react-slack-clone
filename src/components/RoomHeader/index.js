@@ -1,8 +1,10 @@
 import React from 'react'
 import style from './index.module.css'
 
+const RoomName = (name, user) => name.replace(user.id, '')
+
 export const RoomHeader = ({
-  state: { room, sidebar },
+  state: { room, sidebar, user },
   actions: { setSidebar },
 }) =>
   room.id ? (
@@ -12,7 +14,7 @@ export const RoomHeader = ({
           <use xlinkHref="index.svg#menu" />
         </svg>
       </button>
-      <h1>{`#${room.name}`}</h1>
+      <h1>{RoomName(room.name, user)}</h1>
       <div>
         <h4>{room.userIds.length}</h4>
         <svg>
