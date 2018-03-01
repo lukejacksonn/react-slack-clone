@@ -13,7 +13,7 @@ export const FileInput = ({ state: { user, message, room } }) =>
   room.id ? (
     <button>
       <svg>
-        <use xlinkHref="index.svg#attatch" />
+        <use xlinkHref="index.svg#attach" />
       </svg>
       <input
         className={style.component}

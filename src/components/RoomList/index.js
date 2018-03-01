@@ -10,11 +10,13 @@ const Room = (state, actions) => room =>
     >
       <p>
         <svg>
-          {room.name.match(state.user.id) ? (
-            <use xlinkHref={'index.svg#members'} />
-          ) : (
-            <use xlinkHref={'index.svg#public'} />
-          )}
+          <use
+            xlinkHref={
+              room.name.match(state.user.id)
+                ? 'index.svg#members'
+                : room.isPrivate ? 'index.svg#lock' : 'index.svg#public'
+            }
+          />
         </svg>
         <span>{room.name.replace(state.user.id, '')}</span>
       </p>
@@ -27,7 +29,10 @@ export const RoomList = ({ state, actions }) => (
       .filter(x => x.name.match(state.user.id))
       .map(Room(state, actions))}
     {state.rooms
-      .filter(x => !x.name.match(state.user.id))
+      .filter(x => !x.name.match(state.user.id) && x.isPrivate)
+      .map(Room(state, actions))}
+    {state.rooms
+      .filter(x => !x.name.match(state.user.id) && !x.isPrivate)
       .map(Room(state, actions))}
   </ul>
 )
