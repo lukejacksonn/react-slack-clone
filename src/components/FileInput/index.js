@@ -11,19 +11,25 @@ function uuidv4() {
 
 export const FileInput = ({ state: { user, message, room } }) =>
   room.id ? (
-    <input
-      className={style.component}
-      type="file"
-      onChange={e => {
-        const file = e.target.files[0]
-        user.sendMessage({
-          text: message || file.name,
-          roomId: room.id,
-          attachment: {
-            name: uuidv4(),
-            file,
-          },
-        })
-      }}
-    />
+    <button>
+      <svg>
+        <use xlinkHref="index.svg#attatch" />
+      </svg>
+      <input
+        className={style.component}
+        type="file"
+        onChange={e => {
+          const file = e.target.files[0]
+          file &&
+            user.sendMessage({
+              text: message || file.name,
+              roomId: room.id,
+              attachment: {
+                name: uuidv4(),
+                file,
+              },
+            })
+        }}
+      />
+    </button>
   ) : null

@@ -9,7 +9,6 @@ import { CreateMessageForm } from './components/CreateMessageForm'
 import { RoomList } from './components/RoomList'
 import { RoomHeader } from './components/RoomHeader'
 import { CreateRoomForm } from './components/CreateRoomForm'
-import { FileInput } from './components/FileInput'
 
 import ChatManager from './chatkit'
 
@@ -52,8 +51,9 @@ class View extends React.Component {
         .catch(console.log)
     },
     setSidebar: sidebar => this.setState({ sidebar }),
-    addRoom: room => this.setState({ rooms: [...this.state.rooms, room] }),
     setUser: user => this.setState({ user }),
+    setRooms: rooms => this.setState({ rooms }),
+    addRoom: room => this.setState({ rooms: [...this.state.rooms, room] }),
     setRoom: room => {
       setTimeout(() => {
         const $ = document.querySelector('section ul')
@@ -64,8 +64,6 @@ class View extends React.Component {
         sidebar: false,
       })
     },
-    setRooms: rooms => this.setState({ rooms }),
-    setDraggingFile: dragging => this.setState({ dragging }),
     setMessage: message => this.setState({ message }),
     addMessage: payload => {
       const $ = document.querySelector('section ul')
@@ -118,17 +116,11 @@ class View extends React.Component {
           <RoomList state={this.state} actions={this.actions} />
           <CreateRoomForm state={this.state} actions={this.actions} />
         </aside>
-        <section
-          className={this.state.dragging ? 'dragging' : undefined}
-          onDragEnter={e => this.actions.setDraggingFile(true)}
-          onMouseLeave={e => this.actions.setDraggingFile(false)}
-          onDrop={e => this.actions.setDraggingFile(false)}
-        >
+        <section>
           <RoomHeader state={this.state} actions={this.actions} />
           <TypingIndicator state={this.state} />
           <MessageList state={this.state} actions={this.actions} />
           <CreateMessageForm state={this.state} actions={this.actions} />
-          <FileInput state={this.state} actions={this.actions} />
         </section>
       </main>
     )

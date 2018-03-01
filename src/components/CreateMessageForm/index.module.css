@@ -9,7 +9,7 @@
   width: 100%;
 }
 
-.component input {
+.component input:first-child {
   flex: 1 1 100%;
   padding: 1rem;
   border: 0;
@@ -17,9 +17,14 @@
 }
 
 .component button {
+  position: relative;
   border: 0;
-  padding: 0 1rem;
   background: #fff;
+  padding: 0;
+}
+
+.component > * {
+  margin-right: 0.62rem;
 }
 
 .component svg {
