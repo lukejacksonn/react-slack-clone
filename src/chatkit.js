@@ -19,12 +19,13 @@ export default ({ state, actions }, userId) =>
       userCameOnline: user => actions.setUserPresence([user.id, true]),
       userWentOffline: user => actions.setUserPresence([user.id, false]),
       addedToRoom: actions.addRoom,
+      removedFromRoom: actions.removeRoom,
     })
     .then(user => {
       actions.setUser(user)
       user.getAllRooms().then(rooms => {
         actions.setRooms(rooms)
-        actions.joinRoom(rooms.find(x => x.userIds.length !== 100))
+        actions.joinRoom()
       })
     })
     .catch(error => console.log('Error on connection', error))

@@ -44,7 +44,7 @@ class View extends React.Component {
         this.actions.joinRoom(room)
       })
     },
-    joinRoom: room => {
+    joinRoom: (room = this.state.rooms.find(x => x.userIds.length !== 100)) => {
       this.actions.setRoom(room)
       this.state.user
         .subscribeToRoom(room.id, { newMessage: this.actions.addMessage })
@@ -54,6 +54,10 @@ class View extends React.Component {
     setUser: user => this.setState({ user }),
     setRooms: rooms => this.setState({ rooms }),
     addRoom: room => this.setState({ rooms: [...this.state.rooms, room] }),
+    removeRoom: room => {
+      this.setState({ rooms: this.state.rooms.filter(x => x.id !== room.id) })
+      this.state.room.id === room.id && this.actions.joinRoom()
+    },
     setRoom: room => {
       setTimeout(() => {
         const $ = document.querySelector('section ul')
@@ -94,6 +98,13 @@ class View extends React.Component {
       this.setState({
         online: { ...this.state.online, [user]: status },
       }),
+    runCommand: cmd =>
+      ({
+        invite: args => this.state.user.addUser(args[1], this.state.room.id),
+        remove: args => this.state.user.removeUser(args[1], this.state.room.id),
+      } // eslint-disable-next-line
+        [cmd.slice(1).split(' ')[0]](cmd.slice(1).split(' '))
+        .then(() => this.actions.setMessage(''))),
   }
 
   componentDidMount() {

@@ -4,18 +4,21 @@ import { FileInput } from '../FileInput'
 
 export const CreateMessageForm = ({
   state: { user = {}, room = {}, message = '' },
-  actions: { setMessage },
+  actions: { setMessage, runCommand },
 }) =>
   room.id ? (
     <form
       className={style.component}
       onSubmit={e => {
         e.preventDefault()
-        user.sendMessage({
-          text: message,
-          roomId: room.id,
-        })
-        setMessage('')
+        message.startsWith('/')
+          ? runCommand(message)
+          : user
+              .sendMessage({
+                text: message,
+                roomId: room.id,
+              })
+              .then(x => setMessage(''))
       }}
     >
       <input
