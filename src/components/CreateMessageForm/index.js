@@ -12,7 +12,7 @@ export const CreateMessageForm = ({
       onSubmit={e => {
         e.preventDefault()
         message.startsWith('/')
-          ? runCommand(message)
+          ? runCommand(message.slice(1))
           : user
               .sendMessage({
                 text: message,

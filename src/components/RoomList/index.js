@@ -2,7 +2,7 @@ import React from 'react'
 import style from './index.module.css'
 
 const Room = (state, actions) => room =>
-  room.userIds.length < 100 ? (
+  room && room.userIds && room.userIds.length < 100 ? (
     <li
       key={room.id}
       disabled={state.room.id === room.id}
