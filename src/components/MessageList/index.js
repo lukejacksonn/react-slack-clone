@@ -14,10 +14,24 @@ const emptyList = (
 
 export const MessageList = ({
   state: { messages, user, room, online },
-  actions: { createConvo },
+  actions: { createConvo, setEngaged },
 }) =>
   room.id ? (
-    <ul className={style.component}>
+    <ul
+      className={style.component}
+      onScroll={e => {
+        e.target.oldScroll > e.target.scrollTop &&
+          e.target.scrollTop !== 0 &&
+          setEngaged(false)
+        ;(e.target.scrollHeight - e.target.scrollTop ===
+          e.target.clientHeight ||
+          e.target.oldRoom !== room.id) &&
+          setEngaged(true)
+
+        e.target.oldRoom = room.id
+        e.target.oldScroll = e.target.scrollTop
+      }}
+    >
       {Object.keys(messages[room.id] || {}).length > 0
         ? Object.keys(messages[room.id])
             .reverse()

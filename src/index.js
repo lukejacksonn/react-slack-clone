@@ -12,6 +12,11 @@ import { CreateRoomForm } from './components/CreateRoomForm'
 
 import ChatManager from './chatkit'
 
+const scrollList = () => {
+  const elem = document.querySelector('section > ul')
+  elem && (elem.scrollTop = 100000)
+}
+
 class View extends React.Component {
   state = {
     user: {},
@@ -24,9 +29,12 @@ class View extends React.Component {
     dragging: false,
     sidebar: false,
     userList: false,
+    engaged: true,
   }
 
   actions = {
+    scrollToEnd: e => this.state.engaged && scrollList(),
+    setEngaged: engaged => this.setState({ engaged }),
     createConvo: options => {
       const exists = this.state.rooms.find(
         x => x.name.match(options.user.id) && x.name.match(this.state.user.id)
@@ -61,14 +69,12 @@ class View extends React.Component {
       this.setState({ rooms: this.state.rooms.filter(x => x.id !== room.id) })
       this.state.room.id === room.id && this.actions.joinRoom()
     },
-    setRoom: room =>
-      this.setState({
-        room,
-        sidebar: false,
-        userList: false,
-      }),
+    setRoom: room => {
+      this.setState({ room, sidebar: false })
+      this.actions.scrollToEnd()
+    },
     setMessage: message => this.setState({ message }),
-    addMessage: payload =>
+    addMessage: payload => {
       this.setState({
         messages: {
           ...this.state.messages,
@@ -77,7 +83,9 @@ class View extends React.Component {
             [payload.id]: payload,
           },
         },
-      }),
+      })
+      this.actions.scrollToEnd()
+    },
     isTyping: ([user, room]) =>
       this.state.room.id === room.id &&
       !this.state.typing.includes(user) &&
