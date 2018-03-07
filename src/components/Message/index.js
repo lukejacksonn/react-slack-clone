@@ -45,7 +45,9 @@ export const Message = ({ user, online, createConvo }) => ({
     />
     <div>
       <span
-        className={(sender.id === user.id || online[sender.id]) && style.online}
+        className={
+          sender.id === user.id || online[sender.id] ? style.online : null
+        }
       >{`${sender.name} | ${time(createdAt)}`}</span>
       <p>
         <Linkify properties={{ target: '_blank' }}>{text}</Linkify>

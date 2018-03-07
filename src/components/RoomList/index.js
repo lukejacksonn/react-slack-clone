@@ -17,6 +17,11 @@ const Room = (state, actions) => room =>
       key={room.id}
       disabled={state.room.id === room.id}
       onClick={e => actions.joinRoom(room)}
+      style={{
+        order:
+          unreads(state.user.readCursor(room.id), state.messages[room.id]) *
+            -1 || 0,
+      }}
     >
       <p>
         {Icon(

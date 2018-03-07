@@ -1,11 +1,14 @@
 .component {
   padding: 0;
   margin: 0;
-  overflow-y: scroll; /* has to be scroll, not auto */
+  overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
 }
 
 .component li {
+  flex: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
