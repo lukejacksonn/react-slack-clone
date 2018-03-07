@@ -7,7 +7,8 @@
   margin: 0;
   padding: 0.62rem;
   max-height: 50vh;
-  overflow-y: auto;
+  overflow-y: scroll;
+  -webkit-overflow-scrolling: touch;
   box-shadow: 0 0.38rem 0.62rem rgba(0, 0, 0, 0.1);
   z-index: 0;
   width: 16rem;

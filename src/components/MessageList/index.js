@@ -40,12 +40,16 @@ export const MessageList = ({
         e.target.oldScroll = e.target.scrollTop
       }}
     >
-      {Object.keys(messages[room.id] || {}).length > 0
-        ? Object.keys(messages[room.id])
+      {Object.keys(messages[room.id] || {}).length > 0 ? (
+        <wrapper->
+          {Object.keys(messages[room.id])
             .reverse()
             .map(k =>
               Message({ user, online, createConvo })(messages[room.id][k])
-            )
-        : emptyList}
+            )}
+        </wrapper->
+      ) : (
+        emptyList
+      )}
     </ul>
   ) : null
