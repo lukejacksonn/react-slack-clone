@@ -84,6 +84,11 @@ class View extends React.Component {
           },
         },
       })
+      // this.state.user.setReadCursor(
+      //   payload.room.id,
+      //   parseInt(Object.keys(this.state.messages[payload.room.id]).pop())
+      // )
+      // this.actions.setEngaged(true)
       this.actions.scrollToEnd()
     },
     isTyping: ([user, room]) =>
