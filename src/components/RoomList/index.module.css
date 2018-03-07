@@ -39,6 +39,23 @@
   align-items: center;
 }
 
+.component label {
+  display: none;
+}
+
+.component label:not(:empty) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.62rem;
+  height: 1.62rem;
+  padding: 0;
+  border-radius: 0.38rem;
+  font-size: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  color: #fff;
+}
+
 .component svg {
   width: 1.62rem;
   height: 1.62rem;

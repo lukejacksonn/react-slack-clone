@@ -19,6 +19,14 @@ export const MessageList = ({
   room.id ? (
     <ul
       className={style.component}
+      onMouseEnter={e => {
+        messages[room.id] &&
+          user.setReadCursor(
+            room.id,
+            parseInt(Object.keys(messages[room.id]).pop())
+          )
+        setEngaged(true)
+      }}
       onScroll={e => {
         e.target.oldScroll > e.target.scrollTop &&
           e.target.scrollTop !== 0 &&

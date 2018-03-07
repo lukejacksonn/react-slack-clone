@@ -7,6 +7,10 @@ const Icon = id => (
   </svg>
 )
 
+const unreads = (read, messages = {}) =>
+  (read && Object.keys(messages).filter(x => x > read.position).length) ||
+  undefined
+
 const Room = (state, actions) => room =>
   room && room.userIds && room.userIds.length < 100 ? (
     <li
@@ -22,6 +26,9 @@ const Room = (state, actions) => room =>
         )}
         <span>{room.name.replace(state.user.id, '')}</span>
       </p>
+      <label>
+        {unreads(state.user.readCursor(room.id), state.messages[room.id])}
+      </label>
     </li>
   ) : null
 

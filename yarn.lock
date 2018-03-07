@@ -6645,9 +6645,9 @@ punycode@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.0.tgz#5f863edc89b96db09074bad7947bf09056ca4e7d"
 
-pusher-chatkit-client@next:
-  version "0.7.0-alpha"
-  resolved "https://registry.yarnpkg.com/pusher-chatkit-client/-/pusher-chatkit-client-0.7.0-alpha.tgz#b82535d46f5e2e10007d592832f04d5767f3d453"
+pusher-chatkit-client@0.7.0-alpha.2:
+  version "0.7.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/pusher-chatkit-client/-/pusher-chatkit-client-0.7.0-alpha.2.tgz#3f83764b773d14c62e8e89de21572cba751d813b"
   dependencies:
     pusher-platform "^0.14.0"
 
