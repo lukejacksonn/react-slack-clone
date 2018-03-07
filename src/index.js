@@ -12,6 +12,11 @@ import { CreateRoomForm } from './components/CreateRoomForm'
 
 import ChatManager from './chatkit'
 
+const scrollList = () => {
+  const elem = document.querySelector('section > ul')
+  elem && (elem.scrollTop = 100000)
+}
+
 class View extends React.Component {
   state = {
     user: {},
@@ -23,9 +28,13 @@ class View extends React.Component {
     online: {},
     dragging: false,
     sidebar: false,
+    userList: false,
+    engaged: true,
   }
 
   actions = {
+    scrollToEnd: e => this.state.engaged && scrollList(),
+    setEngaged: engaged => this.setState({ engaged }),
     createConvo: options => {
       const exists = this.state.rooms.find(
         x => x.name.match(options.user.id) && x.name.match(this.state.user.id)
@@ -48,10 +57,12 @@ class View extends React.Component {
       this.actions.setRoom(room)
       this.state.user
         .subscribeToRoom(room.id, { newMessage: this.actions.addMessage })
+        .then(this.actions.setRoom)
         .catch(console.log)
     },
     setSidebar: sidebar => this.setState({ sidebar }),
     setUser: user => this.setState({ user }),
+    setUserList: userList => this.setState({ userList }),
     setRooms: rooms => this.setState({ rooms }),
     addRoom: room => this.setState({ rooms: [...this.state.rooms, room] }),
     removeRoom: room => {
@@ -59,20 +70,11 @@ class View extends React.Component {
       this.state.room.id === room.id && this.actions.joinRoom()
     },
     setRoom: room => {
-      setTimeout(() => {
-        const $ = document.querySelector('section ul')
-        $.scrollTop = 100000
-      }, 0)
-      this.setState({
-        room,
-        sidebar: false,
-      })
+      this.setState({ room, sidebar: false })
+      this.actions.scrollToEnd()
     },
     setMessage: message => this.setState({ message }),
     addMessage: payload => {
-      const $ = document.querySelector('section ul')
-      const x = $.scrollHeight - $.clientHeight <= $.scrollTop + 1
-      x && setTimeout(() => ($.scrollTop = 100000), 0)
       this.setState({
         messages: {
           ...this.state.messages,
@@ -82,6 +84,7 @@ class View extends React.Component {
           },
         },
       })
+      this.actions.scrollToEnd()
     },
     isTyping: ([user, room]) =>
       this.state.room.id === room.id &&
@@ -103,8 +106,9 @@ class View extends React.Component {
         invite: args => this.state.user.addUser(args[1], this.state.room.id),
         remove: args => this.state.user.removeUser(args[1], this.state.room.id),
       } // eslint-disable-next-line
-        [cmd.slice(1).split(' ')[0]](cmd.slice(1).split(' '))
-        .then(() => this.actions.setMessage(''))),
+        [cmd.split(' ')[0]](cmd.split(' '))
+        .then(this.actions.setRoom)
+        .then(_ => this.actions.setMessage(''))),
   }
 
   componentDidMount() {

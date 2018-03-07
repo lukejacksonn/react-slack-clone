@@ -13,12 +13,16 @@ class Attachment extends React.Component {
     this.props.link &&
       this.props.user
         .fetchAttachment(this.props.link)
-        .then(fetched => this.setState({ src: fetched.link }))
+        .then(fetched =>
+          this.setState({ src: fetched.link, name: fetched.file.name })
+        )
   }
   render() {
     return this.state
       ? {
-          image: <img controls={true} src={this.state.src} alt="" />,
+          image: (
+            <img controls={true} src={this.state.src} alt={this.state.name} />
+          ),
           video: <video controls={true} src={this.state.src} />,
           audio: <audio controls={true} src={this.state.src} />,
         }[this.props.type]

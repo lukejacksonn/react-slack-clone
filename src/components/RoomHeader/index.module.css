@@ -4,7 +4,7 @@
   flex: none;
   display: flex;
   align-items: center;
-  padding: 1rem;
+  padding: 0.62rem;
   height: 4.8rem;
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
 }
@@ -16,11 +16,8 @@
   border-radius: 0.5rem;
 }
 
-.component > * + * {
-  margin-left: 1rem;
-}
-
 .component h1 {
+  font-size: 1.38rem;
   color: rgba(0, 0, 0, 0.62);
   margin: auto;
 }
@@ -37,6 +34,7 @@
   align-self: center;
   padding: 0.62rem;
   border-radius: 0.5rem;
+  cursor: pointer;
 }
 
 .component div > * + * {

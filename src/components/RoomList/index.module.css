@@ -9,12 +9,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.38rem;
+  padding: 1rem;
   list-style: none;
   cursor: pointer;
   font-weight: bold;
   user-select: none;
   color: rgba(0, 0, 0, 0.38);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.038);
 }
 
 .component li:hover {

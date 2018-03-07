@@ -1,23 +1,25 @@
 import React from 'react'
 import style from './index.module.css'
 
+const Icon = id => (
+  <svg>
+    <use xlinkHref={`index.svg#${id}`} />
+  </svg>
+)
+
 const Room = (state, actions) => room =>
-  room.userIds.length < 100 ? (
+  room && room.userIds && room.userIds.length < 100 ? (
     <li
       key={room.id}
       disabled={state.room.id === room.id}
       onClick={e => actions.joinRoom(room)}
     >
       <p>
-        <svg>
-          <use
-            xlinkHref={
-              room.name.match(state.user.id)
-                ? 'index.svg#members'
-                : room.isPrivate ? 'index.svg#lock' : 'index.svg#public'
-            }
-          />
-        </svg>
+        {Icon(
+          room.name.match(state.user.id)
+            ? 'members'
+            : room.isPrivate ? 'lock' : 'public'
+        )}
         <span>{room.name.replace(state.user.id, '')}</span>
       </p>
     </li>
