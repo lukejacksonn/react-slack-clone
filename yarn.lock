@@ -8364,6 +8364,10 @@ vm-browserify@0.0.4:
   dependencies:
     indexof "0.0.1"
 
+vuid@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/vuid/-/vuid-1.0.0.tgz#23b76fce2be1895b939bf6fb9b145d7035730c57"
+
 w3c-hr-time@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/w3c-hr-time/-/w3c-hr-time-1.0.1.tgz#82ac2bff63d950ea9e3189a58a65625fedf19045"

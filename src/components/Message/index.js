@@ -36,23 +36,24 @@ export const Message = ({ user, online, createConvo }) => ({
   createdAt,
   text,
   attachment = {},
-}) => (
-  <li key={id} className={style.component}>
-    <img
-      onClick={e => createConvo({ user: sender })}
-      src={sender.avatarURL}
-      alt={sender.name}
-    />
-    <div>
-      <span
-        className={
-          sender.id === user.id || online[sender.id] ? style.online : null
-        }
-      >{`${sender.name} | ${time(createdAt)}`}</span>
-      <p>
-        <Linkify properties={{ target: '_blank' }}>{text}</Linkify>
-      </p>
-      <Attachment user={user} link={attachment.link} type={attachment.type} />
-    </div>
-  </li>
-)
+}) =>
+  sender ? (
+    <li key={id} className={style.component}>
+      <img
+        onClick={e => createConvo({ user: sender })}
+        src={sender.avatarURL}
+        alt={sender.name}
+      />
+      <div>
+        <span
+          className={
+            sender.id === user.id || online[sender.id] ? style.online : null
+          }
+        >{`${sender.name} | ${time(createdAt)}`}</span>
+        <p>
+          <Linkify properties={{ target: '_blank' }}>{text}</Linkify>
+        </p>
+        <Attachment user={user} link={attachment.link} type={attachment.type} />
+      </div>
+    </li>
+  ) : null
