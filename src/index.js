@@ -13,12 +13,11 @@ import { CreateRoomForm } from './components/CreateRoomForm'
 
 import ChatManager from './chatkit'
 
-const github_client_id = 'Iv1.53b0a086b2a0ef21'
-
 const githubAuthRedirect = () => {
+  const client = 'Iv1.53b0a086b2a0ef21'
   const nonce = vuid()
   window.localStorage.setItem('nonce', nonce)
-  window.location = `https://github.com/login/oauth/authorize?scope=user:email&client_id=${github_client_id}&state=${nonce}`
+  window.location = `https://github.com/login/oauth/authorize?scope=user:email&client_id=${client}&state=${nonce}`
 }
 
 const scrollList = () => {
