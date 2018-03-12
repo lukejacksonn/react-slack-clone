@@ -15,6 +15,12 @@ import ChatManager from './chatkit'
 
 const github_client_id = 'Iv1.53b0a086b2a0ef21'
 
+const githubAuthRedirect = () => {
+  const nonce = vuid()
+  window.localStorage.setItem('nonce', nonce)
+  window.location = `https://github.com/login/oauth/authorize?scope=user:email&client_id=${github_client_id}&state=${nonce}`
+}
+
 const scrollList = () => {
   const elem = document.querySelector('section > ul')
   elem && (elem.scrollTop = 100000)
@@ -120,9 +126,10 @@ class View extends React.Component {
 
   componentDidMount() {
     const existingUser = window.localStorage.getItem('credentials')
-    const code = new URLSearchParams(window.location.search.slice(1)).get(
-      'code'
-    )
+    const params = new URLSearchParams(window.location.search.slice(1))
+    const code =
+      params.get('state') === window.localStorage.getItem('nonce') &&
+      params.get('code')
     existingUser
       ? ChatManager(this, JSON.parse(existingUser))
       : code
@@ -132,11 +139,12 @@ class View extends React.Component {
           })
             .then(res => res.json())
             .then(user => {
+              window.localStorage.removeItem('nonce')
               window.localStorage.setItem('credentials', JSON.stringify(user))
               window.history.replaceState(null, null, window.location.pathname)
               ChatManager(this, user)
             })
-        : (window.location = `https://github.com/login/oauth/authorize?scope=user:email&client_id=${github_client_id}&state=${vuid()}`)
+        : githubAuthRedirect()
   }
 
   render() {
