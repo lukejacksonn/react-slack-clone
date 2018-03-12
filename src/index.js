@@ -132,7 +132,7 @@ class View extends React.Component {
     existingUser
       ? ChatManager(this, JSON.parse(existingUser))
       : code
-        ? fetch('http://localhost:4000/auth', {
+        ? fetch('https://chatkit-demo-server.herokuapp.com/auth', {
             method: 'POST',
             body: JSON.stringify({ code }),
           })
