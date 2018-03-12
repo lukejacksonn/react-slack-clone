@@ -1,13 +1,14 @@
 {
   "name": "chatkit-demo",
   "version": "1.0.0",
-  "homepage" : "https://pusher.github.io/chatkit-demo",
+  "homepage": "https://pusher.github.io/chatkit-demo",
   "dependencies": {
     "pusher-chatkit-client": "0.7.0-alpha.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-linkify": "^0.2.2",
-    "react-scripts": "next"
+    "react-scripts": "next",
+    "vuid": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

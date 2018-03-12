@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import vuid from 'vuid'
 import './index.css'
 
 import { UserHeader } from './components/UserHeader'
@@ -11,6 +12,8 @@ import { RoomHeader } from './components/RoomHeader'
 import { CreateRoomForm } from './components/CreateRoomForm'
 
 import ChatManager from './chatkit'
+
+const github_client_id = 'Iv1.53b0a086b2a0ef21'
 
 const scrollList = () => {
   const elem = document.querySelector('section > ul')
@@ -116,15 +119,24 @@ class View extends React.Component {
   }
 
   componentDidMount() {
-    const user = localStorage.getItem('chatkit-user')
-    user
-      ? ChatManager(this, user)
-      : fetch('https://chatkit-demo-server.herokuapp.com')
-          .then(res => res.text())
-          .then(id => {
-            localStorage.setItem('chatkit-user', id)
-            ChatManager(this, id)
+    const existingUser = window.localStorage.getItem('credentials')
+    const code = new URLSearchParams(window.location.search.slice(1)).get(
+      'code'
+    )
+    existingUser
+      ? ChatManager(this, JSON.parse(existingUser))
+      : code
+        ? fetch('http://localhost:4000/auth', {
+            method: 'POST',
+            body: JSON.stringify({ code }),
           })
+            .then(res => res.json())
+            .then(user => {
+              window.localStorage.setItem('credentials', JSON.stringify(user))
+              window.history.replaceState(null, null, window.location.pathname)
+              ChatManager(this, user)
+            })
+        : (window.location = `https://github.com/login/oauth/authorize?scope=user:email&client_id=${github_client_id}&state=${vuid()}`)
   }
 
   render() {

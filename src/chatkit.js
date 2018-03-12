@@ -1,17 +1,16 @@
 import Chatkit from 'pusher-chatkit-client'
 
 const credentials = {
-  url:
-    'https://us1.pusherplatform.io/services/chatkit_token_provider/v1/05f46048-3763-4482-9cfe-51ff327c3f29/token?instance_locator=v1:us1:05f46048-3763-4482-9cfe-51ff327c3f29',
+  url: (id, token) => `http://localhost:4000/token?user=${id}&token=${token}`,
   instanceLocator: 'v1:us1:05f46048-3763-4482-9cfe-51ff327c3f29',
 }
 
 const { instanceLocator, url } = credentials
-export default ({ state, actions }, userId) =>
+export default ({ state, actions }, { id, token }) =>
   new Chatkit.ChatManager({
-    tokenProvider: new Chatkit.TokenProvider({ url }),
+    tokenProvider: new Chatkit.TokenProvider({ url: url(id, token) }),
     instanceLocator,
-    userId,
+    userId: id,
   })
     .connect({
       userStartedTyping: (room, user) => actions.isTyping([user.id, room]),
