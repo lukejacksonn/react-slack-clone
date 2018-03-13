@@ -14,10 +14,16 @@ import { CreateRoomForm } from './components/CreateRoomForm'
 import ChatManager from './chatkit'
 
 const githubAuthRedirect = () => {
-  const client = 'Iv1.53b0a086b2a0ef21'
+  const client = '20cdd317000f92af12fe'
+  const url = 'https://github.com/login/oauth/authorize'
+  const server = 'https://chatkit-demo-server.herokuapp.com'
+  const redirect =
+    window.location.hostname === 'localhost'
+      ? `${server}/success/local`
+      : `${server}/success`
   const nonce = vuid()
   window.localStorage.setItem('nonce', nonce)
-  window.location = `https://github.com/login/oauth/authorize?scope=user:email&client_id=${client}&state=${nonce}`
+  window.location = `${url}?scope=user:email&client_id=${client}&state=${nonce}&redirect_uri=${redirect}`
 }
 
 const scrollList = () => {
