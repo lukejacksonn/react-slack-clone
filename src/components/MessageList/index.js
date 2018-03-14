@@ -21,10 +21,18 @@ export const MessageList = ({
       className={style.component}
       onMouseEnter={e => {
         messages[room.id] &&
-          user.setReadCursor(
-            room.id,
-            parseInt(Object.keys(messages[room.id]).pop())
-          )
+          user.setReadCursor({
+            roomId: room.id,
+            position: parseInt(Object.keys(messages[room.id]).pop()),
+          })
+        setEngaged(true)
+      }}
+      onMouseLeave={e => {
+        messages[room.id] &&
+          user.setReadCursor({
+            roomId: room.id,
+            position: parseInt(Object.keys(messages[room.id]).pop()),
+          })
         setEngaged(true)
       }}
       onScroll={e => {

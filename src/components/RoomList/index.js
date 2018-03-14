@@ -19,8 +19,10 @@ const Room = (state, actions) => room =>
       onClick={e => actions.joinRoom(room)}
       style={{
         order:
-          unreads(state.user.readCursor(room.id), state.messages[room.id]) *
-            -1 || 0,
+          unreads(
+            state.user.readCursor({ roomId: room.id }),
+            state.messages[room.id]
+          ) * -1 || 0,
       }}
     >
       <p>
@@ -32,7 +34,10 @@ const Room = (state, actions) => room =>
         <span>{room.name.replace(state.user.id, '')}</span>
       </p>
       <label>
-        {unreads(state.user.readCursor(room.id), state.messages[room.id])}
+        {unreads(
+          state.user.readCursor({ roomId: room.id }),
+          state.messages[room.id]
+        )}
       </label>
     </li>
   ) : null

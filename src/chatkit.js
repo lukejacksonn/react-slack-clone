@@ -1,4 +1,4 @@
-import Chatkit from 'pusher-chatkit-client'
+import Chatkit from '@pusher/chatkit'
 
 const credentials = {
   url: (id, token) =>
@@ -14,12 +14,12 @@ export default ({ state, actions }, { id, token }) =>
     userId: id,
   })
     .connect({
-      userStartedTyping: (room, user) => actions.isTyping([user.id, room]),
-      userStoppedTyping: (room, user) => actions.notTyping(user.id),
-      userCameOnline: user => actions.setUserPresence([user.id, true]),
-      userWentOffline: user => actions.setUserPresence([user.id, false]),
-      addedToRoom: actions.addRoom,
-      removedFromRoom: actions.removeRoom,
+      onUserStartedTyping: (room, user) => actions.isTyping([user.id, room]),
+      onUserStoppedTyping: (room, user) => actions.notTyping(user.id),
+      onUserCameOnline: user => actions.setUserPresence([user.id, true]),
+      onUserWentOffline: user => actions.setUserPresence([user.id, false]),
+      onAddedToRoom: actions.addRoom,
+      onRemovedFromRoom: actions.removeRoom,
     })
     .then(user => {
       actions.setUser(user)

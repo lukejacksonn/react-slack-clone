@@ -12,7 +12,7 @@ class Attachment extends React.Component {
   componentDidMount() {
     this.props.link &&
       this.props.user
-        .fetchAttachment(this.props.link)
+        .fetchAttachment({ url: this.props.link })
         .then(fetched =>
           this.setState({ src: fetched.link, name: fetched.file.name })
         )
