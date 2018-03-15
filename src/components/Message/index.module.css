@@ -12,6 +12,7 @@
 }
 
 .component > img {
+  flex: none;
   width: 2.8rem;
   height: 2.8rem;
   border-radius: 0.38rem;
