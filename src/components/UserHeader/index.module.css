@@ -13,8 +13,8 @@
 }
 
 .component > img {
-  width: 2rem;
-  height: 2rem;
+  width: 2.4rem;
+  height: 2.4rem;
   border-radius: 0.38rem;
   background: #e0e0e0;
 }
@@ -29,6 +29,23 @@
   width: 10rem;
   height: 1rem;
   animation: pulse 1s infinite;
+}
+
+.component h5:empty {
+  display: block;
+  background: #f2f2f2;
+  height: 0.5rem;
+  animation: pulse 1s infinite;
+  width: 6rem;
+  line-height: 100%;
+  margin-top: 0.38rem;
+}
+
+.component h5 {
+  font-size: 0.62rem;
+  margin: 0;
+  font-weight: normal;
+  color: rgba(0, 0, 0, 0.38);
 }
 
 @keyframes pulse {

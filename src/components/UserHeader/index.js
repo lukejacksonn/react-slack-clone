@@ -7,6 +7,9 @@ const placeholder =
 export const UserHeader = ({ state: { user } }) => (
   <header className={style.component}>
     <img src={user.avatarURL || placeholder} alt={user.name} />
-    <h3>{user.name}</h3>
+    <div>
+      <h3>{user.name}</h3>
+      <h5>{user.id && `@${user.id}`}</h5>
+    </div>
   </header>
 )

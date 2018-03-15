@@ -18,8 +18,8 @@ export default ({ state, actions }, { id, token }) =>
       onUserStoppedTyping: (room, user) => actions.notTyping(user.id),
       onUserCameOnline: user => actions.setUserPresence([user.id, true]),
       onUserWentOffline: user => actions.setUserPresence([user.id, false]),
-      onAddedToRoom: actions.addRoom,
-      onRemovedFromRoom: actions.removeRoom,
+      onAddedToRoom: room => actions.addRoom(room),
+      onRemovedFromRoom: room => actions.removeRoom(room),
     })
     .then(user => {
       actions.setUser(user)
