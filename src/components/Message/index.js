@@ -47,7 +47,9 @@ export const Message = ({ user, online, createConvo }) => ({
       <div>
         <span
           className={
-            sender.id === user.id || online[sender.id] ? style.online : null
+            sender.id === user.id || sender.presence.state === 'online'
+              ? style.online
+              : null
           }
         >{`${sender.name} | ${time(createdAt)}`}</span>
         <p>
