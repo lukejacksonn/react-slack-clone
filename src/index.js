@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import vuid from 'vuid'
+import { set, del } from 'object-path-immutable'
 import './index.css'
 
 import { UserHeader } from './components/UserHeader'
@@ -35,11 +36,11 @@ class View extends React.Component {
   state = {
     user: {},
     room: {},
+    messages: {},
+    online: {},
+    typing: {},
     rooms: [],
     message: '',
-    messages: {},
-    typing: [],
-    online: {},
     sidebar: false,
     userList: false,
     engaged: true,
@@ -91,26 +92,15 @@ class View extends React.Component {
     setUserList: userList => this.setState({ userList }),
     setMessage: message => this.setState({ message }),
     addMessage: payload => {
-      this.setState({
-        messages: {
-          ...this.state.messages,
-          [payload.room.id]: {
-            ...this.state.messages[payload.room.id],
-            [payload.id]: payload,
-          },
-        },
-      })
+      this.setState(
+        set(this.state, ['messages', payload.room.id, payload.id], payload)
+      )
       this.actions.scrollToEnd()
     },
-    isTyping: ([user, room]) =>
-      this.state.room.id === room.id &&
-      !this.state.typing.includes(user) &&
-      this.setState({
-        typing: [...this.state.typing, user],
-        online: { ...this.state.online, [user]: true },
-      }),
-    notTyping: user =>
-      this.setState({ typing: this.state.typing.filter(x => x !== user) }),
+    isTyping: (room, user) =>
+      this.setState(set(this.state, ['typing', room.id, user.id], true)),
+    notTyping: (room, user) =>
+      this.setState(del(this.state, ['typing', room.id, user.id])),
     setUserPresence: ([user, status]) =>
       this.setState({ online: { ...this.state.online, [user]: status } }),
     addUserToRoom: ({ userId, roomId = this.state.room.id }) =>

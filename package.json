@@ -4,6 +4,7 @@
   "homepage": "https://pusher.github.io/chatkit-demo",
   "dependencies": {
     "@pusher/chatkit": "^0.7.0",
+    "object-path-immutable": "^1.0.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-linkify": "^0.2.2",

@@ -14,12 +14,12 @@ export default ({ state, actions }, { id, token }) =>
     userId: id,
   })
     .connect({
-      onUserStartedTyping: (room, user) => actions.isTyping([user.id, room]),
-      onUserStoppedTyping: (room, user) => actions.notTyping(user.id),
+      onUserStartedTyping: actions.isTyping,
+      onUserStoppedTyping: actions.notTyping,
+      onAddedToRoom: actions.addRoom,
+      onRemovedFromRoom: actions.removeRoom,
       onUserCameOnline: user => actions.setUserPresence([user.id, true]),
       onUserWentOffline: user => actions.setUserPresence([user.id, false]),
-      onAddedToRoom: room => actions.addRoom(room),
-      onRemovedFromRoom: room => actions.removeRoom(room),
     })
     .then(user => {
       actions.setUser(user)
