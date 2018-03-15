@@ -23,6 +23,12 @@ export default ({ state, actions }, { id, token }) =>
     })
     .then(user => {
       actions.setUser(user)
+      user.rooms.map(room =>
+        user.subscribeToRoom({
+          roomId: room.id,
+          hooks: { onNewMessage: actions.addMessage },
+        })
+      )
       user.getAllRooms().then(rooms => {
         actions.setRooms(rooms)
         actions.joinRoom()
