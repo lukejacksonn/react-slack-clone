@@ -5,6 +5,7 @@ import { set, del } from 'object-path-immutable'
 import './index.css'
 
 import { UserHeader } from './components/UserHeader'
+import { UserList } from './components/UserList'
 import { MessageList } from './components/MessageList'
 import { TypingIndicator } from './components/TypingIndicator'
 import { CreateMessageForm } from './components/CreateMessageForm'
@@ -68,23 +69,29 @@ class View extends React.Component {
         this.actions.joinRoom(room)
       })
     },
-    addRoom: room => this.setState({ rooms: [...this.state.rooms, room] }),
-    joinRoom: (room = this.state.rooms.find(x => x.userIds.length !== 100)) => {
+    addRoom: room => {
+      this.setState({ rooms: [...this.state.user.rooms, room] })
+      this.state.user.subscribeToRoom({
+        roomId: room.id,
+        hooks: { onNewMessage: this.actions.addMessage },
+      })
+    },
+    joinRoom: (room = {}) => {
       this.actions.setRoom(room)
-      this.state.user
-        .subscribeToRoom({
-          roomId: room.id,
-          hooks: { onNewMessage: this.actions.addMessage },
-        })
-        .then(this.actions.setRoom)
-        .catch(console.log)
+      room.id &&
+        this.state.user
+          .subscribeToRoom({
+            roomId: room.id,
+            hooks: { onNewMessage: this.actions.addMessage },
+          })
+          .catch(console.log)
     },
     setRoom: room => {
       this.setState({ room, sidebar: false })
       this.actions.scrollToEnd()
     },
     removeRoom: room => {
-      this.setState({ rooms: this.state.rooms.filter(x => x.id !== room.id) })
+      this.setState({ rooms: this.state.user.rooms })
       this.state.room.id === room.id && this.actions.joinRoom()
     },
     setSidebar: sidebar => this.setState({ sidebar }),
@@ -155,19 +162,39 @@ class View extends React.Component {
   }
 
   render() {
+    const { sidebar, user, room, messages, typing, userList } = this.state
+    const { createRoom, createConvo, removeUserFromRoom } = this.actions
     return (
       <main>
-        <aside data-open={this.state.sidebar}>
-          <UserHeader state={this.state} />
-          <RoomList state={this.state} actions={this.actions} />
-          <CreateRoomForm state={this.state} actions={this.actions} />
+        <aside data-open={sidebar}>
+          <UserHeader user={user} />
+          <RoomList
+            user={user}
+            messages={messages}
+            rooms={user.rooms}
+            current={room}
+            actions={this.actions}
+          />
+          <CreateRoomForm submit={createRoom} />
         </aside>
-        <section>
-          <RoomHeader state={this.state} actions={this.actions} />
-          <TypingIndicator state={this.state} />
-          <MessageList state={this.state} actions={this.actions} />
-          <CreateMessageForm state={this.state} actions={this.actions} />
-        </section>
+        {room.id ? (
+          <section>
+            <RoomHeader state={this.state} actions={this.actions} />
+            {userList && room.userIds.length > 2 ? (
+              <UserList
+                room={room}
+                current={user.id}
+                createConvo={createConvo}
+                removeUser={removeUserFromRoom}
+              />
+            ) : null}
+            <TypingIndicator typing={typing[room.id]} />
+            <MessageList state={this.state} actions={this.actions} />
+            <CreateMessageForm state={this.state} actions={this.actions} />
+          </section>
+        ) : (
+          <section />
+        )}
       </main>
     )
   }
