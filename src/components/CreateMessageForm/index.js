@@ -13,7 +13,8 @@ export const CreateMessageForm = ({
         e.preventDefault()
         message.startsWith('/')
           ? runCommand(message.slice(1))
-          : user
+          : message.length > 0 &&
+            user
               .sendMessage({
                 text: message,
                 roomId: room.id,
