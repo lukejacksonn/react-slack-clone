@@ -29,9 +29,7 @@ export default ({ state, actions }, { id, token }) =>
           hooks: { onNewMessage: actions.addMessage },
         })
       )
-      user.getAllRooms().then(rooms => {
-        actions.setRooms(rooms)
-        actions.joinRoom()
-      })
+      actions.setRooms(user.rooms)
+      user.rooms.length > 0 && actions.joinRoom(user.rooms[0])
     })
     .catch(error => console.log('Error on connection', error))
