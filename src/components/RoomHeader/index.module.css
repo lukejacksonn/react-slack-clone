@@ -35,6 +35,7 @@
   padding: 0.62rem;
   border-radius: 0.5rem;
   cursor: pointer;
+  user-select: none;
 }
 
 .component div > * + * {
