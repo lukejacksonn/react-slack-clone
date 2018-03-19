@@ -11,8 +11,8 @@
   flex: none;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 1rem;
+  height: 3.6rem;
+  padding: 0 1rem;
   list-style: none;
   cursor: pointer;
   font-weight: bold;
@@ -40,6 +40,7 @@
 .component li p {
   display: flex;
   align-items: center;
+  flex: 1 1 100%;
 }
 
 .component label {
@@ -47,6 +48,7 @@
 }
 
 .component label:not(:empty) {
+  flex: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -60,8 +62,8 @@
 }
 
 .component svg {
-  width: 1.62rem;
-  height: 1.62rem;
+  width: 1.5rem;
+  height: 1.5rem;
   fill: rgba(0, 0, 0, 0.38);
-  margin-right: 1rem;
+  margin-right: 0.62rem;
 }

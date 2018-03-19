@@ -7,51 +7,35 @@ const Icon = id => (
   </svg>
 )
 
-const unreads = (read, messages = {}) =>
-  (read && Object.keys(messages).filter(x => x > read.position).length) ||
-  undefined
+const unreads = (user, room, messages = {}) => {
+  const read = user.readCursor({ roomId: room.id })
+  return (
+    (read && Object.keys(messages).filter(x => x > read.position).length) ||
+    undefined
+  )
+}
 
-const Room = (state, actions) => room =>
-  room && room.userIds && room.userIds.length < 100 ? (
-    <li
-      key={room.id}
-      disabled={state.room.id === room.id}
-      onClick={e => actions.joinRoom(room)}
-      style={{
-        order:
-          unreads(
-            state.user.readCursor({ roomId: room.id }),
-            state.messages[room.id]
-          ) * -1 || 0,
-      }}
-    >
-      <p>
-        {Icon(
-          room.name.match(state.user.id)
-            ? 'members'
-            : room.isPrivate ? 'lock' : 'public'
-        )}
-        <span>{room.name.replace(state.user.id, '')}</span>
-      </p>
-      <label>
-        {unreads(
-          state.user.readCursor({ roomId: room.id }),
-          state.messages[room.id]
-        )}
-      </label>
-    </li>
-  ) : null
-
-export const RoomList = ({ state, actions }) => (
+export const RoomList = ({ rooms = [], user, messages, current, actions }) => (
   <ul className={style.component}>
-    {state.rooms
-      .filter(x => x.name.match(state.user.id))
-      .map(Room(state, actions))}
-    {state.rooms
-      .filter(x => !x.name.match(state.user.id) && x.isPrivate)
-      .map(Room(state, actions))}
-    {state.rooms
-      .filter(x => !x.name.match(state.user.id) && !x.isPrivate)
-      .map(Room(state, actions))}
+    {rooms.map(room => (
+      <li
+        key={room.id}
+        disabled={room.id === current.id}
+        onClick={e => actions.joinRoom(room)}
+        style={{
+          order: unreads(user, room, messages[room.id]) * -1 || 0,
+        }}
+      >
+        <p>
+          {Icon(
+            room.name.match(user.id)
+              ? 'members'
+              : room.isPrivate ? 'lock' : 'public'
+          )}
+          <span>{room.name.replace(user.id, '')}</span>
+        </p>
+        <label>{unreads(user, room, messages[room.id])}</label>
+      </li>
+    ))}
   </ul>
 )
