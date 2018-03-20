@@ -139,26 +139,22 @@ class View extends React.Component {
   }
 
   componentDidMount() {
-    const existingUser = window.localStorage.getItem('credentials')
     const params = new URLSearchParams(window.location.search.slice(1))
     const code =
       params.get('state') === window.localStorage.getItem('nonce') &&
       params.get('code')
-    existingUser
-      ? ChatManager(this, JSON.parse(existingUser))
-      : code
-        ? fetch('https://chatkit-demo-server.herokuapp.com/auth', {
-            method: 'POST',
-            body: JSON.stringify({ code }),
+    code
+      ? fetch('https://chatkit-demo-server.herokuapp.com/auth', {
+          method: 'POST',
+          body: JSON.stringify({ code }),
+        })
+          .then(res => res.json())
+          .then(user => {
+            window.localStorage.removeItem('nonce')
+            window.history.replaceState(null, null, window.location.pathname)
+            ChatManager(this, user)
           })
-            .then(res => res.json())
-            .then(user => {
-              window.localStorage.removeItem('nonce')
-              window.localStorage.setItem('credentials', JSON.stringify(user))
-              window.history.replaceState(null, null, window.location.pathname)
-              ChatManager(this, user)
-            })
-        : githubAuthRedirect()
+      : githubAuthRedirect()
   }
 
   render() {
