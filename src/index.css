@@ -7,7 +7,7 @@
 body {
   display: flex;
   height: 100vh;
-  font-size: calc(10px + 1vmin);
+  font-size: 16px;
   font-family: sans-serif;
   background: #f2f2f2;
   margin: 0;
@@ -72,7 +72,6 @@ section:not(.dragging) > input[type='file'] {
     bottom: 0;
     transform: translateX(-100%);
     transition: transform 0.2s ease-out;
-    z-index: 1;
     box-shadow: 0 0 0.38rem rgba(0, 0, 0, 0.1);
   }
   aside[data-open='true'] {

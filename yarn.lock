@@ -1063,6 +1063,13 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
+"@pusher/chatkit@^0.7.1":
+  version "0.7.1"
+  resolved "https://registry.yarnpkg.com/@pusher/chatkit/-/chatkit-0.7.1.tgz#5a45f8c8e7c0ae6cef59367e25277b5f22eefedf"
+  dependencies:
+    pusher-platform "^0.15.0"
+    ramda "^0.25.0"
+
 "@types/node@*":
   version "9.4.6"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-9.4.6.tgz#d8176d864ee48753d053783e4e463aec86b8d82e"
@@ -5861,6 +5868,10 @@ object-keys@^1.0.8:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-1.0.11.tgz#c54601778ad560f1142ce0e01bcca8b56d13426d"
 
+object-path-immutable@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/object-path-immutable/-/object-path-immutable-1.0.1.tgz#3c424052be3c54ec82def03f1b11b0c6e085c7ff"
+
 object-visit@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/object-visit/-/object-visit-1.0.1.tgz#f79c4493af0c5377b59fe39d395e41042dd045bb"
@@ -6645,15 +6656,9 @@ punycode@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.0.tgz#5f863edc89b96db09074bad7947bf09056ca4e7d"
 
-pusher-chatkit-client@0.7.0-alpha.2:
-  version "0.7.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/pusher-chatkit-client/-/pusher-chatkit-client-0.7.0-alpha.2.tgz#3f83764b773d14c62e8e89de21572cba751d813b"
-  dependencies:
-    pusher-platform "^0.14.0"
-
-pusher-platform@^0.14.0:
-  version "0.14.0"
-  resolved "https://registry.yarnpkg.com/pusher-platform/-/pusher-platform-0.14.0.tgz#81b410b51c4b1cc31e24d79295af8ef947c3c307"
+pusher-platform@^0.15.0:
+  version "0.15.0"
+  resolved "https://registry.yarnpkg.com/pusher-platform/-/pusher-platform-0.15.0.tgz#d94c63ceeef5e05e5fc09504f3c7d0971cd218a3"
 
 q@^1.1.2:
   version "1.5.1"
@@ -6695,6 +6700,10 @@ raf@3.4.0:
   resolved "https://registry.yarnpkg.com/raf/-/raf-3.4.0.tgz#a28876881b4bc2ca9117d4138163ddb80f781575"
   dependencies:
     performance-now "^2.1.0"
+
+ramda@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
 
 randomatic@^1.1.3:
   version "1.1.7"

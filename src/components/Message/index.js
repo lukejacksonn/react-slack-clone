@@ -12,7 +12,7 @@ class Attachment extends React.Component {
   componentDidMount() {
     this.props.link &&
       this.props.user
-        .fetchAttachment(this.props.link)
+        .fetchAttachment({ url: this.props.link })
         .then(fetched =>
           this.setState({ src: fetched.link, name: fetched.file.name })
         )
@@ -30,30 +30,34 @@ class Attachment extends React.Component {
   }
 }
 
-export const Message = ({ user, online, createConvo }) => ({
-  id,
-  sender,
-  createdAt,
-  text,
-  attachment = {},
-}) =>
-  sender ? (
-    <li key={id} className={style.component}>
+export const Message = ({ user, online, createConvo }) => message =>
+  message.sender ? (
+    <li key={message.id} className={style.component}>
       <img
-        onClick={e => createConvo({ user: sender })}
-        src={sender.avatarURL}
-        alt={sender.name}
+        onClick={e => createConvo({ user: message.sender })}
+        src={message.sender.avatarURL}
+        alt={message.sender.name}
       />
       <div>
         <span
           className={
-            sender.id === user.id || online[sender.id] ? style.online : null
+            message.sender.id === user.id ||
+            (message.sender.presence &&
+              message.sender.presence.state === 'online')
+              ? style.online
+              : null
           }
-        >{`${sender.name} | ${time(createdAt)}`}</span>
+        >{`${message.sender.name} | ${time(message.createdAt)}`}</span>
         <p>
-          <Linkify properties={{ target: '_blank' }}>{text}</Linkify>
+          <Linkify properties={{ target: '_blank' }}>{message.text}</Linkify>
         </p>
-        <Attachment user={user} link={attachment.link} type={attachment.type} />
+        {message.attachment ? (
+          <Attachment
+            user={user}
+            link={message.attachment.link}
+            type={message.attachment.type}
+          />
+        ) : null}
       </div>
     </li>
   ) : null

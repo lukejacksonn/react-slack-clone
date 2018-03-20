@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "homepage": "https://pusher.github.io/chatkit-demo",
   "dependencies": {
-    "pusher-chatkit-client": "0.7.0-alpha.2",
+    "@pusher/chatkit": "^0.7.1",
+    "object-path-immutable": "^1.0.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-linkify": "^0.2.2",

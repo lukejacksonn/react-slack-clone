@@ -1,4 +1,4 @@
-import Chatkit from 'pusher-chatkit-client'
+import Chatkit from '@pusher/chatkit'
 
 const credentials = {
   url: (id, token) =>
@@ -14,18 +14,22 @@ export default ({ state, actions }, { id, token }) =>
     userId: id,
   })
     .connect({
-      userStartedTyping: (room, user) => actions.isTyping([user.id, room]),
-      userStoppedTyping: (room, user) => actions.notTyping(user.id),
-      userCameOnline: user => actions.setUserPresence([user.id, true]),
-      userWentOffline: user => actions.setUserPresence([user.id, false]),
-      addedToRoom: actions.addRoom,
-      removedFromRoom: actions.removeRoom,
+      onUserStartedTyping: actions.isTyping,
+      onUserStoppedTyping: actions.notTyping,
+      onAddedToRoom: actions.addRoom,
+      onRemovedFromRoom: actions.removeRoom,
+      onUserCameOnline: user => actions.setUserPresence([user.id, true]),
+      onUserWentOffline: user => actions.setUserPresence([user.id, false]),
     })
     .then(user => {
       actions.setUser(user)
-      user.getAllRooms().then(rooms => {
-        actions.setRooms(rooms)
-        actions.joinRoom()
-      })
+      user.rooms.map(room =>
+        user.subscribeToRoom({
+          roomId: room.id,
+          hooks: { onNewMessage: actions.addMessage },
+        })
+      )
+      actions.setRooms(user.rooms)
+      user.rooms.length > 0 && actions.joinRoom(user.rooms[0])
     })
     .catch(error => console.log('Error on connection', error))

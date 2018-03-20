@@ -13,7 +13,8 @@ export const CreateMessageForm = ({
         e.preventDefault()
         message.startsWith('/')
           ? runCommand(message.slice(1))
-          : user
+          : message.length > 0 &&
+            user
               .sendMessage({
                 text: message,
                 roomId: room.id,
@@ -23,11 +24,11 @@ export const CreateMessageForm = ({
     >
       <input
         placeholder="Type a Message.."
+        value={message}
         onInput={e => {
           setMessage(e.target.value)
-          user.isTypingIn(room.id)
+          user.isTypingIn({ roomId: room.id })
         }}
-        value={message}
       />
       <FileInput state={{ user, room, message }} />
       <button type="submit">
