@@ -12,6 +12,7 @@ import { CreateMessageForm } from './components/CreateMessageForm'
 import { RoomList } from './components/RoomList'
 import { RoomHeader } from './components/RoomHeader'
 import { CreateRoomForm } from './components/CreateRoomForm'
+import { WelcomeScreen } from './components/WelcomeScreen'
 
 import ChatManager from './chatkit'
 
@@ -171,7 +172,7 @@ class View extends React.Component {
             current={room}
             actions={this.actions}
           />
-          <CreateRoomForm submit={createRoom} />
+          {user.id ? <CreateRoomForm submit={createRoom} /> : null}
         </aside>
         {room.id ? (
           <section>
@@ -189,7 +190,7 @@ class View extends React.Component {
             <CreateMessageForm state={this.state} actions={this.actions} />
           </section>
         ) : (
-          <section />
+          <WelcomeScreen />
         )}
       </main>
     )

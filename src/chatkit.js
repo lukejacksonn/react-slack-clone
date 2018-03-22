@@ -23,13 +23,16 @@ export default ({ state, actions }, { id, token }) =>
     })
     .then(user => {
       actions.setUser(user)
-      user.rooms.map(room =>
-        user.subscribeToRoom({
-          roomId: room.id,
-          hooks: { onNewMessage: actions.addMessage },
-        })
-      )
-      actions.setRooms(user.rooms)
-      user.rooms.length > 0 && actions.joinRoom(user.rooms[0])
+      Promise.all(
+        user.rooms.map(room =>
+          user.subscribeToRoom({
+            roomId: room.id,
+            hooks: { onNewMessage: actions.addMessage },
+          })
+        )
+      ).then(rooms => {
+        actions.setRooms(user.rooms)
+        user.rooms.length > 0 && actions.joinRoom(user.rooms[0])
+      })
     })
     .catch(error => console.log('Error on connection', error))

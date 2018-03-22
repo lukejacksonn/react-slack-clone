@@ -1,0 +1,38 @@
+.component {
+  margin: auto;
+  text-align: center;
+  color: #b6b6b6;
+}
+
+.component > * + * {
+  margin-top: 1rem;
+}
+
+.component > span {
+  font-size: 3rem;
+}
+
+.component > p {
+  font-size: 1rem;
+  line-height: 150%;
+  max-width: 40ex;
+}
+
+.component svg {
+  width: 6rem;
+  height: 6rem;
+  opacity: 0.1;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  to {
+    transform: scale(1);
+  }
+}
