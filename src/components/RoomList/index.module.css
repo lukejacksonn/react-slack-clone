@@ -37,10 +37,15 @@
   white-space: nowrap;
 }
 
-.component li p {
+.component row- {
   display: flex;
   align-items: center;
   flex: 1 1 100%;
+}
+
+.component col- {
+  display: flex;
+  flex-direction: column;
 }
 
 .component label {
@@ -61,9 +66,29 @@
   color: #fff;
 }
 
-.component svg {
-  width: 1.5rem;
-  height: 1.5rem;
+.component svg,
+.component img {
+  width: 2rem;
+  height: 2rem;
   fill: rgba(0, 0, 0, 0.38);
-  margin-right: 0.62rem;
+  margin-right: 1rem;
+  border-radius: 0.2rem;
+}
+
+.component h2 {
+  font-size: 1rem;
+  padding: 1rem;
+  background: #fcfcfc;
+  color: #b6b6b6;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.component h2:not(:first-child) {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.component span:not(:empty) {
+  font-weight: normal;
+  font-size: 0.62rem;
+  margin-top: 0.2rem;
 }
