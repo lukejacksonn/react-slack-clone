@@ -13,7 +13,9 @@ export const WelcomeScreen = () => (
           </g>
         </svg>
       </span>
-      <p>Getting memberships, subscribing to rooms and fetching messages.</p>
+      <p>
+        Authenticating, subscribing to rooms<br />and fetching messages.
+      </p>
     </div>
   </section>
 )
