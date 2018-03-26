@@ -4,31 +4,27 @@ import { FileInput } from '../FileInput'
 
 export const CreateMessageForm = ({
   state: { user = {}, room = {}, message = '' },
-  actions: { setMessage, runCommand },
+  actions: { runCommand },
 }) =>
   room.id ? (
     <form
       className={style.component}
       onSubmit={e => {
         e.preventDefault()
+        const message = e.target[0].value
+        e.target[0].value = ''
         message.startsWith('/')
           ? runCommand(message.slice(1))
           : message.length > 0 &&
-            user
-              .sendMessage({
-                text: message,
-                roomId: room.id,
-              })
-              .then(x => setMessage(''))
+            user.sendMessage({
+              text: message,
+              roomId: room.id,
+            })
       }}
     >
       <input
         placeholder="Type a Message.."
-        value={message}
-        onInput={e => {
-          setMessage(e.target.value)
-          user.isTypingIn({ roomId: room.id })
-        }}
+        onInput={e => user.isTypingIn({ roomId: room.id })}
       />
       <FileInput state={{ user, room, message }} />
       <button type="submit">

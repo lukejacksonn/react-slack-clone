@@ -30,7 +30,7 @@ class Attachment extends React.Component {
   }
 }
 
-export const Message = ({ user, online, createConvo }) => message =>
+export const Message = ({ user, createConvo }) => message =>
   message.sender ? (
     <li key={message.id} className={style.component}>
       <img

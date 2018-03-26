@@ -50,6 +50,7 @@ aside {
   border-right: 1px solid rgba(0, 0, 0, 0.1);
   background: #fcfcfc;
   z-index: 2;
+  transform: rotateY(360deg);
 }
 
 section {

@@ -23,40 +23,35 @@ const priority = (user, room, messages = {}) => {
 
 export const RoomList = ({ rooms = [], user, messages, current, actions }) => (
   <ul className={style.component}>
-    {rooms.map(room => (
-      <li
-        key={room.id}
-        disabled={room.id === current.id}
-        onClick={e => actions.joinRoom(room)}
-        style={{
-          order: priority(user, room, messages[room.id]),
-        }}
-      >
-        <row->
-          {room.name.match(user.id) &&
-          room.users.find(x => x.id !== user.id) ? (
-            <img
-              src={room.users.find(x => x.id !== user.id).avatarURL}
-              alt={room.users.find(x => x.id !== user.id).id}
-            />
-          ) : (
-            Icon(room.isPrivate ? 'lock' : 'public')
-          )}
-          <col->
-            <p>{room.name.replace(user.id, '')}</p>
-            <span>
-              {messages[room.id] &&
-                Object.keys(messages[room.id]).length > 0 &&
-                messages[room.id][
-                  Object.keys(messages[room.id]).pop()
-                ].text.slice(0, 50)}
-            </span>
-          </col->
-        </row->
-        {room.id !== current.id ? (
-          <label>{unreads(user, room, messages[room.id])}</label>
-        ) : null}
-      </li>
-    ))}
+    {rooms.map(room => {
+      const messageKeys = Object.keys(messages[room.id] || {})
+      const latestMessage =
+        messageKeys.length > 0 && messages[room.id][messageKeys.pop()]
+      const firstUser = room.users.find(x => x.id !== user.id)
+      const order = priority(user, room, messages[room.id])
+      return (
+        <li
+          key={room.id}
+          disabled={room.id === current.id}
+          onClick={e => actions.joinRoom(room)}
+          style={{ order }}
+        >
+          <row->
+            {room.name.match(user.id) && firstUser ? (
+              <img src={firstUser.avatarURL} alt={firstUser.id} />
+            ) : (
+              Icon(room.isPrivate ? 'lock' : 'public')
+            )}
+            <col->
+              <p>{room.name.replace(user.id, '')}</p>
+              <span>{latestMessage && latestMessage.text.slice(0, 50)}</span>
+            </col->
+          </row->
+          {room.id !== current.id ? (
+            <label>{unreads(user, room, messages[room.id])}</label>
+          ) : null}
+        </li>
+      )
+    })}
   </ul>
 )

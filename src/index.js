@@ -30,115 +30,115 @@ const githubAuthRedirect = () => {
   window.location = `${url}?scope=user:email&client_id=${client}&state=${nonce}&redirect_uri=${redirect}`
 }
 
-const scrollList = () => {
-  const elem = document.querySelector('section > ul')
-  elem && (elem.scrollTop = 100000)
-}
-
 class View extends React.Component {
   state = {
     user: {},
     room: {},
     messages: {},
-    online: {},
     typing: {},
-    rooms: [],
-    message: '',
-    sidebar: false,
-    userList: false,
-    engaged: true,
+    sidebarOpen: false,
+    userListOpen: false,
   }
 
   actions = {
-    scrollToEnd: e => this.state.engaged && scrollList(),
-    setEngaged: engaged => this.setState({ engaged }),
-    createConvo: options => {
-      const exists = this.state.rooms.find(
-        x => x.name.match(options.user.id) && x.name.match(this.state.user.id)
-      )
-      exists
-        ? this.actions.joinRoom(exists)
-        : this.actions.createRoom({
-            name: this.state.user.id + options.user.id,
-            addUserIds: [options.user.id],
-            private: true,
-          })
+    // --------------------------------------
+    // User
+    // --------------------------------------
+
+    setUser: user => this.setState({ user }),
+
+    // --------------------------------------
+    // UI
+    // --------------------------------------
+
+    setSidebar: sidebarOpen => this.setState({ sidebarOpen }),
+    setUserList: userListOpen => this.setState({ userListOpen }),
+
+    // --------------------------------------
+    // Room
+    // --------------------------------------
+
+    joinRoom: (room = {}) => {
+      this.actions.setRoom(room)
+      this.actions.subscribeToRoom(room)
+      this.state.messages[room.id] &&
+        this.actions.setCursor(
+          room.id,
+          Object.keys(this.state.messages[room.id]).pop()
+        )
     },
-    setRooms: rooms => this.setState({ rooms }),
-    createRoom: options => {
-      this.state.user.createRoom(options).then(room => {
-        this.actions.addRoom(room)
-        this.actions.joinRoom(room)
-      })
-    },
-    addRoom: room => {
-      this.setState({ rooms: [...this.state.user.rooms, room] })
+
+    subscribeToRoom: room =>
+      !this.state.user.roomSubscriptions[room.id] &&
       this.state.user.subscribeToRoom({
         roomId: room.id,
         hooks: { onNewMessage: this.actions.addMessage },
-      })
-    },
-    joinRoom: (room = {}) => {
-      this.actions.setRoom(room)
-      room.id &&
-        this.state.user
-          .subscribeToRoom({
-            roomId: room.id,
-            hooks: { onNewMessage: this.actions.addMessage },
-          })
-          .then(this.actions.setCursor)
-          .catch(console.log)
-    },
-    setCursor: (room = this.state.room) =>
-      setTimeout(
-        () =>
-          this.state.messages[room.id] &&
-          this.state.user
-            .setReadCursor({
-              roomId: room.id,
-              position: parseInt(
-                Object.keys(this.state.messages[room.id]).pop()
-              ),
+      }),
+
+    createRoom: options =>
+      this.state.user.createRoom(options).then(this.actions.joinRoom),
+
+    createConvo: options => {
+      if (options.user.id !== this.state.user.id) {
+        const exists = this.state.user.rooms.find(
+          x =>
+            x.name === options.user.id + this.state.user.id ||
+            x.name === this.state.user.id + options.user.id
+        )
+        exists
+          ? this.actions.joinRoom(exists)
+          : this.actions.createRoom({
+              name: this.state.user.id + options.user.id,
+              addUserIds: [options.user.id],
+              private: true,
             })
-            .then(x => this.forceUpdate()),
-        0
-      ),
+      }
+    },
+
     setRoom: room => {
-      this.setState({ room, sidebar: false })
+      this.setState({ room, sidebarOpen: false })
       this.actions.scrollToEnd()
     },
-    removeRoom: room => {
-      this.setState({ rooms: this.state.user.rooms })
-      this.state.room.id === room.id && this.actions.joinRoom()
-    },
-    setSidebar: sidebar => this.setState({ sidebar }),
-    setUser: user => this.setState({ user }),
-    setUserList: userList => this.setState({ userList }),
-    setMessage: message => this.setState({ message }),
-    addMessage: payload => {
-      this.setState(
-        set(this.state, ['messages', payload.room.id, payload.id], payload)
-      )
-      this.actions.scrollToEnd()
-      payload.room.id === this.state.room.id && this.actions.setCursor()
-    },
-    isTyping: (room, user) =>
-      this.setState(set(this.state, ['typing', room.id, user.id], true)),
-    notTyping: (room, user) =>
-      this.setState(del(this.state, ['typing', room.id, user.id])),
-    setUserPresence: ([user, status]) =>
-      this.setState({ online: { ...this.state.online, [user]: status } }),
+
+    removeRoom: room => this.setState({ room: {} }),
+
     addUserToRoom: ({ userId, roomId = this.state.room.id }) =>
       this.state.user
         .addUserToRoom({ userId, roomId })
         .then(this.actions.setRoom),
-    removeUserFromRoom: ({ userId, roomId = this.state.room.id }) => {
-      return userId === this.state.user.id
+
+    removeUserFromRoom: ({ userId, roomId = this.state.room.id }) =>
+      userId === this.state.user.id
         ? this.state.user.leaveRoom({ roomId })
         : this.state.user
             .removeUserFromRoom({ userId, roomId })
-            .then(this.actions.setRoom)
+            .then(this.actions.setRoom),
+
+    // --------------------------------------
+    // Cursors
+    // --------------------------------------
+
+    setCursor: (roomId, position) =>
+      this.state.user
+        .setReadCursor({ roomId, position: parseInt(position) })
+        .then(x => this.forceUpdate()),
+
+    // --------------------------------------
+    // Messages
+    // --------------------------------------
+
+    addMessage: payload => {
+      const roomId = payload.room.id
+      const messageId = payload.id
+      this.setState(set(this.state, ['messages', roomId, messageId], payload))
+      if (roomId === this.state.room.id) {
+        const cursor = this.state.user.readCursor({ roomId }) || {}
+        const cursorPosition = cursor.position || 0
+        cursorPosition < messageId && this.actions.setCursor(roomId, messageId)
+        this.actions.scrollToEnd()
+      }
     },
+
     runCommand: command => {
       const commands = {
         invite: ([userId]) => this.actions.addUserToRoom({ userId }),
@@ -149,11 +149,30 @@ class View extends React.Component {
       const name = command.split(' ')[0]
       const args = command.split(' ').slice(1)
       const exec = commands[name]
-      exec &&
-        exec(args)
-          .then(_ => this.actions.setMessage(''))
-          .catch(console.log)
+      exec && exec(args).catch(console.log)
     },
+
+    scrollToEnd: e =>
+      setTimeout(() => {
+        const elem = document.querySelector('section > ul')
+        elem && (elem.scrollTop = 100000)
+      }, 0),
+
+    // --------------------------------------
+    // Typing Indicators
+    // --------------------------------------
+
+    isTyping: (room, user) =>
+      this.setState(set(this.state, ['typing', room.id, user.id], true)),
+
+    notTyping: (room, user) =>
+      this.setState(del(this.state, ['typing', room.id, user.id])),
+
+    // --------------------------------------
+    // Presence
+    // --------------------------------------
+
+    setUserPresence: () => this.forceUpdate(),
   }
 
   componentDidMount() {
@@ -176,16 +195,23 @@ class View extends React.Component {
   }
 
   render() {
-    const { sidebar, user, room, messages, typing, userList } = this.state
+    const {
+      user,
+      room,
+      messages,
+      typing,
+      sidebarOpen,
+      userListOpen,
+    } = this.state
     const { createRoom, createConvo, removeUserFromRoom } = this.actions
     return (
       <main>
-        <aside data-open={sidebar}>
+        <aside data-open={sidebarOpen}>
           <UserHeader user={user} />
           <RoomList
             user={user}
-            messages={messages}
             rooms={user.rooms}
+            messages={messages}
             current={room}
             actions={this.actions}
           />
@@ -194,7 +220,14 @@ class View extends React.Component {
         {room.id ? (
           <section>
             <RoomHeader state={this.state} actions={this.actions} />
-            {userList && room.userIds.length > 2 ? (
+            <TypingIndicator typing={typing[room.id]} />
+            <MessageList
+              user={user}
+              messages={messages[room.id]}
+              createConvo={createConvo}
+            />
+            <CreateMessageForm state={this.state} actions={this.actions} />
+            {userListOpen && room.userIds.length > 2 ? (
               <UserList
                 room={room}
                 current={user.id}
@@ -202,9 +235,6 @@ class View extends React.Component {
                 removeUser={removeUserFromRoom}
               />
             ) : null}
-            <TypingIndicator typing={typing[room.id]} />
-            <MessageList state={this.state} actions={this.actions} />
-            <CreateMessageForm state={this.state} actions={this.actions} />
           </section>
         ) : user.id ? (
           <JoinRoomScreen />

@@ -16,23 +16,23 @@ export default ({ state, actions }, { id, token }) =>
     .connect({
       onUserStartedTyping: actions.isTyping,
       onUserStoppedTyping: actions.notTyping,
-      onAddedToRoom: actions.addRoom,
+      onAddedToRoom: actions.subscribeToRoom,
       onRemovedFromRoom: actions.removeRoom,
-      onUserCameOnline: user => actions.setUserPresence([user.id, true]),
-      onUserWentOffline: user => actions.setUserPresence([user.id, false]),
+      onUserCameOnline: actions.setUserPresence,
+      onUserWentOffline: actions.setUserPresence,
     })
     .then(user => {
+      // Subscribe to all rooms the user is a member of
       Promise.all(
         user.rooms.map(room =>
           user.subscribeToRoom({
             roomId: room.id,
             hooks: { onNewMessage: actions.addMessage },
-            messageLimit: 5,
           })
         )
       ).then(rooms => {
         actions.setUser(user)
-        actions.setRooms(user.rooms)
+        // Join the first room in the users room list
         user.rooms.length > 0 && actions.joinRoom(user.rooms[0])
       })
     })
