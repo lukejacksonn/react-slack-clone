@@ -13,6 +13,7 @@ import { RoomList } from './components/RoomList'
 import { RoomHeader } from './components/RoomHeader'
 import { CreateRoomForm } from './components/CreateRoomForm'
 import { WelcomeScreen } from './components/WelcomeScreen'
+import { JoinRoomScreen } from './components/JoinRoomScreen'
 
 import ChatManager from './chatkit'
 
