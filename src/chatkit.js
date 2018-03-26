@@ -22,15 +22,16 @@ export default ({ state, actions }, { id, token }) =>
       onUserWentOffline: user => actions.setUserPresence([user.id, false]),
     })
     .then(user => {
-      actions.setUser(user)
       Promise.all(
         user.rooms.map(room =>
           user.subscribeToRoom({
             roomId: room.id,
             hooks: { onNewMessage: actions.addMessage },
+            messageLimit: 5,
           })
         )
       ).then(rooms => {
+        actions.setUser(user)
         actions.setRooms(user.rooms)
         user.rooms.length > 0 && actions.joinRoom(user.rooms[0])
       })
