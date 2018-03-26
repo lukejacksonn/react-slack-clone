@@ -86,8 +86,23 @@ class View extends React.Component {
             roomId: room.id,
             hooks: { onNewMessage: this.actions.addMessage },
           })
+          .then(this.actions.setCursor)
           .catch(console.log)
     },
+    setCursor: (room = this.state.room) =>
+      setTimeout(
+        () =>
+          this.state.messages[room.id] &&
+          this.state.user
+            .setReadCursor({
+              roomId: room.id,
+              position: parseInt(
+                Object.keys(this.state.messages[room.id]).pop()
+              ),
+            })
+            .then(x => this.forceUpdate()),
+        0
+      ),
     setRoom: room => {
       this.setState({ room, sidebar: false })
       this.actions.scrollToEnd()
@@ -105,6 +120,7 @@ class View extends React.Component {
         set(this.state, ['messages', payload.room.id, payload.id], payload)
       )
       this.actions.scrollToEnd()
+      payload.room.id === this.state.room.id && this.actions.setCursor()
     },
     isTyping: (room, user) =>
       this.setState(set(this.state, ['typing', room.id, user.id], true)),
@@ -190,6 +206,8 @@ class View extends React.Component {
             <MessageList state={this.state} actions={this.actions} />
             <CreateMessageForm state={this.state} actions={this.actions} />
           </section>
+        ) : user.id ? (
+          <JoinRoomScreen />
         ) : (
           <WelcomeScreen />
         )}

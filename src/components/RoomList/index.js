@@ -21,14 +21,7 @@ const priority = (user, room, messages = {}) => {
   return (unreadMessages + parseInt(lastMessage)) * -1
 }
 
-export const RoomList = ({
-  rooms = [],
-  joinable = [],
-  user,
-  messages,
-  current,
-  actions,
-}) => (
+export const RoomList = ({ rooms = [], user, messages, current, actions }) => (
   <ul className={style.component}>
     {rooms.map(room => (
       <li
