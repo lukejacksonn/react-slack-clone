@@ -21,10 +21,7 @@ const githubAuthRedirect = () => {
   const client = '20cdd317000f92af12fe'
   const url = 'https://github.com/login/oauth/authorize'
   const server = 'https://chatkit-demo-server.herokuapp.com'
-  const redirect =
-    window.location.port === '3000'
-      ? `${server}/success?url=${window.location.href}`
-      : `${server}/success`
+  const redirect = `${server}/success?url=${window.location.href}`
   const nonce = vuid()
   window.localStorage.setItem('nonce', nonce)
   window.location = `${url}?scope=user:email&client_id=${client}&state=${nonce}&redirect_uri=${redirect}`
