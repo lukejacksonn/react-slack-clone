@@ -6,14 +6,14 @@
 
 This is a static, single page web app bootstrapped with [create-react-app](https://github.com/facebookincubator/create-react-app) for ease of setup, distribution and development. It is a thin UI wrapper around the [pusher-chatkit-client](https://github.com/pusher/chatkit-client-js) library to demonstrate how different features can work together to form a compelling real-time chat client with various potential product applications.
 
-You can view a deploy of this application at https://pusher.github.io/chatkit-demo
+You can view a deploy of this application at https://pusher.github.io/react-slack-clone
 
 ## Usage
 
 To get started you will need to clone the repo, install dependencies and run the app.
 
 ```
-$ git clone https://github.com/pusher/chatkit-demo
+$ git clone https://github.com/pusher/react-slack-clone
 $ cd chatkit-demo
 $ yarn && yarn start
 ```
