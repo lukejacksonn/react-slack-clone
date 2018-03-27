@@ -20,7 +20,7 @@ $ yarn && yarn start
 
 The app will start in development mode and open a browser window on `http://localhost:3000`. The project will rebuild and the browser will reload automatically when source files are changed. Any build or runtime errors are also propagated to and displayed in the browser.
 
-The project depends on a anonymous user creation endpoint that is hosted here https://chatkit-demo-server.herokuapp.com.
+The app depends on a GitHub authentication and user creation endpoint that is hosted [here](https://chatkit-demo-server.herokuapp.com).
 
 ## Features
 
