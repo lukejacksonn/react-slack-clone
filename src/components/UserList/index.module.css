@@ -1,53 +1,56 @@
 .component {
+  display: flex;
+  flex-direction: column;
   list-style: none;
-  position: absolute;
-  top: 4.8rem;
-  right: 0.62rem;
   background: #fff;
   margin: 0;
-  padding: 0.62rem;
-  max-height: 50vh;
+  padding: 0;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
-  box-shadow: 0 0.38rem 0.62rem rgba(0, 0, 0, 0.1);
-  z-index: 1;
-  width: 16rem;
+  width: 24rem;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .component > li {
+  flex: none;
   display: flex;
   align-items: center;
   color: rgba(0, 0, 0, 0.38);
   font-weight: bold;
-  font-size: 0.8rem;
-  padding: 0.38rem;
+  font-size: 1rem;
+  padding: 1rem;
   cursor: pointer;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .component > li:hover {
-  background: rgba(0, 0, 0, 0.062);
+  background: rgba(0, 0, 0, 0.015);
 }
 
 .component li > img {
-  width: 1rem;
-  height: 1rem;
+  width: 1.38rem;
+  height: 1.38rem;
   border-radius: 0.1rem;
-  margin-right: 0.62rem;
-}
-
-.component svg {
-  width: 1rem;
-  height: 1rem;
-  fill: rgba(0, 0, 0, 0.38);
   margin-right: 0.62rem;
 }
 
 .online::after {
   display: block;
   content: '';
-  width: 0.5rem;
-  height: 0.5rem;
+  width: 0.62rem;
+  height: 0.62rem;
   background: #42b72a;
   border-radius: 50%;
   margin-left: auto;
+}
+
+@media (max-width: 1000px) {
+  .component {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 18rem;
+    box-shadow: 0 0.38rem 0.62rem rgba(0, 0, 0, 0.1);
+  }
 }

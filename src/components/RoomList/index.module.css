@@ -11,8 +11,7 @@
   flex: none;
   display: flex;
   align-items: center;
-  height: 3.6rem;
-  padding: 0 1rem;
+  padding: 1rem;
   list-style: none;
   cursor: pointer;
   font-weight: bold;
@@ -37,15 +36,8 @@
   white-space: nowrap;
 }
 
-.component row- {
-  display: flex;
-  align-items: center;
-  flex: 1 1 100%;
-}
-
 .component col- {
-  display: flex;
-  flex-direction: column;
+  overflow: hidden;
 }
 
 .component label {
@@ -64,15 +56,16 @@
   font-size: 1rem;
   background: rgba(0, 0, 0, 0.2);
   color: #fff;
+  margin-left: 1rem;
 }
 
 .component svg,
 .component img {
-  width: 2rem;
-  height: 2rem;
-  fill: rgba(0, 0, 0, 0.38);
+  width: 2.4rem;
+  height: 2.4rem;
+  fill: rgba(0, 0, 0, 0.2);
   margin-right: 1rem;
-  border-radius: 0.2rem;
+  border-radius: 50%;
 }
 
 .component h2 {
@@ -88,7 +81,11 @@
 }
 
 .component span:not(:empty) {
+  display: block;
   font-weight: normal;
-  font-size: 0.62rem;
+  font-size: 0.8rem;
   margin-top: 0.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

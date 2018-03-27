@@ -36,17 +36,15 @@ export const RoomList = ({ rooms = [], user, messages, current, actions }) => (
           onClick={e => actions.joinRoom(room)}
           style={{ order }}
         >
-          <row->
-            {room.name.match(user.id) && firstUser ? (
-              <img src={firstUser.avatarURL} alt={firstUser.id} />
-            ) : (
-              Icon(room.isPrivate ? 'lock' : 'public')
-            )}
-            <col->
-              <p>{room.name.replace(user.id, '')}</p>
-              <span>{latestMessage && latestMessage.text.slice(0, 50)}</span>
-            </col->
-          </row->
+          {room.name.match(user.id) && firstUser ? (
+            <img src={firstUser.avatarURL} alt={firstUser.id} />
+          ) : (
+            Icon(room.isPrivate ? 'lock' : 'public')
+          )}
+          <col->
+            <p>{room.name.replace(user.id, '')}</p>
+            <span>{latestMessage && latestMessage.text}</span>
+          </col->
           {room.id !== current.id ? (
             <label>{unreads(user, room, messages[room.id])}</label>
           ) : null}

@@ -37,7 +37,7 @@ class View extends React.Component {
     messages: {},
     typing: {},
     sidebarOpen: false,
-    userListOpen: false,
+    userListOpen: window.innerWidth > 1000,
   }
 
   actions = {
@@ -58,7 +58,14 @@ class View extends React.Component {
     // Room
     // --------------------------------------
 
-    joinRoom: (room = {}) => {
+    setRoom: room => {
+      this.setState({ room, sidebarOpen: false })
+      this.actions.scrollToEnd()
+    },
+
+    removeRoom: room => this.setState({ room: {} }),
+
+    joinRoom: room => {
       this.actions.setRoom(room)
       this.actions.subscribeToRoom(room)
       this.state.messages[room.id] &&
@@ -94,13 +101,6 @@ class View extends React.Component {
             })
       }
     },
-
-    setRoom: room => {
-      this.setState({ room, sidebarOpen: false })
-      this.actions.scrollToEnd()
-    },
-
-    removeRoom: room => this.setState({ room: {} }),
 
     addUserToRoom: ({ userId, roomId = this.state.room.id }) =>
       this.state.user
@@ -154,7 +154,7 @@ class View extends React.Component {
 
     scrollToEnd: e =>
       setTimeout(() => {
-        const elem = document.querySelector('section > ul')
+        const elem = document.querySelector('#messages')
         elem && (elem.scrollTop = 100000)
       }, 0),
 
@@ -215,32 +215,36 @@ class View extends React.Component {
             current={room}
             actions={this.actions}
           />
-          {user.id ? <CreateRoomForm submit={createRoom} /> : null}
+          {user.id && <CreateRoomForm submit={createRoom} />}
         </aside>
-        {room.id ? (
-          <section>
-            <RoomHeader state={this.state} actions={this.actions} />
-            <TypingIndicator typing={typing[room.id]} />
-            <MessageList
-              user={user}
-              messages={messages[room.id]}
-              createConvo={createConvo}
-            />
-            <CreateMessageForm state={this.state} actions={this.actions} />
-            {userListOpen && room.userIds.length > 2 ? (
-              <UserList
-                room={room}
-                current={user.id}
-                createConvo={createConvo}
-                removeUser={removeUserFromRoom}
-              />
-            ) : null}
-          </section>
-        ) : user.id ? (
-          <JoinRoomScreen />
-        ) : (
-          <WelcomeScreen />
-        )}
+        <section>
+          <RoomHeader state={this.state} actions={this.actions} />
+          {room.id ? (
+            <row->
+              <col->
+                <MessageList
+                  user={user}
+                  messages={messages[room.id]}
+                  createConvo={createConvo}
+                />
+                <TypingIndicator typing={typing[room.id]} />
+                <CreateMessageForm state={this.state} actions={this.actions} />
+              </col->
+              {userListOpen && (
+                <UserList
+                  room={room}
+                  current={user.id}
+                  createConvo={createConvo}
+                  removeUser={removeUserFromRoom}
+                />
+              )}
+            </row->
+          ) : user.id ? (
+            <JoinRoomScreen />
+          ) : (
+            <WelcomeScreen />
+          )}
+        </section>
       </main>
     )
   }

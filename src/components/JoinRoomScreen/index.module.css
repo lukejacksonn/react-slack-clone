@@ -19,7 +19,7 @@
 }
 
 .component svg {
-  width: 6rem;
+  width: 100%;
   height: 6rem;
   opacity: 0.1;
   animation: pulse 2s infinite;

@@ -13,8 +13,8 @@
 
 .component > img {
   flex: none;
-  width: 2.8rem;
-  height: 2.8rem;
+  width: 2.4rem;
+  height: 2.4rem;
   border-radius: 0.38rem;
 }
 
@@ -25,6 +25,8 @@
   max-width: 100%;
   height: auto;
   border: 1px solid rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
+  min-width: 0;
 }
 
 .component > * + * {
@@ -37,7 +39,7 @@
 
 .component > div > p,
 .component > div > a {
-  padding: 0.5rem 0;
+  padding-top: 0.5rem;
   max-width: 100%;
   word-break: break-word;
   color: rgba(0, 0, 0, 0.8);

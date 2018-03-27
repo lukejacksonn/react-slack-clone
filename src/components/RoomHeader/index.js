@@ -3,7 +3,7 @@ import style from './index.module.css'
 
 export const RoomHeader = ({
   state: { room, user, sidebarOpen, userListOpen },
-  actions: { setSidebar, setUserList, createConvo, removeUserFromRoom },
+  actions: { setSidebar, setUserList },
 }) => (
   <header className={style.component}>
     <button onClick={e => setSidebar(!sidebarOpen)}>
@@ -11,14 +11,14 @@ export const RoomHeader = ({
         <use xlinkHref="index.svg#menu" />
       </svg>
     </button>
-    <h1>{room.name.replace(user.id, '')}</h1>
-    {room.userIds.length > 2 ? (
+    <h1>{room.name && room.name.replace(user.id, '')}</h1>
+    {room.users && (
       <div onClick={e => setUserList(!userListOpen)}>
-        <h4>{room.userIds.length}</h4>
+        <span>{room.users.length}</span>
         <svg>
           <use xlinkHref="index.svg#members" />
         </svg>
       </div>
-    ) : null}
+    )}
   </header>
 )

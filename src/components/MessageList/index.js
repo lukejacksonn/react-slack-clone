@@ -13,7 +13,7 @@ const emptyList = (
 )
 
 export const MessageList = ({ messages = {}, user, createConvo }) => (
-  <ul className={style.component}>
+  <ul id="messages" className={style.component}>
     {Object.keys(messages).length > 0 ? (
       <wrapper->
         {Object.keys(messages)
