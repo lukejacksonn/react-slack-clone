@@ -212,6 +212,7 @@ class View extends React.Component {
             user={user}
             rooms={user.rooms}
             messages={messages}
+            typing={typing}
             current={room}
             actions={this.actions}
           />
