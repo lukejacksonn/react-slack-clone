@@ -26,6 +26,12 @@ input {
   outline: none;
 }
 
+img,
+svg {
+  display: block;
+  flex: none;
+}
+
 [disabled] {
   opacity: 0.5;
 }
@@ -44,15 +50,32 @@ main {
 }
 
 aside {
-  flex: 1 1 28rem;
+  flex: none;
+  width: 320px;
   display: flex;
   flex-direction: column;
   border-right: 1px solid rgba(0, 0, 0, 0.1);
   background: #fcfcfc;
   z-index: 2;
+  transform: rotateY(360deg);
 }
 
 section {
+  flex: 1 1 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+row- {
+  flex: 1 1 100%;
+  width: 100%;
+  display: flex;
+  position: relative;
+}
+
+col- {
   flex: 1 1 100%;
   width: 100%;
   display: flex;

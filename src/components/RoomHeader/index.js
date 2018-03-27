@@ -2,23 +2,23 @@ import React from 'react'
 import style from './index.module.css'
 
 export const RoomHeader = ({
-  state: { room, sidebar, user, userList },
-  actions: { setSidebar, setUserList, createConvo, removeUserFromRoom },
+  state: { room, user, sidebarOpen, userListOpen },
+  actions: { setSidebar, setUserList },
 }) => (
   <header className={style.component}>
-    <button onClick={e => setSidebar(!sidebar)}>
+    <button onClick={e => setSidebar(!sidebarOpen)}>
       <svg>
         <use xlinkHref="index.svg#menu" />
       </svg>
     </button>
-    <h1>{room.name.replace(user.id, '')}</h1>
-    {room.userIds.length > 2 ? (
-      <div onClick={e => setUserList(!userList)}>
-        <h4>{room.userIds.length}</h4>
+    <h1>{room.name && room.name.replace(user.id, '')}</h1>
+    {room.users && (
+      <div onClick={e => setUserList(!userListOpen)}>
+        <span>{room.users.length}</span>
         <svg>
           <use xlinkHref="index.svg#members" />
         </svg>
       </div>
-    ) : null}
+    )}
   </header>
 )
