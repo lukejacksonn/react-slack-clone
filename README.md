@@ -14,7 +14,7 @@ To get started you will need to clone the repo, install dependencies and run the
 
 ```
 $ git clone https://github.com/pusher/react-slack-clone
-$ cd chatkit-demo
+$ cd react-slack-clone
 $ yarn && yarn start
 ```
 
