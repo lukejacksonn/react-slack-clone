@@ -54,6 +54,6 @@ The app depends on a GitHub authentication and user creation endpoint that is ho
 
 [github-star-badge]: https://img.shields.io/github/stars/pusher/react-slack-clone.svg?style=social
 [github-star]: https://github.com/pusher/react-slack-clone/stargazers
-[twitter]: https://twitter.com/intent/tweet?text=Check%20out%20react-testing-library%20by%20%40kentcdodds%20https%3A%2F%2Fgithub.com%2Fkentcdodds%2Freact-testing-library%20%F0%9F%91%8D
+[twitter]: https://twitter.com/intent/tweet?text=Check%20out%20this%20Slack%20clone%20using%20@pusher%20Chatkit%20%F0%9F%91%89https://github.com/pusher/react-slack-clone
 [twitter-badge]: https://img.shields.io/twitter/url/https/github.com/kentcdodds/react-testing-library.svg?style=social
 
