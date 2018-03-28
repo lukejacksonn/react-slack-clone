@@ -1,6 +1,7 @@
-# chatkit-demo
+[![Star on GitHub][github-star-badge]][github-star]
+[![Tweet][twitter-badge]][twitter]
 
-> An app to demonstrate the capabilities and features of the Chatkit JavaScript SDK
+# React Slack Clone
 
 ![demo](https://user-images.githubusercontent.com/1457604/35891289-687ad6ec-0b9b-11e8-99cc-ffbad31a017e.gif)
 
@@ -45,3 +46,10 @@ The demo attempts to be feature complete according to documentation [here](https
 - RoomList - to render a list of rooms which can be subscribed to by the current user.
 - TypingIndicator - to signify to the user that another user is typing in a given room.
 - UserHeader - to display useful information about a given user.
+
+
+[github-star-badge]: https://img.shields.io/github/stars/pusher/react-slack-clone.svg?style=social
+[github-star]: https://github.com/pusher/react-slack-clone/stargazers
+[twitter]: https://twitter.com/intent/tweet?text=Check%20out%20react-testing-library%20by%20%40kentcdodds%20https%3A%2F%2Fgithub.com%2Fkentcdodds%2Freact-testing-library%20%F0%9F%91%8D
+[twitter-badge]: https://img.shields.io/twitter/url/https/github.com/kentcdodds/react-testing-library.svg?style=social
+
