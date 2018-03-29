@@ -25,7 +25,7 @@ export const FileInput = ({ state: { user, message, room } }) =>
               text: message || file.name,
               roomId: room.id,
               attachment: {
-                name: uuidv4(),
+                name: file.name,
                 file,
               },
             })
