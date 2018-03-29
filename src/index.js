@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import vuid from 'vuid'
 import { set, del } from 'object-path-immutable'
 import './index.css'
 
@@ -17,15 +16,28 @@ import { JoinRoomScreen } from './components/JoinRoomScreen'
 
 import ChatManager from './chatkit'
 
+// --------------------------------------
+// Authentication
+// --------------------------------------
+
+const params = new URLSearchParams(window.location.search.slice(1))
+const authCode = params.get('code')
+const existingUser = window.localStorage.getItem('chatkit-user')
+
 const githubAuthRedirect = () => {
   const client = '20cdd317000f92af12fe'
   const url = 'https://github.com/login/oauth/authorize'
   const server = 'https://chatkit-demo-server.herokuapp.com'
-  const redirect = `${server}/success?url=${window.location.href}`
-  const nonce = vuid()
-  window.localStorage.setItem('nonce', nonce)
-  window.location = `${url}?scope=user:email&client_id=${client}&state=${nonce}&redirect_uri=${redirect}`
+  const redirect = `${server}/success?url=${window.location.origin}`
+  window.location = `${url}?scope=user:email&client_id=${client}&redirect_uri=${redirect}`
 }
+
+!existingUser && window.localStorage.clear()
+!existingUser && !authCode && githubAuthRedirect()
+
+// --------------------------------------
+// Application
+// --------------------------------------
 
 class View extends React.Component {
   state = {
@@ -39,17 +51,17 @@ class View extends React.Component {
 
   actions = {
     // --------------------------------------
-    // User
-    // --------------------------------------
-
-    setUser: user => this.setState({ user }),
-
-    // --------------------------------------
     // UI
     // --------------------------------------
 
     setSidebar: sidebarOpen => this.setState({ sidebarOpen }),
     setUserList: userListOpen => this.setState({ userListOpen }),
+
+    // --------------------------------------
+    // User
+    // --------------------------------------
+
+    setUser: user => this.setState({ user }),
 
     // --------------------------------------
     // Room
@@ -173,22 +185,18 @@ class View extends React.Component {
   }
 
   componentDidMount() {
-    const params = new URLSearchParams(window.location.search.slice(1))
-    const code =
-      params.get('state') === window.localStorage.getItem('nonce') &&
-      params.get('code')
-    code
-      ? fetch('https://chatkit-demo-server.herokuapp.com/auth', {
+    existingUser
+      ? ChatManager(this, JSON.parse(existingUser))
+      : fetch('https://chatkit-demo-server.herokuapp.com/auth', {
           method: 'POST',
-          body: JSON.stringify({ code }),
+          body: JSON.stringify({ code: authCode }),
         })
           .then(res => res.json())
           .then(user => {
-            window.localStorage.removeItem('nonce')
+            window.localStorage.setItem('chatkit-user', JSON.stringify(user))
             window.history.replaceState(null, null, window.location.pathname)
-            ChatManager(this, user)
+            ChatManager(this, user) // { id: 'existinguser', token: 'from github lol' }
           })
-      : githubAuthRedirect()
   }
 
   render() {
