@@ -17,15 +17,31 @@ import { JoinRoomScreen } from './components/JoinRoomScreen'
 
 import ChatManager from './chatkit'
 
+// --------------------------------------
+// Authentication
+// --------------------------------------
+
+const params = new URLSearchParams(window.location.search.slice(1))
+const authCode = params.get('code')
+const existingUser = window.localStorage.getItem('chatkit-user')
+
 const githubAuthRedirect = () => {
   const client = '20cdd317000f92af12fe'
   const url = 'https://github.com/login/oauth/authorize'
   const server = 'https://chatkit-demo-server.herokuapp.com'
-  const redirect = `${server}/success?url=${window.location.href}`
+  const redirect = `${server}/success?url=${window.location.href.split('?')[0]}`
   const nonce = vuid()
+  console.log(nonce);
   window.localStorage.setItem('nonce', nonce)
   window.location = `${url}?scope=user:email&client_id=${client}&state=${nonce}&redirect_uri=${redirect}`
 }
+
+!existingUser && window.localStorage.clear()
+!existingUser && !authCode && githubAuthRedirect()
+
+// --------------------------------------
+// Application
+// --------------------------------------
 
 class View extends React.Component {
   state = {
@@ -39,17 +55,17 @@ class View extends React.Component {
 
   actions = {
     // --------------------------------------
-    // User
-    // --------------------------------------
-
-    setUser: user => this.setState({ user }),
-
-    // --------------------------------------
     // UI
     // --------------------------------------
 
     setSidebar: sidebarOpen => this.setState({ sidebarOpen }),
     setUserList: userListOpen => this.setState({ userListOpen }),
+
+    // --------------------------------------
+    // User
+    // --------------------------------------
+
+    setUser: user => this.setState({ user }),
 
     // --------------------------------------
     // Room
@@ -92,10 +108,10 @@ class View extends React.Component {
         exists
           ? this.actions.joinRoom(exists)
           : this.actions.createRoom({
-              name: this.state.user.id + options.user.id,
-              addUserIds: [options.user.id],
-              private: true,
-            })
+            name: this.state.user.id + options.user.id,
+            addUserIds: [options.user.id],
+            private: true,
+          })
       }
     },
 
@@ -108,8 +124,8 @@ class View extends React.Component {
       userId === this.state.user.id
         ? this.state.user.leaveRoom({ roomId })
         : this.state.user
-            .removeUserFromRoom({ userId, roomId })
-            .then(this.actions.setRoom),
+          .removeUserFromRoom({ userId, roomId })
+          .then(this.actions.setRoom),
 
     // --------------------------------------
     // Cursors
@@ -173,22 +189,20 @@ class View extends React.Component {
   }
 
   componentDidMount() {
-    const params = new URLSearchParams(window.location.search.slice(1))
-    const code =
-      params.get('state') === window.localStorage.getItem('nonce') &&
-      params.get('code')
-    code
-      ? fetch('https://chatkit-demo-server.herokuapp.com/auth', {
-          method: 'POST',
-          body: JSON.stringify({ code }),
+    console.log(existingUser);
+    existingUser
+      ? ChatManager(this, JSON.parse(existingUser))
+      : fetch('https://chatkit-demo-server.herokuapp.com/auth', {
+        method: 'POST',
+        body: JSON.stringify({ code: authCode }),
+      })
+        .then(res => res.json())
+        .then(user => {
+          console.log(user);
+          window.localStorage.setItem('chatkit-user', JSON.stringify(user))
+          window.history.replaceState(null, null, window.location.pathname)
+          ChatManager(this, user) // { id: 'existinguser', token: 'from github lol' }
         })
-          .then(res => res.json())
-          .then(user => {
-            window.localStorage.removeItem('nonce')
-            window.history.replaceState(null, null, window.location.pathname)
-            ChatManager(this, user)
-          })
-      : githubAuthRedirect()
   }
 
   render() {
@@ -240,8 +254,8 @@ class View extends React.Component {
           ) : user.id ? (
             <JoinRoomScreen />
           ) : (
-            <WelcomeScreen />
-          )}
+                <WelcomeScreen />
+              )}
         </section>
       </main>
     )

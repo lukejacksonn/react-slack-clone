@@ -1,9 +1,7 @@
 language: node_js
 node_js:
 - "9"
-
-script: npm run build
-
+script: CI=false yarn build
 deploy:
   local_dir: build
   provider: pages

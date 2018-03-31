@@ -13,25 +13,36 @@ class Attachment extends React.Component {
     this.props.link &&
       this.props.user
         .fetchAttachment({ url: this.props.link })
-        .then(fetched =>
-          this.setState({ src: fetched.link, name: fetched.file.name })
-        )
+        .then(fetched =>{
+          this.setState({ src: fetched.link, name: fetched.file.name });
+          }
+        ).catch(error => console.log(error));
   }
   render() {
-    return this.state
-      ? {
-          image: (
-            <img controls={true} src={this.state.src} alt={this.state.name} />
-          ),
+    let paperClipIcon = (
+      <div className={style['icon-paperclip']} style={{float: "left"}}>
+        <div className={style["paperclip-1"]} style={{backgroundColor: "black"}}>
+          <div className={style["paperclip-2"]}>
+            <div className={style["paperclip-3"]} style={{backgroundColor: "black"}}>
+              <div className={style["paperclip-4"]}>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> );
+    return this.state? {
+          image: <img controls={true} src={this.state.src} alt={this.state.name} />,
           video: <video controls={true} src={this.state.src} />,
           audio: <audio controls={true} src={this.state.src} />,
+          file: (<a download={this.props.text} href={this.state.src} className={style.link}>{paperClipIcon} {this.props.text}</a>)
         }[this.props.type]
       : null
   }
 }
 
-export const Message = ({ user, createConvo }) => message =>
-  message.sender ? (
+export const Message = ({ user, createConvo }) => message =>{
+  console.log(message);
+  return message.sender ? (
     <li key={message.id} className={style.component}>
       <img
         onClick={e => createConvo({ user: message.sender })}
@@ -48,16 +59,15 @@ export const Message = ({ user, createConvo }) => message =>
               : null
           }
         >{`${message.sender.name} | ${time(message.createdAt)}`}</span>
-        <p>
-          <Linkify properties={{ target: '_blank' }}>{message.text}</Linkify>
-        </p>
+        {(message.attachment && message.attachment.type === 'file')?null:<p><Linkify properties={{ target: '_blank' }}>{message.text}</Linkify></p>}
         {message.attachment ? (
           <Attachment
             user={user}
             link={message.attachment.link}
             type={message.attachment.type}
+            text={message.text}
           />
         ) : null}
       </div>
     </li>
-  ) : null
+  ) : null}
