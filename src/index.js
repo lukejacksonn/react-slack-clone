@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import vuid from 'vuid'
 import { set, del } from 'object-path-immutable'
 import './index.css'
 
@@ -29,7 +30,10 @@ const githubAuthRedirect = () => {
   const url = 'https://github.com/login/oauth/authorize'
   const server = 'https://chatkit-demo-server.herokuapp.com'
   const redirect = `${server}/success?url=${window.location.href.split('?')[0]}`
-  window.location = `${url}?scope=user:email&client_id=${client}&redirect_uri=${redirect}`
+  const nonce = vuid()
+  console.log(nonce);
+  window.localStorage.setItem('nonce', nonce)
+  window.location = `${url}?scope=user:email&client_id=${client}&state=${nonce}&redirect_uri=${redirect}`
 }
 
 !existingUser && window.localStorage.clear()
@@ -104,10 +108,10 @@ class View extends React.Component {
         exists
           ? this.actions.joinRoom(exists)
           : this.actions.createRoom({
-              name: this.state.user.id + options.user.id,
-              addUserIds: [options.user.id],
-              private: true,
-            })
+            name: this.state.user.id + options.user.id,
+            addUserIds: [options.user.id],
+            private: true,
+          })
       }
     },
 
@@ -120,8 +124,8 @@ class View extends React.Component {
       userId === this.state.user.id
         ? this.state.user.leaveRoom({ roomId })
         : this.state.user
-            .removeUserFromRoom({ userId, roomId })
-            .then(this.actions.setRoom),
+          .removeUserFromRoom({ userId, roomId })
+          .then(this.actions.setRoom),
 
     // --------------------------------------
     // Cursors
@@ -185,18 +189,20 @@ class View extends React.Component {
   }
 
   componentDidMount() {
+    console.log(existingUser);
     existingUser
       ? ChatManager(this, JSON.parse(existingUser))
       : fetch('https://chatkit-demo-server.herokuapp.com/auth', {
-          method: 'POST',
-          body: JSON.stringify({ code: authCode }),
+        method: 'POST',
+        body: JSON.stringify({ code: authCode }),
+      })
+        .then(res => res.json())
+        .then(user => {
+          console.log(user);
+          window.localStorage.setItem('chatkit-user', JSON.stringify(user))
+          window.history.replaceState(null, null, window.location.pathname)
+          ChatManager(this, user) // { id: 'existinguser', token: 'from github lol' }
         })
-          .then(res => res.json())
-          .then(user => {
-            window.localStorage.setItem('chatkit-user', JSON.stringify(user))
-            window.history.replaceState(null, null, window.location.pathname)
-            ChatManager(this, user) // { id: 'existinguser', token: 'from github lol' }
-          })
   }
 
   render() {
@@ -248,8 +254,8 @@ class View extends React.Component {
           ) : user.id ? (
             <JoinRoomScreen />
           ) : (
-            <WelcomeScreen />
-          )}
+                <WelcomeScreen />
+              )}
         </section>
       </main>
     )
