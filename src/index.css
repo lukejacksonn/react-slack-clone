@@ -24,6 +24,7 @@ p {
 button,
 input {
   outline: none;
+  min-width: 0;
 }
 
 img,
@@ -73,6 +74,7 @@ row- {
   width: 100%;
   display: flex;
   position: relative;
+  overflow: hidden;
 }
 
 col- {
