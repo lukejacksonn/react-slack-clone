@@ -178,7 +178,7 @@ class View extends React.Component {
             user.version = version
             window.localStorage.setItem('chatkit-user', JSON.stringify(user))
             window.history.replaceState(null, null, window.location.pathname)
-            ChatManager(this, user) // { id: 'existinguser', token: 'from github lol' }
+            ChatManager(this, user)
           })
   }
 
