@@ -1063,9 +1063,9 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@pusher/chatkit@^0.7.3":
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/@pusher/chatkit/-/chatkit-0.7.4.tgz#7390ba1a65e2b7457663eda67fcd7f1890925b37"
+"@pusher/chatkit@^0.7.5":
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/@pusher/chatkit/-/chatkit-0.7.5.tgz#e29bf3dcfc530c8f2bb39ba7c32850c3079bc750"
   dependencies:
     pusher-platform "^0.15.0"
     ramda "^0.25.0"
