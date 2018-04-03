@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { set, del } from 'object-path-immutable'
+import { version } from '../package.json'
 import './index.css'
 
 import { UserHeader } from './components/UserHeader'
@@ -174,6 +175,7 @@ class View extends React.Component {
         })
           .then(res => res.json())
           .then(user => {
+            user.version = version
             window.localStorage.setItem('chatkit-user', JSON.stringify(user))
             window.history.replaceState(null, null, window.location.pathname)
             ChatManager(this, user) // { id: 'existinguser', token: 'from github lol' }
@@ -242,8 +244,7 @@ class View extends React.Component {
 // --------------------------------------
 
 window.localStorage.getItem('chatkit-user') &&
-  !JSON.parse(window.localStorage.getItem('chatkit-user')).id &&
-  !JSON.parse(window.localStorage.getItem('chatkit-user')).token &&
+  !window.localStorage.getItem('chatkit-user').match(version) &&
   window.localStorage.clear()
 
 const params = new URLSearchParams(window.location.search.slice(1))
