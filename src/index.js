@@ -17,25 +17,6 @@ import { JoinRoomScreen } from './components/JoinRoomScreen'
 import ChatManager from './chatkit'
 
 // --------------------------------------
-// Authentication
-// --------------------------------------
-
-const params = new URLSearchParams(window.location.search.slice(1))
-const authCode = params.get('code')
-const existingUser = window.localStorage.getItem('chatkit-user')
-
-const githubAuthRedirect = () => {
-  const client = '20cdd317000f92af12fe'
-  const url = 'https://github.com/login/oauth/authorize'
-  const server = 'https://chatkit-demo-server.herokuapp.com'
-  const redirect = `${server}/success?url=${window.location.href.split('?')[0]}`
-  window.location = `${url}?scope=user:email&client_id=${client}&redirect_uri=${redirect}`
-}
-
-!existingUser && window.localStorage.clear()
-!existingUser && !authCode && githubAuthRedirect()
-
-// --------------------------------------
 // Application
 // --------------------------------------
 
@@ -256,4 +237,22 @@ class View extends React.Component {
   }
 }
 
-ReactDOM.render(<View />, document.querySelector('#root'))
+// --------------------------------------
+// Authentication
+// --------------------------------------
+
+const params = new URLSearchParams(window.location.search.slice(1))
+const authCode = params.get('code')
+const existingUser = window.localStorage.getItem('chatkit-user')
+
+const githubAuthRedirect = () => {
+  const client = '20cdd317000f92af12fe'
+  const url = 'https://github.com/login/oauth/authorize'
+  const server = 'https://chatkit-demo-server.herokuapp.com'
+  const redirect = `${server}/success?url=${window.location.href.split('?')[0]}`
+  window.location = `${url}?scope=user:email&client_id=${client}&redirect_uri=${redirect}`
+}
+
+!existingUser && !authCode
+  ? githubAuthRedirect()
+  : ReactDOM.render(<View />, document.querySelector('#root'))

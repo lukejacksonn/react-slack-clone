@@ -25,6 +25,7 @@ button,
 input {
   outline: none;
   min-width: 0;
+  flex: none;
 }
 
 img,
