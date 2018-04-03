@@ -166,8 +166,8 @@ class View extends React.Component {
   }
 
   componentDidMount() {
-    existingUser()
-      ? ChatManager(this, JSON.parse(existingUser()))
+    existingUser
+      ? ChatManager(this, JSON.parse(existingUser))
       : fetch('https://chatkit-demo-server.herokuapp.com/auth', {
           method: 'POST',
           body: JSON.stringify({ code: authCode }),
@@ -243,8 +243,7 @@ class View extends React.Component {
 
 const params = new URLSearchParams(window.location.search.slice(1))
 const authCode = params.get('code')
-const existingUser = () =>
-  JSON.parse(window.localStorage.getItem('chatkit-user'))
+const existingUser = window.localStorage.getItem('chatkit-user')
 
 const githubAuthRedirect = () => {
   const client = '20cdd317000f92af12fe'
@@ -254,10 +253,6 @@ const githubAuthRedirect = () => {
   window.location = `${url}?scope=user:email&client_id=${client}&redirect_uri=${redirect}`
 }
 
-// Clear any bad user in localStorage
-typeof existingUser() !== 'object' && window.localStorage.clear()
-
-// Auth with github if not already authenticated
-!existingUser() && !authCode
+!existingUser && !authCode
   ? githubAuthRedirect()
   : ReactDOM.render(<View />, document.querySelector('#root'))
