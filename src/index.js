@@ -241,6 +241,11 @@ class View extends React.Component {
 // Authentication
 // --------------------------------------
 
+window.localStorage.getItem('chatkit-user') &&
+  !JSON.parse(window.localStorage.getItem('chatkit-user')).id &&
+  !JSON.parse(window.localStorage.getItem('chatkit-user')).token &&
+  window.localStorage.clear()
+
 const params = new URLSearchParams(window.location.search.slice(1))
 const authCode = params.get('code')
 const existingUser = window.localStorage.getItem('chatkit-user')
