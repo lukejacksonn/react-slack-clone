@@ -29,6 +29,12 @@
   min-width: 0;
 }
 
+.component svg {
+  width: 2rem;
+  height: 2rem;
+  fill: #006eff;
+}
+
 .component > * + * {
   margin-left: 0.38rem;
 }
@@ -68,4 +74,95 @@
   background: #42b72a;
   border-radius: 50%;
   margin-right: 0.38rem;
+}
+.icon-paperclip {
+  width: 28px;
+  height: 28px;
+  position: relative;
+  overflow: hidden;
+  -webkit-transform: rotate(135deg);
+  -moz-transform: rotate(135deg);
+  -ms-transform: rotate(135deg);
+  transform: rotate(135deg);
+}
+
+.paperclip-1 {
+  width: 80%;
+  height: 40%;
+  background-color: #000;
+  border-radius: 20px;
+  border-top-right-radius: 12px;
+  border-bottom-right-radius: 25px;
+  position: absolute;
+  top: 28%;
+  right: 10%;
+}
+
+.paperclip-2 {
+  width: 80%;
+  height: 72%;
+  background-color: white;
+  border-radius: 0%;
+  position: absolute;
+  left: 8%;
+  border-radius: 10px;
+  top: 14.5%;
+}
+
+.paperclip-2:before {
+  content: "";
+  width: 25%;
+  height: 120%;
+  background-color: inherit;
+  position: absolute;
+  left: 90%;
+  top: 18%;
+  border-radius: 100%;
+}
+
+.paperclip-2:after {
+  content: "";
+  width: 50%;
+  height: 50%;
+  background-color: inherit;
+  position: absolute;
+  left: 85%;
+  top: 86%;
+}
+
+.paperclip-3 {
+  width: 102%;
+  height: 70%;
+  background-color: #000;
+  border-radius: 25px;
+  border-top-right-radius: 15px;
+  position: absolute;
+  top: 16%;
+  right: -14.8%;
+}
+
+.paperclip-4 {
+  width: 81%;
+  height: 40%;
+  background-color: white;
+  border-radius: 65px;
+  border-bottom-right-radius: 145px;
+  position: absolute;
+  left: 10%;
+  top: 30%;
+}
+
+.paperclip-4:after {
+  content: "";
+  width: 23%;
+  height: 225%;
+  background-color: inherit;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 4px;
+  position: absolute;
+  right: 0;
+  top: -132%;
+}
+.link{
+  text-decoration: none;
 }
