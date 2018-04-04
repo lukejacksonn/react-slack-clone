@@ -2,6 +2,7 @@
 
 [![Star on GitHub][github-star-badge]][github-star]
 [![Tweet][twitter-badge]][twitter]
+[![Build Status](https://travis-ci.org/pusher/react-slack-clone.svg?branch=master)](https://travis-ci.org/pusher/react-slack-clone)
 
 Slack clone powered by [Chatkit](https://pusher.com/chatkit). See it in action here: https://pusher.github.io/react-slack-clone
 
@@ -11,7 +12,7 @@ This is a static, single page web app bootstrapped with [create-react-app](https
 
 ## Features
 
-The Chatkit SDK allows you to implement features you would expect from a chat client. these include:
+The Chatkit SDK allows you to implement features you would expect from a chat client. These include:
 
 - 📝 Public and private chat rooms
 - 📡 Realtime sending and receiving of messages
