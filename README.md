@@ -19,7 +19,7 @@ The Chatkit SDK allows you to implement features you would expect from a chat cl
 - 💬 Typing and presence indicators
 - 📚 Read message cursors
 
-Want to get involves? We have a bunch of [beginner-friendly GitHub issues](https://github.com/pusher/react-slack-clone/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
+Want to get involved? We have a bunch of [beginner-friendly GitHub issues](https://github.com/pusher/react-slack-clone/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
 
 ## Components
 
