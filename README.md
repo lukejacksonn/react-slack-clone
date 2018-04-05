@@ -11,7 +11,7 @@ This is a static, single page web app bootstrapped with [create-react-app](https
 
 ## Features
 
-The Chatkit SDK allows you to implement features you would expect from a chat client. these include:
+The Chatkit SDK allows features you would expect from a chat client to be implemented. These include:
 
 - 📝 Public and private chat rooms
 - 📡 Realtime sending and receiving of messages
@@ -37,7 +37,7 @@ The demo attempts to be feature complete according to documentation [here](https
 
 ## Running the Slack clone locally
 
-To run the application locally, you'll need to clone the repo, install dependencies, and run the app.
+To run the application locally, clone the repo, install dependencies, and run the app.
 
 ```
 $ git clone https://github.com/pusher/react-slack-clone
@@ -45,7 +45,7 @@ $ cd react-slack-clone
 $ yarn && yarn start
 ```
 
-The app will start in development mode and open a browser window on `http://localhost:3000`. The project will rebuild and the browser will reload automatically when source files are changed. Any build or runtime errors are also propagated to and displayed in the browser.
+The app starts in development mode and opens a browser window on `http://localhost:3000`. The project rebuilds and the browser reloads automatically when source files are changed. Any build or runtime errors are also propagated and displayed in the browser.
 
 The app depends on a GitHub authentication and user creation endpoint that is hosted [here](https://chatkit-demo-server.herokuapp.com).
 
