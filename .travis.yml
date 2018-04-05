@@ -2,7 +2,7 @@ language: node_js
 node_js:
 - "9"
 
-script: npm run build
+script: yarn build
 
 deploy:
   local_dir: build
