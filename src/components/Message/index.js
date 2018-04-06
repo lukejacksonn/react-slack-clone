@@ -25,6 +25,11 @@ class Attachment extends React.Component {
           ),
           video: <video controls={true} src={this.state.src} />,
           audio: <audio controls={true} src={this.state.src} />,
+          file: (
+            <a href={this.state.src} download>
+              Download File
+            </a>
+          ),
         }[this.props.type]
       : null
   }
