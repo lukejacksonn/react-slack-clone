@@ -60,18 +60,19 @@ class View extends React.Component {
       this.actions.setRoom(room)
       this.actions.subscribeToRoom(room)
       this.state.messages[room.id] &&
-        this.actions.setCursor(
-          room.id,
-          Object.keys(this.state.messages[room.id]).pop()
-        )
+      this.actions.setCursor(
+        room.id,
+        Object.keys(this.state.messages[room.id]).pop()
+      )
     },
 
-    subscribeToRoom: room =>
+    subscribeToRoom: room => {
       !this.state.user.roomSubscriptions[room.id] &&
       this.state.user.subscribeToRoom({
         roomId: room.id,
         hooks: { onNewMessage: this.actions.addMessage },
-      }),
+      })
+    },
 
     createRoom: options =>
       this.state.user.createRoom(options).then(this.actions.joinRoom),
@@ -86,10 +87,10 @@ class View extends React.Component {
         exists
           ? this.actions.joinRoom(exists)
           : this.actions.createRoom({
-              name: this.state.user.id + options.user.id,
-              addUserIds: [options.user.id],
-              private: true,
-            })
+            name: this.state.user.id + options.user.id,
+            addUserIds: [options.user.id],
+            private: true,
+          })
       }
     },
 
@@ -102,8 +103,8 @@ class View extends React.Component {
       userId === this.state.user.id
         ? this.state.user.leaveRoom({ roomId })
         : this.state.user
-            .removeUserFromRoom({ userId, roomId })
-            .then(this.actions.setRoom),
+        .removeUserFromRoom({ userId, roomId })
+        .then(this.actions.setRoom),
 
     // --------------------------------------
     // Cursors
@@ -121,6 +122,12 @@ class View extends React.Component {
     addMessage: payload => {
       const roomId = payload.room.id
       const messageId = payload.id
+      const userId = this.state.user ? this.state.user.id : null
+
+      if(userId !== payload.senderId) {
+        this.actions.showNotification.call(this, payload)
+      }
+
       this.setState(set(this.state, ['messages', roomId, messageId], payload))
       if (roomId === this.state.room.id) {
         const cursor = this.state.user.readCursor({ roomId }) || {}
@@ -164,22 +171,54 @@ class View extends React.Component {
     // --------------------------------------
 
     setUserPresence: () => this.forceUpdate(),
+
+    // --------------------------------------
+    // Notifications
+    // --------------------------------------
+    requestUsersPermissionForNotifications: () => {
+      Notification.requestPermission()
+    },
+
+    showNotification: (payload) => {
+      const options = {
+        body: payload.text
+      }
+      const notification = new Notification('React Slack Clone', options)
+
+      notification.addEventListener('click', this.actions.handleNotificationClick.bind(this, payload))
+    },
+
+    handleNotificationClick: (payload, e) => {
+      e.preventDefault()
+
+      // focus on window that generated the notification
+      window.focus()
+
+      this.actions.showNotificationsMessage.call(this, payload.room)
+    },
+
+    showNotificationsMessage: (room) => {
+      this.actions.joinRoom(room)
+
+      this.actions.scrollToEnd()
+    }
   }
 
   componentDidMount() {
+    this.actions.requestUsersPermissionForNotifications()
     existingUser
       ? ChatManager(this, JSON.parse(existingUser))
       : fetch('https://chatkit-demo-server.herokuapp.com/auth', {
-          method: 'POST',
-          body: JSON.stringify({ code: authCode }),
-        })
-          .then(res => res.json())
-          .then(user => {
-            user.version = version
-            window.localStorage.setItem('chatkit-user', JSON.stringify(user))
-            window.history.replaceState(null, null, window.location.pathname)
-            ChatManager(this, user)
-          })
+        method: 'POST',
+        body: JSON.stringify({ code: authCode }),
+      })
+      .then(res => res.json())
+      .then(user => {
+        user.version = version
+        window.localStorage.setItem('chatkit-user', JSON.stringify(user))
+        window.history.replaceState(null, null, window.location.pathname)
+        ChatManager(this, user)
+      })
   }
 
   render() {
@@ -191,7 +230,12 @@ class View extends React.Component {
       sidebarOpen,
       userListOpen,
     } = this.state
-    const { createRoom, createConvo, removeUserFromRoom } = this.actions
+    const {
+      createRoom,
+      createConvo,
+      removeUserFromRoom
+    } = this.actions
+
     return (
       <main>
         <aside data-open={sidebarOpen}>
@@ -244,8 +288,8 @@ class View extends React.Component {
 // --------------------------------------
 
 window.localStorage.getItem('chatkit-user') &&
-  !window.localStorage.getItem('chatkit-user').match(version) &&
-  window.localStorage.clear()
+!window.localStorage.getItem('chatkit-user').match(version) &&
+window.localStorage.clear()
 
 const params = new URLSearchParams(window.location.search.slice(1))
 const authCode = params.get('code')
