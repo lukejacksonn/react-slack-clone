@@ -1064,10 +1064,10 @@
     to-fast-properties "^2.0.0"
 
 "@pusher/chatkit@^0.7.3":
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/@pusher/chatkit/-/chatkit-0.7.4.tgz#7390ba1a65e2b7457663eda67fcd7f1890925b37"
+  version "0.7.9"
+  resolved "https://registry.yarnpkg.com/@pusher/chatkit/-/chatkit-0.7.9.tgz#34587299107baf55b36b3fe1c9870ea99e90a62a"
   dependencies:
-    pusher-platform "^0.15.0"
+    pusher-platform "^0.15.1"
     ramda "^0.25.0"
 
 "@types/node@*":
@@ -6656,9 +6656,9 @@ punycode@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.0.tgz#5f863edc89b96db09074bad7947bf09056ca4e7d"
 
-pusher-platform@^0.15.0:
-  version "0.15.0"
-  resolved "https://registry.yarnpkg.com/pusher-platform/-/pusher-platform-0.15.0.tgz#d94c63ceeef5e05e5fc09504f3c7d0971cd218a3"
+pusher-platform@^0.15.1:
+  version "0.15.1"
+  resolved "https://registry.yarnpkg.com/pusher-platform/-/pusher-platform-0.15.1.tgz#e8ff7e59f8440ddae6dd71a50e4796400b7ec62f"
 
 q@^1.1.2:
   version "1.5.1"
