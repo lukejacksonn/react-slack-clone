@@ -66,13 +66,12 @@ class View extends React.Component {
         )
     },
 
-    subscribeToRoom: room => {
+    subscribeToRoom: room =>
       !this.state.user.roomSubscriptions[room.id] &&
-        this.state.user.subscribeToRoom({
-          roomId: room.id,
-          hooks: { onNewMessage: this.actions.addMessage },
-        })
-    },
+      this.state.user.subscribeToRoom({
+        roomId: room.id,
+        hooks: { onNewMessage: this.actions.addMessage },
+      }),
 
     createRoom: options =>
       this.state.user.createRoom(options).then(this.actions.joinRoom),
@@ -197,7 +196,7 @@ class View extends React.Component {
   }
 
   componentDidMount() {
-    Notification.requestPermission()
+    'Notification' in window && Notification.requestPermission()
     existingUser
       ? ChatManager(this, JSON.parse(existingUser))
       : fetch('https://chatkit-demo-server.herokuapp.com/auth', {
