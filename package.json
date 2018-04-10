@@ -1,6 +1,6 @@
 {
   "name": "chatkit-demo",
-  "version": "1.0.0",
+  "version": "2.1.0",
   "homepage": "https://pusher.github.io/react-slack-clone",
   "dependencies": {
     "@pusher/chatkit": "^0.7.9",

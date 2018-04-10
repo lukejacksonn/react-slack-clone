@@ -2,3 +2,4 @@ node_modules
 build
 client/static/index.js
 .DS_Store
+.idea/
