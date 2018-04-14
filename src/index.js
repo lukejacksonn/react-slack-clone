@@ -122,19 +122,17 @@ class View extends React.Component {
     addMessage: payload => {
       const roomId = payload.room.id
       const messageId = payload.id
-      const userId = this.state.user ? this.state.user.id : null
-
-      if(userId !== payload.senderId) {
-        this.actions.showNotification.call(this, payload)
-      }
-
+      // Update local message cache with new message
       this.setState(set(this.state, ['messages', roomId, messageId], payload))
+      // Update cursor if the message was read
       if (roomId === this.state.room.id) {
         const cursor = this.state.user.readCursor({ roomId }) || {}
         const cursorPosition = cursor.position || 0
         cursorPosition < messageId && this.actions.setCursor(roomId, messageId)
         this.actions.scrollToEnd()
       }
+      // Send notification
+      this.actions.showNotification(payload)
     },
 
     runCommand: command => {
@@ -175,37 +173,30 @@ class View extends React.Component {
     // --------------------------------------
     // Notifications
     // --------------------------------------
-    requestUsersPermissionForNotifications: () => {
-      Notification.requestPermission()
-    },
-
-    showNotification: (payload) => {
-      const options = {
-        body: payload.text
+    showNotification: message => {
+      if (
+        'Notification' in window &&
+        this.state.user.id &&
+        this.state.user.id !== message.senderId &&
+        document.visibilityState === 'hidden'
+      ) {
+        const notification = new Notification(
+          `New Message from ${message.sender.id}`,
+          {
+            body: message.text,
+            icon: message.sender.avatarURL,
+          }
+        )
+        notification.addEventListener('click', e => {
+          this.actions.joinRoom(message.room)
+          window.focus()
+        })
       }
-      const notification = new Notification('React Slack Clone', options)
-
-      notification.addEventListener('click', this.actions.handleNotificationClick.bind(this, payload))
     },
-
-    handleNotificationClick: (payload, e) => {
-      e.preventDefault()
-
-      // focus on window that generated the notification
-      window.focus()
-
-      this.actions.showNotificationsMessage.call(this, payload.room)
-    },
-
-    showNotificationsMessage: (room) => {
-      this.actions.joinRoom(room)
-
-      this.actions.scrollToEnd()
-    }
   }
 
   componentDidMount() {
-    this.actions.requestUsersPermissionForNotifications()
+    'Notification' in window && Notification.requestPermission()
     existingUser
       ? ChatManager(this, JSON.parse(existingUser))
       : fetch('https://chatkit-demo-server.herokuapp.com/auth', {
@@ -230,11 +221,7 @@ class View extends React.Component {
       sidebarOpen,
       userListOpen,
     } = this.state
-    const {
-      createRoom,
-      createConvo,
-      removeUserFromRoom
-    } = this.actions
+    const { createRoom, createConvo, removeUserFromRoom } = this.actions
 
     return (
       <main>
