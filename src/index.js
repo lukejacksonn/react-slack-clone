@@ -29,7 +29,7 @@ class View extends React.Component {
     typing: {},
     sidebarOpen: false,
     isPickerShowing: false,
-    userListOpen: window.innerWidth > 1000,
+    userListOpen: window.innerWidth > 1000
   }
 
   actions = {
@@ -62,18 +62,18 @@ class View extends React.Component {
       this.actions.setRoom(room)
       this.actions.subscribeToRoom(room)
       this.state.messages[room.id] &&
-      this.actions.setCursor(
-        room.id,
-        Object.keys(this.state.messages[room.id]).pop()
-      )
+        this.actions.setCursor(
+          room.id,
+          Object.keys(this.state.messages[room.id]).pop()
+        )
     },
 
     subscribeToRoom: room => {
       !this.state.user.roomSubscriptions[room.id] &&
-      this.state.user.subscribeToRoom({
-        roomId: room.id,
-        hooks: { onNewMessage: this.actions.addMessage },
-      })
+        this.state.user.subscribeToRoom({
+          roomId: room.id,
+          hooks: { onNewMessage: this.actions.addMessage }
+        })
     },
 
     createRoom: options =>
@@ -89,10 +89,10 @@ class View extends React.Component {
         exists
           ? this.actions.joinRoom(exists)
           : this.actions.createRoom({
-            name: this.state.user.id + options.user.id,
-            addUserIds: [options.user.id],
-            private: true,
-          })
+              name: this.state.user.id + options.user.id,
+              addUserIds: [options.user.id],
+              private: true
+            })
       }
     },
 
@@ -105,8 +105,8 @@ class View extends React.Component {
       userId === this.state.user.id
         ? this.state.user.leaveRoom({ roomId })
         : this.state.user
-        .removeUserFromRoom({ userId, roomId })
-        .then(this.actions.setRoom),
+            .removeUserFromRoom({ userId, roomId })
+            .then(this.actions.setRoom),
 
     // --------------------------------------
     // Cursors
@@ -142,7 +142,7 @@ class View extends React.Component {
         invite: ([userId]) => this.actions.addUserToRoom({ userId }),
         remove: ([userId]) => this.actions.removeUserFromRoom({ userId }),
         leave: ([userId]) =>
-          this.actions.removeUserFromRoom({ userId: this.state.user.id }),
+          this.actions.removeUserFromRoom({ userId: this.state.user.id })
       }
       const name = command.split(' ')[0]
       const args = command.split(' ').slice(1)
@@ -186,7 +186,7 @@ class View extends React.Component {
           `New Message from ${message.sender.id}`,
           {
             body: message.text,
-            icon: message.sender.avatarURL,
+            icon: message.sender.avatarURL
           }
         )
         notification.addEventListener('click', e => {
@@ -194,7 +194,7 @@ class View extends React.Component {
           window.focus()
         })
       }
-    },
+    }
   }
 
   componentDidMount() {
@@ -202,18 +202,24 @@ class View extends React.Component {
     existingUser
       ? ChatManager(this, JSON.parse(existingUser))
       : fetch('https://chatkit-demo-server.herokuapp.com/auth', {
-        method: 'POST',
-        body: JSON.stringify({ code: authCode }),
-      })
-      .then(res => res.json())
-      .then(user => {
-        user.version = version
-        window.localStorage.setItem('chatkit-user', JSON.stringify(user))
-        window.history.replaceState(null, null, window.location.pathname)
-        ChatManager(this, user)
-      })
+          method: 'POST',
+          body: JSON.stringify({ code: authCode })
+        })
+          .then(res => res.json())
+          .then(user => {
+            user.version = version
+            window.localStorage.setItem('chatkit-user', JSON.stringify(user))
+            window.history.replaceState(null, null, window.location.pathname)
+            ChatManager(this, user)
+          })
 
-    document.addEventListener('click', e => { this.actions.toggleEmojiPicker(false) }, false)
+    document.addEventListener(
+      'click',
+      e => {
+        this.actions.toggleEmojiPicker(false)
+      },
+      false
+    )
   }
 
   render() {
@@ -223,15 +229,9 @@ class View extends React.Component {
       messages,
       typing,
       sidebarOpen,
-      userListOpen,
-      isPickerShowing
+      userListOpen
     } = this.state
-    const {
-      createRoom,
-      createConvo,
-      removeUserFromRoom,
-      toggleEmojiPicker
-    } = this.actions
+    const { createRoom, createConvo, removeUserFromRoom } = this.actions
 
     return (
       <main>
@@ -285,8 +285,8 @@ class View extends React.Component {
 // --------------------------------------
 
 window.localStorage.getItem('chatkit-user') &&
-!window.localStorage.getItem('chatkit-user').match(version) &&
-window.localStorage.clear()
+  !window.localStorage.getItem('chatkit-user').match(version) &&
+  window.localStorage.clear()
 
 const params = new URLSearchParams(window.location.search.slice(1))
 const authCode = params.get('code')
