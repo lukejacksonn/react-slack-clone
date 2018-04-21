@@ -29,7 +29,7 @@ class View extends React.Component {
     typing: {},
     sidebarOpen: false,
     isPickerShowing: false,
-    userListOpen: window.innerWidth > 1000
+    userListOpen: window.innerWidth > 1000,
   }
 
   actions = {
@@ -72,7 +72,7 @@ class View extends React.Component {
       !this.state.user.roomSubscriptions[room.id] &&
         this.state.user.subscribeToRoom({
           roomId: room.id,
-          hooks: { onNewMessage: this.actions.addMessage }
+          hooks: { onNewMessage: this.actions.addMessage },
         })
     },
 
@@ -91,7 +91,7 @@ class View extends React.Component {
           : this.actions.createRoom({
               name: this.state.user.id + options.user.id,
               addUserIds: [options.user.id],
-              private: true
+              private: true,
             })
       }
     },
@@ -142,7 +142,7 @@ class View extends React.Component {
         invite: ([userId]) => this.actions.addUserToRoom({ userId }),
         remove: ([userId]) => this.actions.removeUserFromRoom({ userId }),
         leave: ([userId]) =>
-          this.actions.removeUserFromRoom({ userId: this.state.user.id })
+          this.actions.removeUserFromRoom({ userId: this.state.user.id }),
       }
       const name = command.split(' ')[0]
       const args = command.split(' ').slice(1)
@@ -186,7 +186,7 @@ class View extends React.Component {
           `New Message from ${message.sender.id}`,
           {
             body: message.text,
-            icon: message.sender.avatarURL
+            icon: message.sender.avatarURL,
           }
         )
         notification.addEventListener('click', e => {
@@ -194,7 +194,7 @@ class View extends React.Component {
           window.focus()
         })
       }
-    }
+    },
   }
 
   componentDidMount() {
@@ -203,7 +203,7 @@ class View extends React.Component {
       ? ChatManager(this, JSON.parse(existingUser))
       : fetch('https://chatkit-demo-server.herokuapp.com/auth', {
           method: 'POST',
-          body: JSON.stringify({ code: authCode })
+          body: JSON.stringify({ code: authCode }),
         })
           .then(res => res.json())
           .then(user => {
@@ -229,7 +229,7 @@ class View extends React.Component {
       messages,
       typing,
       sidebarOpen,
-      userListOpen
+      userListOpen,
     } = this.state
     const { createRoom, createConvo, removeUserFromRoom } = this.actions
 

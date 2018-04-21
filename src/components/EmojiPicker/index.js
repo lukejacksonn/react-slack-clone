@@ -8,7 +8,7 @@ let jsemoji = new JSEMOJI()
 
 const Picker = ({
   state: { isPickerShowing },
-  actions: { toggleEmojiPicker, handleEmojiSelection }
+  actions: { toggleEmojiPicker, handleEmojiSelection },
 }) => (
   <div
     onClick={e => {
@@ -28,8 +28,8 @@ const Picker = ({
         }}
       />
     </div>
-    <a
-      href="#"
+    <input
+      type={'button'}
       className={style.button}
       onClick={e => {
         e.preventDefault()
