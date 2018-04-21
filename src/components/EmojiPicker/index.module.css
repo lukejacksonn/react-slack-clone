@@ -1,0 +1,32 @@
+.component {
+  width: 2rem;
+  height: 2rem;
+  position: relative;
+}
+
+.overlayWrapper {
+  height: 0;
+  overflow: hidden;
+  position: absolute;
+  bottom: 32px;
+  right: 0;
+  -webkit-transition: height .25s ease-in-out; /* Safari */
+  transition: height .25s ease-in-out;
+}
+
+.button {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-image: url("https://cdn.jsdelivr.net/emojione/assets/3.0/png/32/1f600.png");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.show {
+  /* find a better way to set this height */
+  height: 333px;
+}
