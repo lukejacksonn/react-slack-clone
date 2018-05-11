@@ -210,6 +210,17 @@ class View extends React.Component {
             window.history.replaceState(null, null, window.location.pathname)
             ChatManager(this, user)
           })
+
+    window
+      .Chirpy(data =>
+        this.actions.subscribeToRoom({
+          id: parseInt(data),
+        })
+      )
+      .then(send => {
+        this.actions.chirp = send
+        this.setState()
+      })
   }
 
   render() {
