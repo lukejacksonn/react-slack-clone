@@ -28,21 +28,23 @@ class View extends React.Component {
     messages: {},
     typing: {},
     sidebarOpen: false,
+    inputIsOpen:false,
     userListOpen: window.innerWidth > 1000,
+    roomTitle:""
   }
 
   actions = {
     // --------------------------------------
     // UI
     // --------------------------------------
-
+    changeInputTitle:e => this.setState({roomTitle:e.target.value}),
     setSidebar: sidebarOpen => this.setState({ sidebarOpen }),
     setUserList: userListOpen => this.setState({ userListOpen }),
+    setTitleEditable:(inputIsOpen, roomTitle) => this.setState({inputIsOpen,roomTitle}),
 
     // --------------------------------------
     // User
     // --------------------------------------
-
     setUser: user => this.setState({ user }),
 
     // --------------------------------------
@@ -76,6 +78,19 @@ class View extends React.Component {
     createRoom: options =>
       this.state.user.createRoom(options).then(this.actions.joinRoom),
 
+    updateRoom:(roomId,roomName)=>{
+      this.actions.setTitleEditable(!this.state.inputIsOpen)
+      this.state.user.updateRoom({
+        roomId: roomId ,
+        name: roomName,
+        private: false
+      }).then(() => {
+          alert(`Room name with ${roomId} updated successfully`)
+      })
+        .catch(err => {
+          alert(err.info.error_description)
+      })
+    },
     createConvo: options => {
       if (options.user.id !== this.state.user.id) {
         const exists = this.state.user.rooms.find(
@@ -221,11 +236,13 @@ class View extends React.Component {
       sidebarOpen,
       userListOpen,
     } = this.state
-    const { createRoom, createConvo, removeUserFromRoom } = this.actions
+    const { createRoom, createConvo, removeUserFromRoom , updateRoom } = this.actions
 
     return (
       <main>
         <aside data-open={sidebarOpen}>
+        {console.log("########user###########")}
+        {console.log(user)}
           <UserHeader user={user} />
           <RoomList
             user={user}
@@ -238,7 +255,7 @@ class View extends React.Component {
           {user.id && <CreateRoomForm submit={createRoom} />}
         </aside>
         <section>
-          <RoomHeader state={this.state} actions={this.actions} />
+          <RoomHeader state={this.state} actions={this.actions} updateRoomName={updateRoom} />
           {room.id ? (
             <row->
               <col->

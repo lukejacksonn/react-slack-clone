@@ -9,6 +9,21 @@
   /*box-shadow: 0 0 0.62rem rgba(0, 0, 0, 0.1);*/
 }
 
+.horizontal {
+  display: flex;
+  align-items: center;
+}
+
+.inputComponent {
+  padding: 12px 20px;
+  font-size: 1.38rem;
+  color: rgba(0, 0, 0, 0.62);
+  margin: auto;
+  text-align: center;
+  font-weight: bold
+  
+}
+
 .component button {
   background: transparent;
   border: 1px solid rgba(0, 0, 0, 0.1);
