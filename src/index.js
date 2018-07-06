@@ -79,16 +79,21 @@ class View extends React.Component {
       this.state.user.createRoom(options).then(this.actions.joinRoom),
 
     updateRoom:(roomId,roomName)=>{
-      this.actions.setTitleEditable(!this.state.inputIsOpen)
+      
       this.state.user.updateRoom({
         roomId: roomId ,
         name: roomName,
         private: false
       }).then(() => {
+          this.setState({
+            roomTitle:roomName
+          })
           alert(`Room name with ${roomId} updated successfully`)
+          this.actions.setTitleEditable(!this.state.inputIsOpen)
       })
         .catch(err => {
           alert(err.info.error_description)
+          this.actions.setTitleEditable(!this.state.inputIsOpen)
       })
     },
     createConvo: options => {
@@ -241,8 +246,6 @@ class View extends React.Component {
     return (
       <main>
         <aside data-open={sidebarOpen}>
-        {console.log("########user###########")}
-        {console.log(user)}
           <UserHeader user={user} />
           <RoomList
             user={user}
