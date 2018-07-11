@@ -3,7 +3,7 @@ import style from './index.module.css'
 
 export const FileInput = ({ state: { user, message, room } }) =>
   room.id ? (
-    <button>
+    <div>
       <svg>
         <use xlinkHref="index.svg#attach" />
       </svg>
@@ -23,5 +23,5 @@ export const FileInput = ({ state: { user, message, room } }) =>
             })
         }}
       />
-    </button>
+    </div>
   ) : null
