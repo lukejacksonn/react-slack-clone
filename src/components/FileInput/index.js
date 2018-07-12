@@ -3,7 +3,7 @@ import style from './index.module.css'
 
 export const FileInput = ({ state: { user, message, room } }) =>
   room.id ? (
-    <div>
+    <div className={style.container}>
       <svg>
         <use xlinkHref="index.svg#attach" />
       </svg>
