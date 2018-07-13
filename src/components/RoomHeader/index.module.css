@@ -8,6 +8,21 @@
   height: 4.8rem;
 }
 
+.horizontal {
+  display: flex;
+  align-items: center;
+}
+
+.inputComponent {
+  padding: 12px 20px;
+  font-size: 1.38rem;
+  color: rgba(0, 0, 0, 0.62);
+  margin: auto;
+  text-align: center;
+  font-weight: bold
+  
+}
+
 .component button {
   background: transparent;
   border: 0;
