@@ -1063,7 +1063,7 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@pusher/chatkit@^0.7.3":
+"@pusher/chatkit@^0.7.9":
   version "0.7.9"
   resolved "https://registry.yarnpkg.com/@pusher/chatkit/-/chatkit-0.7.9.tgz#34587299107baf55b36b3fe1c9870ea99e90a62a"
   dependencies:
@@ -1611,7 +1611,7 @@ babel-register@^6.26.0:
     mkdirp "^0.5.1"
     source-map-support "^0.4.15"
 
-babel-runtime@^6.22.0, babel-runtime@^6.26.0:
+babel-runtime@^6.22.0, babel-runtime@^6.25.0, babel-runtime@^6.26.0:
   version "6.26.0"
   resolved "https://registry.yarnpkg.com/babel-runtime/-/babel-runtime-6.26.0.tgz#965c7058668e82b55d7bfe04ff2337bc8b5647fe"
   dependencies:
@@ -2963,6 +2963,23 @@ elliptic@^6.0.0:
     inherits "^2.0.1"
     minimalistic-assert "^1.0.0"
     minimalistic-crypto-utils "^1.0.0"
+
+emoji-datasource@4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/emoji-datasource/-/emoji-datasource-4.0.0.tgz#3fc9c0c2f4fb321d9291138819f6d100603d3e2f"
+
+emoji-js@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/emoji-js/-/emoji-js-3.4.0.tgz#dabdeda60c92d1948a5177e51ba9421d2029b052"
+  dependencies:
+    emoji-datasource "4.0.0"
+
+emoji-picker-react@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/emoji-picker-react/-/emoji-picker-react-2.0.4.tgz#a58edc3412d39726dbcd64a7811806ccc90d9b46"
+  dependencies:
+    babel-runtime "^6.25.0"
+    throttle-debounce "^1.0.1"
 
 emoji-regex@^6.1.0:
   version "6.5.1"
@@ -7954,6 +7971,10 @@ thread-loader@1.1.2:
 throat@^4.0.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/throat/-/throat-4.1.0.tgz#89037cbc92c56ab18926e6ba4cbb200e15672a6a"
+
+throttle-debounce@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/throttle-debounce/-/throttle-debounce-1.0.1.tgz#dad0fe130f9daf3719fdea33dc36a8e6ba7f30b5"
 
 through2@^2.0.0:
   version "2.0.3"

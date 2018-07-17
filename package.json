@@ -4,6 +4,8 @@
   "homepage": "https://pusher.github.io/react-slack-clone",
   "dependencies": {
     "@pusher/chatkit": "^0.7.9",
+    "emoji-js": "^3.4.0",
+    "emoji-picker-react": "^2.0.4",
     "object-path-immutable": "^1.0.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",

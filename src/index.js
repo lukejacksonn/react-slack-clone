@@ -28,6 +28,7 @@ class View extends React.Component {
     messages: {},
     typing: {},
     sidebarOpen: false,
+    isPickerShowing: false,
     userListOpen: window.innerWidth > 1000,
   }
 
@@ -38,6 +39,7 @@ class View extends React.Component {
 
     setSidebar: sidebarOpen => this.setState({ sidebarOpen }),
     setUserList: userListOpen => this.setState({ userListOpen }),
+    toggleEmojiPicker: isPickerShowing => this.setState({ isPickerShowing }),
 
     // --------------------------------------
     // User
@@ -66,12 +68,13 @@ class View extends React.Component {
         )
     },
 
-    subscribeToRoom: room =>
+    subscribeToRoom: room => {
       !this.state.user.roomSubscriptions[room.id] &&
-      this.state.user.subscribeToRoom({
-        roomId: room.id,
-        hooks: { onNewMessage: this.actions.addMessage },
-      }),
+        this.state.user.subscribeToRoom({
+          roomId: room.id,
+          hooks: { onNewMessage: this.actions.addMessage },
+        })
+    },
 
     createRoom: options =>
       this.state.user.createRoom(options).then(this.actions.joinRoom),
@@ -172,7 +175,6 @@ class View extends React.Component {
     // --------------------------------------
     // Notifications
     // --------------------------------------
-
     showNotification: message => {
       if (
         'Notification' in window &&
@@ -210,6 +212,14 @@ class View extends React.Component {
             window.history.replaceState(null, null, window.location.pathname)
             ChatManager(this, user)
           })
+
+    document.addEventListener(
+      'click',
+      e => {
+        this.actions.toggleEmojiPicker(false)
+      },
+      false
+    )
   }
 
   render() {
