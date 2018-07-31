@@ -3,7 +3,7 @@
   "version": "2.1.0",
   "homepage": "https://pusher.github.io/react-slack-clone",
   "dependencies": {
-    "@pusher/chatkit": "^0.7.9",
+    "@pusher/chatkit": "0.7.17",
     "object-path-immutable": "^1.0.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
