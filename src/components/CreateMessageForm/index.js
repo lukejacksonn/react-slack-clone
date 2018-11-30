@@ -11,12 +11,18 @@ export const CreateMessageForm = ({
       className={style.component}
       onSubmit={e => {
         e.preventDefault()
-        const message = e.target[0].value
+
+        const message = e.target[0].value.trim()
+
+        if (message.length === 0) {
+          return
+        }
+
         e.target[0].value = ''
+
         message.startsWith('/')
           ? runCommand(message.slice(1))
-          : message.length > 0 &&
-            user.sendMessage({
+          : user.sendMessage({
               text: message,
               roomId: room.id,
             })
