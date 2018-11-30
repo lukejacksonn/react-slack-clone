@@ -2,7 +2,11 @@ import React from 'react'
 import style from './index.module.css'
 
 const dots = (
-  <div className={style.dots}>{[0, 1, 2].map(x => <div key={x} />)}</div>
+  <div className={style.dots}>
+    {[0, 1, 2].map(x => (
+      <div key={x} />
+    ))}
+  </div>
 )
 
 export const TypingIndicator = ({ typing = {} }) =>
