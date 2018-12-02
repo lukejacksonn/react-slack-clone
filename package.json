@@ -30,9 +30,6 @@
       "not ie < 11"
     ]
   },
-  "devDependencies": {
-    "prettier": "^1.15.3"
-  },
   "prettier": {
     "trailingComma": "es5",
     "tabWidth": 2,
