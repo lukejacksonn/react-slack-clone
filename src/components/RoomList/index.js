@@ -57,7 +57,11 @@ export const RoomList = ({
           {room.id !== current.id && unreadCount ? (
             <label>{unreadCount}</label>
           ) : Object.keys(typing[room.id] || {}).length > 0 ? (
-            <div className={dots}>{[0, 1, 2].map(x => <div key={x} />)}</div>
+            <div className={dots}>
+              {[0, 1, 2].map(x => (
+                <div key={x} />
+              ))}
+            </div>
           ) : null}
         </li>
       )
