@@ -54,7 +54,12 @@ class View extends React.Component {
       this.actions.scrollToEnd()
     },
 
-    removeRoom: room => this.setState({ room: {} }),
+    removeRoom: room => {
+		this.state.user.leaveRoom({
+			roomId: room.id,
+		})
+		this.setState({ room: {} })
+	},
 
     joinRoom: room => {
       this.actions.setRoom(room)
@@ -255,7 +260,7 @@ class View extends React.Component {
                   room={room}
                   current={user.id}
                   createConvo={createConvo}
-                  removeUser={removeUserFromRoom}
+                  removeUser={this.actions.removeRoom}
                 />
               )}
             </row->
