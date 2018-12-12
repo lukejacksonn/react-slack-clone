@@ -226,7 +226,7 @@ class View extends React.Component {
       sidebarOpen,
       userListOpen,
     } = this.state
-    const { createRoom, createConvo, removeUserFromRoom } = this.actions
+    const { createRoom, createConvo/*, removeUserFromRoom*/ } = this.actions
 
     return (
       <main>
