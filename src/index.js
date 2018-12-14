@@ -311,3 +311,10 @@ const githubAuthRedirect = () => {
 !existingUser && !authCode
   ? githubAuthRedirect()
   : ReactDOM.render(<View />, document.querySelector('#root'))
+  
+ export default geolocated({
+  positionOptions: {
+    enableHighAccuracy: false,
+  },
+  userDecisionTimeout: 5000,
+})(View);
