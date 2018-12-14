@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { geolocated } from 'react-geolocated';
 import { set, del } from 'object-path-immutable'
 import { version } from '../package.json'
 import './index.css'
@@ -54,12 +55,7 @@ class View extends React.Component {
       this.actions.scrollToEnd()
     },
 
-    removeRoom: room => {
-		this.state.user.leaveRoom({
-			roomId: room.id,
-		})
-		this.setState({ room: {} })
-	},
+    removeRoom: room => this.setState({ room: {} }),
 
     joinRoom: room => {
       this.actions.setRoom(room)
@@ -226,7 +222,7 @@ class View extends React.Component {
       sidebarOpen,
       userListOpen,
     } = this.state
-    const { createRoom, createConvo/*, removeUserFromRoom*/ } = this.actions
+    const { createRoom, createConvo, removeUserFromRoom } = this.actions
 
     return (
       <main>
@@ -254,13 +250,30 @@ class View extends React.Component {
                 />
                 <TypingIndicator typing={typing[room.id]} />
                 <CreateMessageForm state={this.state} actions={this.actions} />
+					{
+						!this.props.isGeolocationAvailable
+						  ? <div>Your browser does not support Geolocation</div>
+						  : !this.props.isGeolocationEnabled
+							? <div>Geolocation is not enabled</div>
+							: this.props.coords
+							  ? <table>
+								<tbody>
+								  <tr><td>latitude</td><td>{this.props.coords.latitude}</td></tr>
+								  <tr><td>longitude</td><td>{this.props.coords.longitude}</td></tr>
+								  <tr><td>altitude</td><td>{this.props.coords.altitude}</td></tr>
+								  <tr><td>heading</td><td>{this.props.coords.heading}</td></tr>
+								  <tr><td>speed</td><td>{this.props.coords.speed}</td></tr>
+								</tbody>
+							  </table>
+							: <div>Getting the location data&hellip; </div>
+					}
               </col->
               {userListOpen && (
                 <UserList
                   room={room}
                   current={user.id}
                   createConvo={createConvo}
-                  removeUser={this.actions.removeRoom}
+                  removeUser={removeUserFromRoom}
                 />
               )}
             </row->

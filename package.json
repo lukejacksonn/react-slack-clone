@@ -7,6 +7,7 @@
     "object-path-immutable": "^1.0.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-geolocated": "^2.4.0",
     "react-linkify": "^0.2.2",
     "react-scripts": "next",
     "vuid": "^1.0.0"
