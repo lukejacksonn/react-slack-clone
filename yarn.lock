@@ -1063,12 +1063,18 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@pusher/chatkit@0.7.17":
-  version "0.7.17"
-  resolved "https://registry.yarnpkg.com/@pusher/chatkit/-/chatkit-0.7.17.tgz#2f3229e3ec04590924d6f6719da4d1e158825f57"
+"@pusher/chatkit-client@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@pusher/chatkit-client/-/chatkit-client-1.2.2.tgz#63326d25af119ab9b47bbd81e8191fa7cbd3352a"
+  integrity sha512-VTXVR+CRRkkqp1z1AK8NhDtWKsnvVwHT33b2Em7tlMbcpJT17YHm0wsOZLytKJkO1QG5WMdYuOsGPkymBnMYww==
   dependencies:
-    pusher-platform "^0.15.1"
+    "@pusher/platform" "^0.16.0"
     ramda "^0.25.0"
+
+"@pusher/platform@^0.16.0":
+  version "0.16.0"
+  resolved "https://registry.yarnpkg.com/@pusher/platform/-/platform-0.16.0.tgz#82510641fc3b4b7ee492726799266d59c5f35178"
+  integrity sha512-fN8GgHejm1U/WC6h9KcWfqK3kptFxMNSVXAhyCBkVek9mr63vvHnWBUmFcOZ1DBNWj8zBRxTSazfm2OvGOkkuQ==
 
 "@types/node@*":
   version "9.4.6"
@@ -6546,10 +6552,6 @@ prettier@^1.10.2:
   version "1.10.2"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.10.2.tgz#1af8356d1842276a99a5b5529c82dd9e9ad3cc93"
 
-prettier@^1.15.3:
-  version "1.15.3"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.15.3.tgz#1feaac5bdd181237b54dbe65d874e02a1472786a"
-
 pretty-bytes@^4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/pretty-bytes/-/pretty-bytes-4.0.2.tgz#b2bf82e7350d65c6c33aa95aaa5a4f6327f61cd9"
@@ -6659,10 +6661,6 @@ punycode@^1.2.4, punycode@^1.4.1:
 punycode@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.0.tgz#5f863edc89b96db09074bad7947bf09056ca4e7d"
-
-pusher-platform@^0.15.1:
-  version "0.15.1"
-  resolved "https://registry.yarnpkg.com/pusher-platform/-/pusher-platform-0.15.1.tgz#e8ff7e59f8440ddae6dd71a50e4796400b7ec62f"
 
 q@^1.1.2:
   version "1.5.1"

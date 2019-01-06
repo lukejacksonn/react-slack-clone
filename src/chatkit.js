@@ -1,4 +1,4 @@
-import Chatkit from '@pusher/chatkit'
+import Chatkit from '@pusher/chatkit-client'
 
 const credentials = {
   url: (id, token) =>
@@ -27,7 +27,7 @@ export default ({ state, actions }, { id, token }) =>
         user.rooms.map(room =>
           user.subscribeToRoom({
             roomId: room.id,
-            hooks: { onNewMessage: actions.addMessage },
+            hooks: { onMessage: actions.addMessage },
           })
         )
       ).then(rooms => {
