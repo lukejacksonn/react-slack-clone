@@ -5,7 +5,7 @@
   background: #fff;
   margin: 0;
   padding: 0;
-  overflow-y: scroll;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   width: 24rem;
   border-left: 1px solid rgba(0, 0, 0, 0.1);
@@ -21,6 +21,30 @@
   padding: 1rem;
   cursor: pointer;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.component .hint {
+  border: 0;
+}
+
+.component .hint > div {
+  text-align: center;
+  font-size: .9rem;
+  width: 100%;
+  font-weight: 400;
+}
+
+.component .hint > div > span {
+  background: #F4F5F7;
+  border-radius: 3px;
+  padding: 1px 3px;
+  display: inline-block;
+  box-sizing: border-box;
+}
+
+.component .hint:hover {
+  background: transparent;
+  cursor: default;
 }
 
 .component > li:hover {
