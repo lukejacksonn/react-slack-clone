@@ -9,14 +9,8 @@ const time = string => {
 }
 
 class Attachment extends React.Component {
-  fetchURL = () =>
-    this.props.user
-      .fetchAttachment({ url: this.props.link })
-      .then(fetched =>
-        this.setState({ src: fetched.link, name: fetched.file.name })
-      )
   componentDidMount() {
-    this.props.link && setInterval(this.fetchURL, 1000 * 60, this.fetchURL())
+    if (this.props.link) this.setState({ src: this.props.link });
   }
   render() {
     return this.state

@@ -18,8 +18,7 @@ export default ({ state, actions }, { id, token }) =>
       onUserStoppedTyping: actions.notTyping,
       onAddedToRoom: actions.subscribeToRoom,
       onRemovedFromRoom: actions.removeRoom,
-      onUserCameOnline: actions.setUserPresence,
-      onUserWentOffline: actions.setUserPresence,
+      onPresenceChanged: actions.setUserPresence,
     })
     .then(user => {
       // Subscribe to all rooms the user is a member of

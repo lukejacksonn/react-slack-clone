@@ -1063,18 +1063,18 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@pusher/chatkit-client@^1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@pusher/chatkit-client/-/chatkit-client-1.2.2.tgz#63326d25af119ab9b47bbd81e8191fa7cbd3352a"
-  integrity sha512-VTXVR+CRRkkqp1z1AK8NhDtWKsnvVwHT33b2Em7tlMbcpJT17YHm0wsOZLytKJkO1QG5WMdYuOsGPkymBnMYww==
+"@pusher/chatkit-client@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@pusher/chatkit-client/-/chatkit-client-1.3.0.tgz#d9ce96c2dc410e1bae32a7c6590a9fdb2b72ba42"
+  integrity sha512-TGfi1GTD0JotRLnISx/Vrn6XbUsbmLRhGEaZM2UvmURV2oGGKoIm/JoYQw/cN6YOFrB2ASZPbm0m4RgT8ogfqg==
   dependencies:
-    "@pusher/platform" "^0.16.0"
+    "@pusher/platform" "^0.16.1"
     ramda "^0.25.0"
 
-"@pusher/platform@^0.16.0":
-  version "0.16.0"
-  resolved "https://registry.yarnpkg.com/@pusher/platform/-/platform-0.16.0.tgz#82510641fc3b4b7ee492726799266d59c5f35178"
-  integrity sha512-fN8GgHejm1U/WC6h9KcWfqK3kptFxMNSVXAhyCBkVek9mr63vvHnWBUmFcOZ1DBNWj8zBRxTSazfm2OvGOkkuQ==
+"@pusher/platform@^0.16.1":
+  version "0.16.1"
+  resolved "https://registry.yarnpkg.com/@pusher/platform/-/platform-0.16.1.tgz#d8da86c9261d2cf1b9d275893521bfc94aafa013"
+  integrity sha512-3GCY4oT5TUM83Cm6REz5ILpm9ZaQ8rg/kbYxf27VK3ErJGGZ4FhQKfaPkQRQZ1/+qImiMwWoDDD8GoqYpGT+vQ==
 
 "@types/node@*":
   version "9.4.6"
