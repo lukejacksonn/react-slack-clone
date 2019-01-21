@@ -223,8 +223,6 @@ class View extends React.Component {
     } = this.state
     const { createRoom, createConvo, removeUserFromRoom } = this.actions
 
-    console.log(messages);
-
     return (
       <main>
         <aside data-open={sidebarOpen}>
