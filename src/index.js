@@ -70,7 +70,7 @@ class View extends React.Component {
       !this.state.user.roomSubscriptions[room.id] &&
       this.state.user.subscribeToRoom({
         roomId: room.id,
-        hooks: { onNewMessage: this.actions.addMessage },
+        hooks: { onMessage: this.actions.addMessage },
       }),
 
     createRoom: options =>
