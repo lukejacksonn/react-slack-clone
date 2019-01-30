@@ -38,13 +38,18 @@
   position: relative;
   border: 0;
   padding: 0;
-  background: #fff;
+  background: transparent;
+  cursor: pointer;
 }
 
 .component svg {
   width: 2rem;
   height: 2rem;
   fill: #006eff;
+}
+
+.component input {
+    cursor: pointer;
 }
 
 .component input[type='checkbox']:not(:checked) + svg {

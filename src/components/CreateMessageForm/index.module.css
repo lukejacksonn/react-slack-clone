@@ -21,6 +21,7 @@
   border: 0;
   background: #fff;
   padding: 0;
+  cursor: pointer;
 }
 
 .component > * {
