@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { set, del } from 'object-path-immutable'
 import { version } from '../package.json'
 import './index.css'
 
@@ -122,7 +121,15 @@ class View extends React.Component {
       const roomId = payload.room.id
       const messageId = payload.id
       // Update local message cache with new message
-      this.setState(set(this.state, ['messages', roomId, messageId], payload))
+      this.setState(prevState => ({
+        messages: {
+          ...prevState.messages,
+          [roomId]: {
+            ...prevState.messages[roomId],
+            [messageId]: payload
+          }
+        }
+      }))
       // Update cursor if the message was read
       if (roomId === this.state.room.id) {
         const cursor = this.state.user.readCursor({ roomId }) || {}
@@ -158,10 +165,26 @@ class View extends React.Component {
     // --------------------------------------
 
     isTyping: (room, user) =>
-      this.setState(set(this.state, ['typing', room.id, user.id], true)),
+      this.setState(prevState => ({
+        typing: {
+          ...prevState.typing,
+          [room.id]: {
+            ...prevState.typing[room.id],
+            [user.id]: true
+          }
+        }
+      })),
 
     notTyping: (room, user) =>
-      this.setState(del(this.state, ['typing', room.id, user.id])),
+      this.setState(prevState => ({
+        typing: {
+          ...prevState.typing,
+          [room.id]: {
+            ...prevState.typing[room.id],
+            [user.id]: false
+          }
+        }
+      })),
 
     // --------------------------------------
     // Presence
