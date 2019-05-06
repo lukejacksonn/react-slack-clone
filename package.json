@@ -7,7 +7,7 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-linkify": "^0.2.2",
-    "react-scripts": "next",
+    "react-scripts": "2.0.0",
     "vuid": "^1.0.0"
   },
   "scripts": {
