@@ -14,8 +14,6 @@ import { CreateRoomForm } from './components/CreateRoomForm'
 import { WelcomeScreen } from './components/WelcomeScreen'
 import { JoinRoomScreen } from './components/JoinRoomScreen'
 
-import ChatManager from './chatkit'
-
 // --------------------------------------
 // Application
 // --------------------------------------
@@ -138,7 +136,7 @@ class View extends React.Component {
         this.actions.scrollToEnd()
       }
       // Send notification
-      this.actions.showNotification(payload)
+      //this.actions.showNotification(payload)
     },
 
     runCommand: command => {
@@ -190,13 +188,13 @@ class View extends React.Component {
     // Presence
     // --------------------------------------
 
-    setUserPresence: () => this.forceUpdate(),
+    setUserPresence: () => this.forceUpdate()}
 
     // --------------------------------------
     // Notifications
     // --------------------------------------
 
-    showNotification: message => {
+/*     showNotification: message => {
       if (
         'Notification' in window &&
         this.state.user.id &&
@@ -215,10 +213,10 @@ class View extends React.Component {
           window.focus()
         })
       }
-    },
-  }
+    }
+  } */
 
-  componentDidMount() {
+   componentDidMount() {/* 
     'Notification' in window && Notification.requestPermission()
     existingUser
       ? ChatManager(this, JSON.parse(existingUser))
@@ -232,7 +230,7 @@ class View extends React.Component {
             window.localStorage.setItem('chatkit-user', JSON.stringify(user))
             window.history.replaceState(null, null, window.location.pathname)
             ChatManager(this, user)
-          })
+          }) */
   }
 
   render() {
@@ -297,22 +295,5 @@ class View extends React.Component {
 // Authentication
 // --------------------------------------
 
-window.localStorage.getItem('chatkit-user') &&
-  !window.localStorage.getItem('chatkit-user').match(version) &&
-  window.localStorage.clear()
 
-const params = new URLSearchParams(window.location.search.slice(1))
-const authCode = params.get('code')
-const existingUser = window.localStorage.getItem('chatkit-user')
-
-const githubAuthRedirect = () => {
-  const client = '20cdd317000f92af12fe'
-  const url = 'https://github.com/login/oauth/authorize'
-  const server = 'https://chatkit-demo-server.herokuapp.com'
-  const redirect = `${server}/success?url=${window.location.href.split('?')[0]}`
-  window.location = `${url}?scope=user:email&client_id=${client}&redirect_uri=${redirect}`
-}
-
-!existingUser && !authCode
-  ? githubAuthRedirect()
-  : ReactDOM.render(<View />, document.querySelector('#root'))
+ReactDOM.render(<View />, document.querySelector('#root'))
