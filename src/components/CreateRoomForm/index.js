@@ -13,7 +13,7 @@ export const CreateRoomForm = ({ submit }) => (
       e.target[0].value = ''
     }}
   >
-    <input placeholder="Create a Room" />
+    <input placeholder="Create a Room" type="text" required />
     <button>
       <input type="checkbox" />
       <svg>
