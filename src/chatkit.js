@@ -1,4 +1,5 @@
 import Chatkit from '@pusher/chatkit-client'
+// importing 3rd party package
 
 const credentials = {
   url: (id, token) =>

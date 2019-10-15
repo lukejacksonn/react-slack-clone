@@ -46,6 +46,12 @@ $ cd react-slack-clone
 $ yarn && yarn start
 ```
 
+or run 
+
+```
+npm run start
+```
+
 The app starts in development mode and opens a browser window on `http://localhost:3000`. The project rebuilds and the browser reloads automatically when source files are changed. Any build or runtime errors are propagated and displayed in the browser.
 
 The app depends on GitHub authentication and a user creation endpoint that is hosted at https://chatkit-demo-server.herokuapp.com. The endpoints are `/auth` and `/token`.
