@@ -72,8 +72,12 @@ class View extends React.Component {
         hooks: { onMessage: this.actions.addMessage },
       }),
 
-    createRoom: options =>
-      this.state.user.createRoom(options).then(this.actions.joinRoom),
+    createRoom: options => {
+      // validation for room name
+      if (options.name.length > 0) {
+        this.state.user.createRoom(options).then(this.actions.joinRoom)
+      }
+    },
 
     createConvo: options => {
       if (options.user.id !== this.state.user.id) {
@@ -126,9 +130,9 @@ class View extends React.Component {
           ...prevState.messages,
           [roomId]: {
             ...prevState.messages[roomId],
-            [messageId]: payload
-          }
-        }
+            [messageId]: payload,
+          },
+        },
       }))
       // Update cursor if the message was read
       if (roomId === this.state.room.id) {
@@ -170,9 +174,9 @@ class View extends React.Component {
           ...prevState.typing,
           [room.id]: {
             ...prevState.typing[room.id],
-            [user.id]: true
-          }
-        }
+            [user.id]: true,
+          },
+        },
       })),
 
     notTyping: (room, user) =>
@@ -181,9 +185,9 @@ class View extends React.Component {
           ...prevState.typing,
           [room.id]: {
             ...prevState.typing[room.id],
-            [user.id]: false
-          }
-        }
+            [user.id]: false,
+          },
+        },
       })),
 
     // --------------------------------------
